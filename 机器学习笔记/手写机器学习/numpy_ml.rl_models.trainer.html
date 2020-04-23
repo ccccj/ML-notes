@@ -1,0 +1,216 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Training &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utilities" href="numpy_ml.rl_models.utils.html" />
+    <link rel="prev" title="Agents" href="numpy_ml.rl_models.agents.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.agents.html">Agents</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Training</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-numpy_ml.rl_models.trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.rl_models.html">Reinforcement learning</a><ul>
+      <li>Previous: <a href="numpy_ml.rl_models.agents.html" title="previous chapter">Agents</a></li>
+      <li>Next: <a href="numpy_ml.rl_models.utils.html" title="next chapter">Utilities</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="training">
+<h1>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-numpy_ml.rl_models.trainer">
+<span id="trainer"></span><h2><code class="docutils literal notranslate"><span class="pre">Trainer</span></code><a class="headerlink" href="#module-numpy_ml.rl_models.trainer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.rl_models.trainer.Trainer">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models.trainer.</code><code class="descname">Trainer</code><span class="sig-paren">(</span><em>agent</em>, <em>env</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/trainer.py#L5-L148"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.trainer.Trainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object to facilitate agent training and evaluation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>agent</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">AgentBase</span></code> instance) – The agent to train.</li>
+<li><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to run the agent on.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.rl_models.trainer.Trainer.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>n_episodes</em>, <em>max_steps</em>, <em>seed=None</em>, <em>plot=True</em>, <em>verbose=True</em>, <em>render_every=None</em>, <em>smooth_factor=0.05</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/trainer.py#L33-L101"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.trainer.Trainer.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train an agent on an OpenAI gym environment, logging training
+statistics along the way.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_episodes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of episodes to train the agent across.</li>
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps the agent can take on each episode.</li>
+<li><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – A seed for the random number generator. Default is None.</li>
+<li><strong>plot</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to generate a plot of the cumulative reward as a function
+of training episode. Default is True.</li>
+<li><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to print intermediate run statistics to stdout during
+training. Default is True.</li>
+<li><strong>smooth_factor</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The amount to smooth the cumulative reward across episodes. Larger
+values correspond to less smoothing.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.trainer.Trainer.plot_rewards">
+<code class="descname">plot_rewards</code><span class="sig-paren">(</span><em>rwd_greedy</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/trainer.py#L103-L148"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.trainer.Trainer.plot_rewards" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the cumulative reward per episode as a function of episode number.</p>
+<p class="rubric">Notes</p>
+<p>Saves plot to the file <code class="docutils literal notranslate"><span class="pre">./img/&lt;agent&gt;-&lt;env&gt;.png</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rwd_greedy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The cumulative reward earned with a final execution of a greedy
+target policy.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.rl_models.trainer.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

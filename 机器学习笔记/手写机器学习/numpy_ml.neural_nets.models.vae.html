@@ -1,0 +1,271 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Variational auto-encoder (neural_nets.models.vae) &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-numpy_ml.neural_nets.models.vae">
+<span id="variational-auto-encoder-neural-nets-models-vae"></span><h1>Variational auto-encoder (<code class="docutils literal notranslate"><span class="pre">neural_nets.models.vae</span></code>)<a class="headerlink" href="#module-numpy_ml.neural_nets.models.vae" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.models.vae.</code><code class="descname">BernoulliVAE</code><span class="sig-paren">(</span><em>T=5</em>, <em>latent_dim=256</em>, <em>enc_conv1_pad=0</em>, <em>enc_conv2_pad=0</em>, <em>enc_conv1_out_ch=32</em>, <em>enc_conv2_out_ch=64</em>, <em>enc_conv1_stride=1</em>, <em>enc_pool1_stride=2</em>, <em>enc_conv2_stride=1</em>, <em>enc_pool2_stride=1</em>, <em>enc_conv1_kernel_shape=(5</em>, <em>5)</em>, <em>enc_pool1_kernel_shape=(2</em>, <em>2)</em>, <em>enc_conv2_kernel_shape=(5</em>, <em>5)</em>, <em>enc_pool2_kernel_shape=(2</em>, <em>2)</em>, <em>optimizer='RMSProp(lr=0.0001)'</em>, <em>init='glorot_uniform'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L12-L453"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A variational autoencoder (VAE) with 2D convolutional encoder and Bernoulli
+input and output units.</p>
+<p class="rubric">Notes</p>
+<p>The VAE architecture is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>                |-- t_mean ----|
+X -&gt; [Encoder] -|              |--&gt; [Sampler] -&gt; [Decoder] -&gt; X_recon
+                |-- t_log_var -|
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">[Encoder]</span></code> is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Conv1 -&gt; ReLU -&gt; MaxPool1 -&gt; Conv2 -&gt; ReLU -&gt;
+    MaxPool2 -&gt; Flatten -&gt; FC1 -&gt; ReLU -&gt; FC2
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">[Decoder]</span></code> is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FC1 -&gt; FC2 -&gt; Sigmoid
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">[Sampler]</span></code> draws a sample from the distribution</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{N}(\text{t_mean}, \exp \left\{\text{t_log_var}\right\} I)\]</div>
+<p>using the reparameterization trick.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The dimension of the variational parameter <cite>t</cite>. Default is 5.</li>
+<li><strong>enc_conv1_pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The padding for the first convolutional layer of the encoder. Default is 0.</li>
+<li><strong>enc_conv1_stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride for the first convolutional layer of the encoder. Default is 1.</li>
+<li><strong>enc_conv1_out_ch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of output channels for the first convolutional layer of
+the encoder. Default is 32.</li>
+<li><strong>enc_conv1_kernel_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – The number of rows and columns in each filter of the first
+convolutional layer of the encoder. Default is (5, 5).</li>
+<li><strong>enc_pool1_kernel_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – The number of rows and columns in the receptive field of the first
+max pool layer of the encoder. Default is (2, 3).</li>
+<li><strong>enc_pool1_stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride for the first MaxPool layer of the encoder. Default is
+2.</li>
+<li><strong>enc_conv2_pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The padding for the second convolutional layer of the encoder.
+Default is 0.</li>
+<li><strong>enc_conv2_out_ch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of output channels for the second convolutional layer of
+the encoder. Default is 64.</li>
+<li><strong>enc_conv2_kernel_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – The number of rows and columns in each filter of the second
+convolutional layer of the encoder. Default is (5, 5).</li>
+<li><strong>enc_conv2_stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride for the second convolutional layer of the encoder.
+Default is 1.</li>
+<li><strong>enc_pool2_stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride for the second MaxPool layer of the encoder. Default is
+1.</li>
+<li><strong>enc_pool2_kernel_shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – The number of rows and columns in the receptive field of the second
+max pool layer of the encoder. Default is (2, 3).</li>
+<li><strong>latent_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The dimension of the output for the first FC layer of the encoder.
+Default is 256.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object or None) – The optimization strategy to use when performing gradient updates.
+If None, use the <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a>
+optimizer with default parameters. Default is “RMSProp(lr=0.0001)”.</li>
+<li><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The weight initialization strategy. Valid entries are
+{‘glorot_normal’, ‘glorot_uniform’, ‘he_normal’, ‘he_uniform’,
+‘std_normal’, ‘trunc_normal’}. Default is ‘glorot_uniform’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L210-L217"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L219-L247"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L249-L272"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L274-L281"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.gradients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X_train</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L308-L339"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>VAE forward pass</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>X_train</em>, <em>X_recon</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L341-L385"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>VAE backward pass</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>cur_loss=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L387-L393"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform gradient updates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.flush_gradients">
+<code class="descname">flush_gradients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L395-L400"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.flush_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset parameter gradients after update</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.vae.BernoulliVAE.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X_train</em>, <em>n_epochs=20</em>, <em>batchsize=128</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/vae.py#L402-L453"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.vae.BernoulliVAE.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the VAE to a training dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X_train</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_ch)</cite>) – The input volume</li>
+<li><strong>n_epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of training epochs to run. Default is 20.</li>
+<li><strong>batchsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The desired number of examples in each training batch. Default is 128.</li>
+<li><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Print batch information during training. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.models.vae.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

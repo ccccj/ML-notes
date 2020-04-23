@@ -1,0 +1,332 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Kernels &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Window functions" href="numpy_ml.utils.windows.html" />
+    <link rel="prev" title="Distance metrics" href="numpy_ml.utils.distance_metrics.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.utils.data_structures.html">Data structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.utils.distance_metrics.html">Distance metrics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Kernels</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#linearkernel"><code class="docutils literal notranslate"><span class="pre">LinearKernel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#polynomialkernel"><code class="docutils literal notranslate"><span class="pre">PolynomialKernel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rbfkernel"><code class="docutils literal notranslate"><span class="pre">RBFKernel</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.utils.windows.html">Window functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.utils.testing.html">Testing</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.utils.html">Utilities</a><ul>
+      <li>Previous: <a href="numpy_ml.utils.distance_metrics.html" title="previous chapter">Distance metrics</a></li>
+      <li>Next: <a href="numpy_ml.utils.windows.html" title="next chapter">Window functions</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="kernels">
+<h1>Kernels<a class="headerlink" href="#kernels" title="Permalink to this headline">¶</a></h1>
+<p>A collection of common kernel / similarity functions. All kernels are
+continuous, bounded, and symmetric real functions which integrate to 1.</p>
+<div class="section" id="linearkernel">
+<h2><code class="docutils literal notranslate"><span class="pre">LinearKernel</span></code><a class="headerlink" href="#linearkernel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.utils.kernels.LinearKernel">
+<em class="property">class </em><code class="descclassname">numpy_ml.utils.kernels.</code><code class="descname">LinearKernel</code><span class="sig-paren">(</span><em>c0=0</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L72-L116"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.LinearKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The linear (i.e., dot-product) kernel.</p>
+<p class="rubric">Notes</p>
+<p>For input vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, the linear
+kernel is:</p>
+<div class="math notranslate nohighlight">
+\[k(\mathbf{x}, \mathbf{y}) = \mathbf{x}^\top \mathbf{y} + c_0\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – An “inhomogeneity” parameter. When <cite>c0</cite> = 0, the kernel is said to be
+homogenous. Default is 1.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.LinearKernel.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>summary_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L34-L69"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.LinearKernel.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the model parameters and hyperparameters using the settings in
+<cite>summary_dict</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary with keys ‘parameters’ and ‘hyperparameters’,
+structured as would be returned by the <a class="reference internal" href="#numpy_ml.utils.kernels.LinearKernel.summary" title="numpy_ml.utils.kernels.LinearKernel.summary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summary()</span></code></a> method. If
+a particular (hyper)parameter is not included in this dict, the
+current value will be used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>new_kernel</strong> (<a class="reference internal" href="#"><span class="doc">Kernel</span></a> instance) – A kernel with parameters and hyperparameters adjusted to those
+specified in <cite>summary_dict</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.LinearKernel.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L26-L32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.LinearKernel.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dictionary of model parameters, hyperparameters, and ID</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="polynomialkernel">
+<h2><code class="docutils literal notranslate"><span class="pre">PolynomialKernel</span></code><a class="headerlink" href="#polynomialkernel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.utils.kernels.PolynomialKernel">
+<em class="property">class </em><code class="descclassname">numpy_ml.utils.kernels.</code><code class="descname">PolynomialKernel</code><span class="sig-paren">(</span><em>d=3</em>, <em>gamma=None</em>, <em>c0=1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L119-L181"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.PolynomialKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The degree-<cite>d</cite> polynomial kernel.</p>
+<p class="rubric">Notes</p>
+<p>For input vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, the polynomial
+kernel is:</p>
+<div class="math notranslate nohighlight">
+\[k(\mathbf{x}, \mathbf{y}) = (\gamma \mathbf{x}^\top \mathbf{y} + c_0)^d\]</div>
+<p>In contrast to the linear kernel, the polynomial kernel also computes
+similarities <em>across</em> dimensions of the <strong>x</strong> and <strong>y</strong> vectors,
+allowing it to account for interactions between features.  As an
+instance of the dot product family of kernels, the polynomial kernel is
+invariant to a rotation of the coordinates about the origin, but <em>not</em>
+to translations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>d</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Degree of the polynomial kernel. Default is 3.</li>
+<li><strong>gamma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – A scaling parameter for the dot product between <cite>x</cite> and <cite>y</cite>,
+determining the amount of smoothing/resonlution of the kernel.
+Larger values result in greater smoothing. If None, defaults to 1 /
+<cite>C</cite>.  Sometimes referred to as the kernel bandwidth.  Default is
+None.</li>
+<li><strong>c0</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Parameter trading off the influence of higher-order versus lower-order
+terms in the polynomial. If <cite>c0</cite> = 0, the kernel is said to be
+homogenous. Default is 1.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.PolynomialKernel.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>summary_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L34-L69"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.PolynomialKernel.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the model parameters and hyperparameters using the settings in
+<cite>summary_dict</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary with keys ‘parameters’ and ‘hyperparameters’,
+structured as would be returned by the <a class="reference internal" href="#numpy_ml.utils.kernels.PolynomialKernel.summary" title="numpy_ml.utils.kernels.PolynomialKernel.summary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summary()</span></code></a> method. If
+a particular (hyper)parameter is not included in this dict, the
+current value will be used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>new_kernel</strong> (<a class="reference internal" href="#"><span class="doc">Kernel</span></a> instance) – A kernel with parameters and hyperparameters adjusted to those
+specified in <cite>summary_dict</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.PolynomialKernel.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L26-L32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.PolynomialKernel.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dictionary of model parameters, hyperparameters, and ID</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="rbfkernel">
+<h2><code class="docutils literal notranslate"><span class="pre">RBFKernel</span></code><a class="headerlink" href="#rbfkernel" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.utils.kernels.RBFKernel">
+<em class="property">class </em><code class="descclassname">numpy_ml.utils.kernels.</code><code class="descname">RBFKernel</code><span class="sig-paren">(</span><em>sigma=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L184-L238"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.RBFKernel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radial basis function (RBF) / squared exponential kernel.</p>
+<p class="rubric">Notes</p>
+<p>For input vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span>, the radial
+basis function kernel is:</p>
+<div class="math notranslate nohighlight">
+\[k(\mathbf{x}, \mathbf{y}) = \exp \left\{ -0.5
+    \left\lVert \frac{\mathbf{x} -
+        \mathbf{y}}{\sigma} \right\rVert_2^2 \right\}\]</div>
+<p>The RBF kernel decreases with distance and ranges between zero (in the
+limit) to one (when <strong>x</strong> = <strong>y</strong>). Notably, the implied feature space
+of the kernel has an infinite number of dimensions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sigma</strong> (float or array of shape <cite>(C,)</cite> or None) – A scaling parameter for the vectors <strong>x</strong> and <strong>y</strong>, producing an
+isotropic kernel if a float, or an anistropic kernel if an array of
+length <cite>C</cite>.  Larger values result in higher resolution / greater
+smoothing. If None, defaults to <span class="math notranslate nohighlight">\(\sqrt(C / 2)\)</span>. Sometimes
+referred to as the kernel ‘bandwidth’. Default is None.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.RBFKernel.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>summary_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L34-L69"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.RBFKernel.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the model parameters and hyperparameters using the settings in
+<cite>summary_dict</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>summary_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – A dictionary with keys ‘parameters’ and ‘hyperparameters’,
+structured as would be returned by the <a class="reference internal" href="#numpy_ml.utils.kernels.RBFKernel.summary" title="numpy_ml.utils.kernels.RBFKernel.summary"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summary()</span></code></a> method. If
+a particular (hyper)parameter is not included in this dict, the
+current value will be used.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>new_kernel</strong> (<a class="reference internal" href="#"><span class="doc">Kernel</span></a> instance) – A kernel with parameters and hyperparameters adjusted to those
+specified in <cite>summary_dict</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.utils.kernels.RBFKernel.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/utils/kernels.py#L26-L32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.utils.kernels.RBFKernel.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the dictionary of model parameters, hyperparameters, and ID</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.utils.kernels.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

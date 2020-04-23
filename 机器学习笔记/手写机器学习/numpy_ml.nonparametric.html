@@ -1,0 +1,245 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Nonparametric models &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="KNN" href="numpy_ml.nonparametric.knn.html" />
+    <link rel="prev" title="Utilities" href="numpy_ml.rl_models.utils.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Nonparametric models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.nonparametric.knn.html"><code class="docutils literal notranslate"><span class="pre">KNN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.nonparametric.gp.html"><code class="docutils literal notranslate"><span class="pre">GPRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.nonparametric.kernel_regression.html"><code class="docutils literal notranslate"><span class="pre">KernelRegression</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="numpy_ml.rl_models.utils.html" title="previous chapter">Utilities</a></li>
+      <li>Next: <a href="numpy_ml.nonparametric.knn.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">KNN</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="nonparametric-models">
+<h1>Nonparametric models<a class="headerlink" href="#nonparametric-models" title="Permalink to this headline">¶</a></h1>
+<h2>Nearest Neighbors</h2><p>TODO</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.nonparametric.knn.html#numpy_ml.nonparametric.KNN" title="numpy_ml.nonparametric.KNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">KNN</span></code></a></li>
+</ul>
+<h2>Gaussian Process Regression</h2><p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Gaussian_process">Gaussian process</a> defines a prior distribution over functions mapping
+<span class="math notranslate nohighlight">\(X \rightarrow \mathbb{R}\)</span>, where <cite>X</cite> can be any finite (or
+infinite!)-dimensional set.</p>
+<p>Let <span class="math notranslate nohighlight">\(f(x_k)\)</span> be the random variable corresponding to
+the value of a function <cite>f</cite> at a point <span class="math notranslate nohighlight">\(x_k \in X\)</span>. Define a random
+variable <span class="math notranslate nohighlight">\(z = [f(x_1), \ldots, f(x_N)]\)</span> for any finite set of points
+<span class="math notranslate nohighlight">\(\{x_1, \ldots, x_N\} \subset X\)</span>. If <cite>f</cite> is distributed according to a
+Gaussian Process, it is the case that</p>
+<div class="math notranslate nohighlight">
+\[z \sim \mathcal{N}(\mu, K)\]</div>
+<p>for</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mu  &amp;=  [\text{mean}(x_1), \ldots, \text{mean}(x_N)] \\
+K_{ij}  &amp;=  \text{kernel}(x_i, x_j)\end{split}\]</div>
+<p>where mean is the mean function (in Gaussian process regression it is common
+to define mean(<cite>x</cite>) = 0), and <cite>kernel</cite> is a <a class="reference internal" href="numpy_ml.utils.kernels.html"><span class="doc">kernel</span></a> / covariance function that determines the general
+shape of the GP prior over functions, <cite>p(f)</cite>.</p>
+<p>In <a class="reference external" href="https://en.wikipedia.org/wiki/Kriging">Gaussian process regression</a> (AKA simple Kriging <a class="footnote-reference" href="#id4" id="id1">[2]</a> <a class="footnote-reference" href="#id5" id="id2">[3]</a>), a Gaussian
+process is used as a prior on functions and is combined with the Gaussian
+likelihood from the linear model via Bayes’ rule to compute a posterior over
+functions <cite>f</cite>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}y \mid X, f  &amp;\sim  \mathcal{N}( [f(x_1), \ldots, f(x_n)], \alpha I ) \\
+f \mid X     &amp;\sim  \text{GP}(0, K)\end{split}\]</div>
+<p>Due to the conjugacy of the Gaussian Process prior with the regression model’s
+Gaussian likelihood, the posterior will also be Gaussian and can be computed in
+closed form.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.nonparametric.gp.html#numpy_ml.nonparametric.GPRegression" title="numpy_ml.nonparametric.GPRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">GPRegression</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Rasmussen, C. E., &amp; Williams, C. K. I. (2006). Gaussian Processes for
+Machine Learning. MIT Press, Cambridge, MA.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>Krige, D. G., (1951). “A statistical approach to some mine valuations and
+allied problems at the Witwatersrand”, <em>Master’s thesis of the University of
+Witwatersrand</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[3]</a></td><td>Matheron, G., (1963). “Principles of geostatistics”, <em>Economic Geology, 58</em>, 1246-1266.</td></tr>
+</tbody>
+</table>
+<h2>Kernel Regression</h2><p>Kernel regression is another nonparametric approach to nonlinear regression.
+Like the Gaussian Process regression approach (or, more generally, all
+regression models), kernel regression attempts to learn a function <cite>f</cite> which
+captures the conditional expectation of some targets <strong>y</strong> given the data
+<strong>X</strong>, under the assumption that</p>
+<div class="math notranslate nohighlight">
+\[y_i = f(x_i) + \epsilon_i \ \ \ \ \text{where } \mathbb{E}[\epsilon | \mathbf{x}] = \mathbb{E}[\epsilon] = 0\]</div>
+<p>Unlike the Gaussian Process regression approach, however, kernel regression
+does not place a prior over <cite>f</cite>. Instead, it models <span class="math notranslate nohighlight">\(f = \mathbb{E}[y |
+X] = \int_y \frac{p(X, y)}{p(X)} y \ \text{d}y\)</span> using a <a class="reference internal" href="numpy_ml.utils.kernels.html"><span class="doc">kernel function</span></a>, <cite>k</cite>, to estimate the smoothed data probabilities.
+For example, the <a class="reference internal" href="numpy_ml.nonparametric.kernel_regression.html#numpy_ml.nonparametric.KernelRegression" title="numpy_ml.nonparametric.KernelRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">Nadaraya-Watson</span></code></a>
+estimator <a class="footnote-reference" href="#id8" id="id6">[4]</a> <a class="footnote-reference" href="#id9" id="id7">[5]</a> uses the following probability estimates:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{p}(X)  &amp;=  \prod_{i=1}^N \hat{p}(x_i) = \prod_{i=1}^N \sum_{j=1}^N \frac{k(x_i - x_j)}{N} \\
+\hat{p}(X, y)  &amp;  \prod_{i=1}^N \hat{p}(x_i, y_i) = \prod_{i=1}^N \sum_{j=1}^N \frac{k(x_i - x_j) k(y_i - y_j)}{N}\end{split}\]</div>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.nonparametric.kernel_regression.html#numpy_ml.nonparametric.KernelRegression" title="numpy_ml.nonparametric.KernelRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">KernelRegression</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td>Nadaraya, E. A. (1964). “On estimating regression”. <em>Theory of
+Probability and Its Applications, 9 (1)</em>, 141-2.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[5]</a></td><td>Watson, G. S. (1964). “Smooth regression analysis”. <em>Sankhyā: The Indian
+Journal of Statistics, Series A. 26 (4)</em>, 359–372.</td></tr>
+</tbody>
+</table>
+<h2>See Also</h2><p>The <a class="reference internal" href="numpy_ml.trees.html"><span class="doc">trees</span></a> module contains other classic nonparametric
+approaches, including <a class="reference internal" href="numpy_ml.trees.dt.html"><span class="doc">decision trees</span></a>,
+<a class="reference internal" href="numpy_ml.trees.rf.html"><span class="doc">random forests</span></a>, and <a class="reference internal" href="numpy_ml.trees.gbdt.html"><span class="doc">gradient
+boosted decision trees</span></a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.nonparametric.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

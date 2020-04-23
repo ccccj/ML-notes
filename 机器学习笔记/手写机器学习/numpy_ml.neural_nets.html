@@ -1,0 +1,597 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Neural networks &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Layers" href="numpy_ml.neural_nets.layers.html" />
+    <link rel="prev" title="GradientBoostedDecisionTree" href="numpy_ml.trees.gbdt.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Neural networks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.activations.html">Activations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.losses.html">Loss functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html">Optimizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html">Wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.models.html">Full networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="numpy_ml.trees.gbdt.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">GradientBoostedDecisionTree</span></code></a></li>
+      <li>Next: <a href="numpy_ml.neural_nets.layers.html" title="next chapter">Layers</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="neural-networks">
+<h1>Neural networks<a class="headerlink" href="#neural-networks" title="Permalink to this headline">¶</a></h1>
+<p>The neural network module includes common building blocks for implementing
+modern <a class="reference external" href="https://en.wikipedia.org/wiki/Deep_learning">deep learning</a> models.</p>
+<h2>Layers</h2><p>Most modern neural networks can be represented as a <a class="reference external" href="https://en.wikipedia.org/wiki/Function_composition">composition</a> of
+many small, parametric functions. The functions in this composition are
+commonly referred to as the “layers” of the network. As an example, the
+multilayer perceptron (MLP) below computes the function <span class="math notranslate nohighlight">\((f
+\circ g \circ h)\)</span> where, <cite>f</cite>, <cite>g</cite>, and <cite>h</cite> are the individual network layers.</p>
+<div class="figure align-center" id="id3">
+<a class="reference internal image-reference" href="_images/mlp_model.png"><img alt="_images/mlp_model.png" src="_images/mlp_model.png" style="width: 290.40000000000003px; height: 364.0px;" /></a>
+<p class="caption"><span class="caption-text">A multilayer perceptron with three layers labeled <cite>f</cite>, <cite>g</cite>, and <cite>h</cite>.</span></p>
+</div>
+<p>Many neural network layers are parametric: they express different
+transformations depending on the setting of their weights (coefficients),
+biases (intercepts), and/or other tunable values. These parameters are adjusted
+during training to improve the performance of the network on a particular
+metric.</p>
+<p>The <a class="reference internal" href="numpy_ml.neural_nets.layers.html"><span class="doc">Layers</span></a> module contains a number of common
+transformations that can be composed to create larger networks.</p>
+<p><strong>Layers</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="36%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Add" title="numpy_ml.neural_nets.layers.Add"><code class="xref py py-class docutils literal notranslate"><span class="pre">Add</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Deconv2D" title="numpy_ml.neural_nets.layers.Deconv2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Deconv2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LSTM" title="numpy_ml.neural_nets.layers.LSTM"><code class="xref py py-class docutils literal notranslate"><span class="pre">LSTM</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm1D" title="numpy_ml.neural_nets.layers.BatchNorm1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm1D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.DotProductAttention" title="numpy_ml.neural_nets.layers.DotProductAttention"><code class="xref py py-class docutils literal notranslate"><span class="pre">DotProductAttention</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LSTMCell" title="numpy_ml.neural_nets.layers.LSTMCell"><code class="xref py py-class docutils literal notranslate"><span class="pre">LSTMCell</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm2D" title="numpy_ml.neural_nets.layers.BatchNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Embedding" title="numpy_ml.neural_nets.layers.Embedding"><code class="xref py py-class docutils literal notranslate"><span class="pre">Embedding</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LayerNorm1D" title="numpy_ml.neural_nets.layers.LayerNorm1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayerNorm1D</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv1D" title="numpy_ml.neural_nets.layers.Conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv1D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Flatten" title="numpy_ml.neural_nets.layers.Flatten"><code class="xref py py-class docutils literal notranslate"><span class="pre">Flatten</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LayerNorm2D" title="numpy_ml.neural_nets.layers.LayerNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">LayerNorm2D</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv2D" title="numpy_ml.neural_nets.layers.Conv2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.FullyConnected" title="numpy_ml.neural_nets.layers.FullyConnected"><code class="xref py py-class docutils literal notranslate"><span class="pre">FullyConnected</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Multiply" title="numpy_ml.neural_nets.layers.Multiply"><code class="xref py py-class docutils literal notranslate"><span class="pre">Multiply</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Pool2D" title="numpy_ml.neural_nets.layers.Pool2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.RNN" title="numpy_ml.neural_nets.layers.RNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNN</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.RNNCell" title="numpy_ml.neural_nets.layers.RNNCell"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNNCell</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.RBM" title="numpy_ml.neural_nets.layers.RBM"><code class="xref py py-class docutils literal notranslate"><span class="pre">RBM</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Softmax" title="numpy_ml.neural_nets.layers.Softmax"><code class="xref py py-class docutils literal notranslate"><span class="pre">Softmax</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.SparseEvolution" title="numpy_ml.neural_nets.layers.SparseEvolution"><code class="xref py py-class docutils literal notranslate"><span class="pre">SparseEvolution</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>Activations</h2><p>Each unit in a neural network sums its input and passes it through an
+<a class="reference external" href="https://en.wikipedia.org/wiki/Activation_function">activation function</a> before sending it on to its outgoing weights. Activation
+functions in most modern networks are real-valued, non-linear functions that
+are computationally inexpensive to compute and easily differentiable.</p>
+<p>The <a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activations</span></a> module contains a
+number of common activation functions.</p>
+<p><strong>Activations</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><blockquote class="first">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Affine" title="numpy_ml.neural_nets.activations.Affine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Affine</span></code></a></li>
+</ul>
+</div></blockquote>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.ELU" title="numpy_ml.neural_nets.activations.ELU"><code class="xref py py-class docutils literal notranslate"><span class="pre">ELU</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Exponential" title="numpy_ml.neural_nets.activations.Exponential"><code class="xref py py-class docutils literal notranslate"><span class="pre">Exponential</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.HardSigmoid" title="numpy_ml.neural_nets.activations.HardSigmoid"><code class="xref py py-class docutils literal notranslate"><span class="pre">HardSigmoid</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+<td><blockquote class="first">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Identity" title="numpy_ml.neural_nets.activations.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a></li>
+</ul>
+</div></blockquote>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.LeakyReLU" title="numpy_ml.neural_nets.activations.LeakyReLU"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeakyReLU</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.ReLU" title="numpy_ml.neural_nets.activations.ReLU"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReLU</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.SELU" title="numpy_ml.neural_nets.activations.SELU"><code class="xref py py-class docutils literal notranslate"><span class="pre">SELU</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+<td><blockquote class="first">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Sigmoid" title="numpy_ml.neural_nets.activations.Sigmoid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sigmoid</span></code></a></li>
+</ul>
+</div></blockquote>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.SoftPlus" title="numpy_ml.neural_nets.activations.SoftPlus"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoftPlus</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Tanh" title="numpy_ml.neural_nets.activations.Tanh"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tanh</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>Losses</h2><p>Training a neural network involves searching for layer parameters that optimize
+the network’s performance on a given task. <a class="reference external" href="https://en.wikipedia.org/wiki/Loss_function">Loss functions</a> are the
+quantitative metric we use to measure how well the network is performing. Loss
+functions are typically scalar-valued functions of a network’s output on some
+training data.</p>
+<p>The <a class="reference internal" href="numpy_ml.neural_nets.losses.html"><span class="doc">Losses</span></a> module contains loss functions
+for a number of common tasks.</p>
+<p><strong>Losses</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="35%" />
+<col width="31%" />
+<col width="34%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><blockquote class="first">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.CrossEntropy" title="numpy_ml.neural_nets.losses.CrossEntropy"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrossEntropy</span></code></a></li>
+</ul>
+</div></blockquote>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.SquaredError" title="numpy_ml.neural_nets.losses.SquaredError"><code class="xref py py-class docutils literal notranslate"><span class="pre">SquaredError</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+<td><blockquote class="first">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.NCELoss" title="numpy_ml.neural_nets.losses.NCELoss"><code class="xref py py-class docutils literal notranslate"><span class="pre">NCELoss</span></code></a></li>
+</ul>
+</div></blockquote>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.VAELoss" title="numpy_ml.neural_nets.losses.VAELoss"><code class="xref py py-class docutils literal notranslate"><span class="pre">VAELoss</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+<td><blockquote class="first last">
+<div><ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.WGAN_GPLoss" title="numpy_ml.neural_nets.losses.WGAN_GPLoss"><code class="xref py py-class docutils literal notranslate"><span class="pre">WGAN_GPLoss</span></code></a></li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>Optimizers</h2><p>The <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizers</span></a> module contains several
+popular gradient-based strategies for adjusting the parameters of a neural
+network to optimize a loss function. The proper choice of optimization strategy
+can help reduce training time / speed up convergence, though see <a class="footnote-reference" href="#id2" id="id1">[1]</a> for a
+discussion on the generalization performance of the solutions identified via
+different strategies.</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Wilson, A. C., Roelofs, R., Stern, M., Srebro, M., &amp; Recht, B. (2017)
+“The marginal value of adaptive gradient methods in machine learning”,
+<em>Proceedings of the 31st Conference on Neural Information Processing
+Systems</em>. <a class="reference external" href="https://arxiv.org/pdf/1705.08292.pdf">https://arxiv.org/pdf/1705.08292.pdf</a></td></tr>
+</tbody>
+</table>
+<p><strong>Optimizers</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="26%" />
+<col width="24%" />
+<col width="26%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.AdaGrad" title="numpy_ml.neural_nets.optimizers.AdaGrad"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdaGrad</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.Adam" title="numpy_ml.neural_nets.optimizers.Adam"><code class="xref py py-class docutils literal notranslate"><span class="pre">Adam</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.RMSProp" title="numpy_ml.neural_nets.optimizers.RMSProp"><code class="xref py py-class docutils literal notranslate"><span class="pre">RMSProp</span></code></a></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<h2>Learning Rate Schedulers</h2><p>It is common to reduce an optimizer’s learning rate(s) over the course of
+training in order to eke out additional performance improvements. The
+<a class="reference internal" href="numpy_ml.neural_nets.schedulers.html"><span class="doc">Schedulers</span></a> module contains several
+strategies for automatically adjusting the learning rate as a function of the
+number of elapsed training steps.</p>
+<p><strong>Schedulers</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="35%" />
+<col width="31%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html#numpy_ml.neural_nets.schedulers.ConstantScheduler" title="numpy_ml.neural_nets.schedulers.ConstantScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConstantScheduler</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html#numpy_ml.neural_nets.schedulers.ExponentialScheduler" title="numpy_ml.neural_nets.schedulers.ExponentialScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExponentialScheduler</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html#numpy_ml.neural_nets.schedulers.KingScheduler" title="numpy_ml.neural_nets.schedulers.KingScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">KingScheduler</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html#numpy_ml.neural_nets.schedulers.NoamScheduler" title="numpy_ml.neural_nets.schedulers.NoamScheduler"><code class="xref py py-class docutils literal notranslate"><span class="pre">NoamScheduler</span></code></a></li>
+</ul>
+</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<h2>Wrappers</h2><p>The <a class="reference internal" href="numpy_ml.neural_nets.wrappers.html"><span class="doc">Wrappers</span></a> module contains classes
+that wrap or otherwise modify the behavior of a network layer.</p>
+<p><strong>Wrappers</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html#numpy_ml.neural_nets.wrappers.Dropout" title="numpy_ml.neural_nets.wrappers.Dropout"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dropout</span></code></a></li>
+</ul>
+<h2>Modules</h2><p>Many deep networks consist of stacks of repeated modules. These modules, often
+consisting of several layers / layer operations, can themselves be abstracted
+in order to simplify the building of more complex networks. The <a class="reference internal" href="numpy_ml.neural_nets.modules.html"><span class="doc">Modules</span></a> module contains a few common architectural
+patterns that appear across a number of popular deep learning approaches.</p>
+<p><strong>Modules</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="33%" />
+<col width="32%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.modules.html#numpy_ml.neural_nets.modules.BidirectionalLSTM" title="numpy_ml.neural_nets.modules.BidirectionalLSTM"><code class="xref py py-class docutils literal notranslate"><span class="pre">BidirectionalLSTM</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.modules.html#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule" title="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiHeadedAttentionModule</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.modules.html#numpy_ml.neural_nets.modules.SkipConnectionConvModule" title="numpy_ml.neural_nets.modules.SkipConnectionConvModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SkipConnectionConvModule</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.modules.html#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule" title="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SkipConnectionIdentityModule</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.modules.html#numpy_ml.neural_nets.modules.WavenetResidualModule" title="numpy_ml.neural_nets.modules.WavenetResidualModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">WavenetResidualModule</span></code></a></li>
+</ul>
+</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<h2>Full Networks</h2><p>The <a class="reference internal" href="numpy_ml.neural_nets.models.html"><span class="doc">Models</span></a> module contains implementations
+of several well-known neural networks from recent papers.</p>
+<p><strong>Full Networks</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.models.html#numpy_ml.neural_nets.models.WGAN_GP" title="numpy_ml.neural_nets.models.WGAN_GP"><code class="xref py py-class docutils literal notranslate"><span class="pre">WGAN_GP</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.models.html#numpy_ml.neural_nets.models.BernoulliVAE" title="numpy_ml.neural_nets.models.BernoulliVAE"><code class="xref py py-class docutils literal notranslate"><span class="pre">BernoulliVAE</span></code></a></li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.models.html#numpy_ml.neural_nets.models.Word2Vec" title="numpy_ml.neural_nets.models.Word2Vec"><code class="xref py py-class docutils literal notranslate"><span class="pre">Word2Vec</span></code></a></li>
+</ul>
+<h2>Utilities</h2><p>The <a class="reference internal" href="numpy_ml.neural_nets.utils.html"><span class="doc">Utilities</span></a> module contains a number of
+helper functions for dealing with weight initialization, convolution
+arithmetic, padding, and minibatching.</p>
+<p><strong>Utilities</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="26%" />
+<col width="26%" />
+<col width="22%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.minibatch" title="numpy_ml.neural_nets.utils.minibatch"><code class="xref py py-class docutils literal notranslate"><span class="pre">minibatch</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.pad1D" title="numpy_ml.neural_nets.utils.pad1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">pad1D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.calc_fan" title="numpy_ml.neural_nets.utils.calc_fan"><code class="xref py py-class docutils literal notranslate"><span class="pre">calc_fan</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.col2im" title="numpy_ml.neural_nets.utils.col2im"><code class="xref py py-class docutils literal notranslate"><span class="pre">col2im</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.conv2D" title="numpy_ml.neural_nets.utils.conv2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">conv2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.pad2D" title="numpy_ml.neural_nets.utils.pad2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">pad2D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.calc_conv_out_dims" title="numpy_ml.neural_nets.utils.calc_conv_out_dims"><code class="xref py py-class docutils literal notranslate"><span class="pre">calc_conv_out_dims</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.conv2D" title="numpy_ml.neural_nets.utils.conv2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">conv2D</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.calc_pad_dims_1D" title="numpy_ml.neural_nets.utils.calc_pad_dims_1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">calc_pad_dims_1D</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.dilate" title="numpy_ml.neural_nets.utils.dilate"><code class="xref py py-class docutils literal notranslate"><span class="pre">dilate</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.im2col" title="numpy_ml.neural_nets.utils.im2col"><code class="xref py py-class docutils literal notranslate"><span class="pre">im2col</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.conv1D" title="numpy_ml.neural_nets.utils.conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">conv1D</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.deconv2D_naive" title="numpy_ml.neural_nets.utils.deconv2D_naive"><code class="xref py py-class docutils literal notranslate"><span class="pre">deconv2D_naive</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.conv2D_naive" title="numpy_ml.neural_nets.utils.conv2D_naive"><code class="xref py py-class docutils literal notranslate"><span class="pre">conv2D_naive</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.he_uniform" title="numpy_ml.neural_nets.utils.he_uniform"><code class="xref py py-class docutils literal notranslate"><span class="pre">he_uniform</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.he_normal" title="numpy_ml.neural_nets.utils.he_normal"><code class="xref py py-class docutils literal notranslate"><span class="pre">he_normal</span></code></a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.glorot_uniform" title="numpy_ml.neural_nets.utils.glorot_uniform"><code class="xref py py-class docutils literal notranslate"><span class="pre">glorot_uniform</span></code></a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.utils.html#numpy_ml.neural_nets.utils.truncated_normal" title="numpy_ml.neural_nets.utils.truncated_normal"><code class="xref py py-class docutils literal notranslate"><span class="pre">truncated_normal</span></code></a></li>
+</ul>
+</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,750 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Modules &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Full networks" href="numpy_ml.neural_nets.models.html" />
+    <link rel="prev" title="Wrappers" href="numpy_ml.neural_nets.wrappers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.activations.html">Activations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.losses.html">Loss functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html">Optimizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html">Wrappers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bidirectionallstm"><code class="docutils literal notranslate"><span class="pre">BidirectionalLSTM</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiheadedattentionmodule"><code class="docutils literal notranslate"><span class="pre">MultiHeadedAttentionModule</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipconnectionconvmodule"><code class="docutils literal notranslate"><span class="pre">SkipConnectionConvModule</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#skipconnectionidentitymodule"><code class="docutils literal notranslate"><span class="pre">SkipConnectionIdentityModule</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wavenetresidualmodule"><code class="docutils literal notranslate"><span class="pre">WavenetResidualModule</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.models.html">Full networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.neural_nets.html">Neural networks</a><ul>
+      <li>Previous: <a href="numpy_ml.neural_nets.wrappers.html" title="previous chapter">Wrappers</a></li>
+      <li>Next: <a href="numpy_ml.neural_nets.models.html" title="next chapter">Full networks</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="bidirectionallstm">
+<h2><code class="docutils literal notranslate"><span class="pre">BidirectionalLSTM</span></code><a class="headerlink" href="#bidirectionallstm" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.modules.</code><code class="descname">BidirectionalLSTM</code><span class="sig-paren">(</span><em>n_out</em>, <em>act_fn=None</em>, <em>gate_fn=None</em>, <em>merge_mode='concat'</em>, <em>init='glorot_uniform'</em>, <em>optimizer=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L987-L1189"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single bidirectional long short-term memory (LSTM) layer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_out</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The dimension of a single hidden state / output on a given timestep</li>
+<li><strong>act_fn</strong> (<a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activation</span></a> object or None) – The activation function for computing <code class="docutils literal notranslate"><span class="pre">A[t]</span></code>. If not specified,
+use <a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Tanh" title="numpy_ml.neural_nets.activations.Tanh"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tanh</span></code></a> by default.</li>
+<li><strong>gate_fn</strong> (<a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activation</span></a> object or None) – The gate function for computing the update, forget, and output
+gates. If not specified, use
+<a class="reference internal" href="numpy_ml.neural_nets.activations.html#numpy_ml.neural_nets.activations.Sigmoid" title="numpy_ml.neural_nets.activations.Sigmoid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sigmoid</span></code></a> by default.</li>
+<li><strong>merge_mode</strong> (<em>{&quot;sum&quot;</em><em>, </em><em>&quot;multiply&quot;</em><em>, </em><em>&quot;concat&quot;</em><em>, </em><em>&quot;average&quot;}</em>) – Mode by which outputs of the forward and backward LSTMs will be
+combined. Default is ‘concat’.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object or None) – The optimization strategy to use when performing gradient updates
+within the <cite>update</cite> method.  If None, use the
+<a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with
+default parameters. Default is None.</li>
+<li><strong>init</strong> (<em>{'glorot_normal'</em><em>, </em><em>'glorot_uniform'</em><em>, </em><em>'he_normal'</em><em>, </em><em>'he_uniform'}</em>) – The weight initialization strategy. Default is ‘glorot_uniform’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1049-L1090"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a forward pass across all timesteps in the input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_in, n_t)</cite>) – Input consisting of <cite>n_ex</cite> examples each of dimensionality <cite>n_in</cite>
+and extending for <cite>n_t</cite> timesteps.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_out, n_t)</cite>) – The value of the hidden state for each of the <cite>n_ex</cite> examples
+across each of the <cite>n_t</cite> timesteps.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>dLdA</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1092-L1140"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a backward pass across all timesteps in the input.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dLdA</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_out, n_t)</cite>) – The gradient of the loss with respect to the layer output for each
+of the <cite>n_ex</cite> examples across all <cite>n_t</cite> timesteps.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>dLdX</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_in, n_t)</cite>) – The value of the hidden state for each of the <cite>n_ex</cite> examples
+across each of the <cite>n_t</cite> timesteps.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1142-L1151"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of intermediate values computed during the
+forward/backward passes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1153-L1161"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the accumulated module parameter gradients.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1163-L1171"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.BidirectionalLSTM.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1173-L1189"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.BidirectionalLSTM.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module hyperparameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="multiheadedattentionmodule">
+<h2><code class="docutils literal notranslate"><span class="pre">MultiHeadedAttentionModule</span></code><a class="headerlink" href="#multiheadedattentionmodule" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.modules.</code><code class="descname">MultiHeadedAttentionModule</code><span class="sig-paren">(</span><em>n_heads=8</em>, <em>dropout_p=0</em>, <em>init='glorot_uniform'</em>, <em>optimizer=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1192-L1427"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>A mutli-headed attention module.</p>
+<p class="rubric">Notes</p>
+<p>Multi-head attention allows a model to jointly attend to information from
+different representation subspaces at different positions. With a
+single head, this information would get averaged away when the
+attention weights are combined with the value</p>
+<div class="math notranslate nohighlight">
+\[\text{MultiHead}(\mathbf{Q}, \mathbf{K}, \mathbf{V})
+    = [\text{head}_1; ...; \text{head}_h] \mathbf{W}^{(O)}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\text{head}_i = \text{SDP_attention}(
+    \mathbf{Q W}_i^{(Q)}, \mathbf{K W}_i^{(K)}, \mathbf{V W}_i^{(V)})\]</div>
+<p>and the projection weights are parameter matrices:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{W}_i^{(Q)}  &amp;\in
+    \mathbb{R}^{(\text{kqv_dim} \ \times \ \text{latent_dim})} \\
+\mathbf{W}_i^{(K)}  &amp;\in
+    \mathbb{R}^{(\text{kqv_dim} \ \times \ \text{latent_dim})} \\
+\mathbf{W}_i^{(V)}  &amp;\in
+    \mathbb{R}^{(\text{kqv_dim} \ \times \ \text{latent_dim})} \\
+\mathbf{W}^{(O)}  &amp;\in
+    \mathbb{R}^{(\text{n_heads} \cdot \text{latent_dim} \ \times \ \text{kqv_dim})}\end{split}\]</div>
+<p>Importantly, the current module explicitly assumes that</p>
+<div class="math notranslate nohighlight">
+\[\text{kqv_dim} = \text{dim(query)} = \text{dim(keys)} = \text{dim(values)}\]</div>
+<p>and that</p>
+<div class="math notranslate nohighlight">
+\[\text{latent_dim} = \text{kqv_dim / n_heads}\]</div>
+<p><strong>[MH Attention Head h]</strong>:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>K --&gt; W_h^(K) ------\
+V --&gt; W_h^(V) ------- &gt; DP_Attention --&gt; head_h
+Q --&gt; W_h^(Q) ------/
+</pre></div>
+</div>
+<p>The full <strong>[MultiHeadedAttentionModule]</strong> then becomes</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>      -----------------
+K --&gt; | [Attn Head 1] | --&gt; head_1 --\
+V --&gt; | [Attn Head 2] | --&gt; head_2 --\
+Q --&gt; |      ...      |      ...       --&gt; Concat --&gt; W^(O) --&gt; MH_out
+      | [Attn Head Z] | --&gt; head_Z --/
+      -----------------
+</pre></div>
+</div>
+<p>Due to the reduced dimension of each head, the total computational cost
+is similar to that of a single attention head with full (i.e., kqv_dim)
+dimensionality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_heads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of simultaneous attention heads to use. Note that the
+larger <cite>n_heads</cite>, the smaller the dimensionality of any single
+head, since <code class="docutils literal notranslate"><span class="pre">latent_dim</span> <span class="pre">=</span> <span class="pre">kqv_dim</span> <span class="pre">/</span> <span class="pre">n_heads</span></code>. Default is 8.</li>
+<li><strong>dropout_p</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>)</em>) – The dropout propbability during training, applied to the output of
+the softmax in each dot-product attention head. If 0, no dropout is
+applied. Default is 0.</li>
+<li><strong>init</strong> (<em>{'glorot_normal'</em><em>, </em><em>'glorot_uniform'</em><em>, </em><em>'he_normal'</em><em>, </em><em>'he_uniform'}</em>) – The weight initialization strategy. Default is ‘glorot_uniform’.</li>
+<li><strong>optimizer</strong> (str, <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object, or None) – The optimization strategy to use when performing gradient updates
+within the <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method.  If None, use the
+<a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with default
+parameters. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>Q</em>, <em>K</em>, <em>V</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1313-L1341"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>dLdy</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1343-L1362"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.backward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1364-L1381"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of intermediate values computed during the
+forward/backward passes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1383-L1394"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the accumulated module parameter gradients.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1396-L1407"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L1409-L1427"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.MultiHeadedAttentionModule.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module hyperparameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="skipconnectionconvmodule">
+<h2><code class="docutils literal notranslate"><span class="pre">SkipConnectionConvModule</span></code><a class="headerlink" href="#skipconnectionconvmodule" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.modules.</code><code class="descname">SkipConnectionConvModule</code><span class="sig-paren">(</span><em>out_ch1</em>, <em>out_ch2</em>, <em>kernel_shape1</em>, <em>kernel_shape2</em>, <em>kernel_shape_skip</em>, <em>pad1=0</em>, <em>pad2=0</em>, <em>stride1=1</em>, <em>stride2=1</em>, <em>act_fn=None</em>, <em>epsilon=1e-05</em>, <em>momentum=0.9</em>, <em>stride_skip=1</em>, <em>optimizer=None</em>, <em>init='glorot_uniform'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L615-L984"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ResNet-like “convolution” shortcut module.</p>
+<p class="rubric">Notes</p>
+<p>In contrast to <a class="reference internal" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule" title="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">SkipConnectionIdentityModule</span></code></a>, the additional
+<cite>conv2d_skip</cite> and <cite>batchnorm_skip</cite> layers in the shortcut path allow
+adjusting the dimensions of <cite>X</cite> to match the output of the main set of
+convolutions.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X -&gt; Conv2D -&gt; Act_fn -&gt; BatchNorm2D -&gt; Conv2D -&gt; BatchNorm2D -&gt; + -&gt; Act_fn
+ \_____________________ Conv2D -&gt; Batchnorm2D __________________/
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>He et al. (2015). “Deep residual learning for image
+recognition.” <a class="reference external" href="https://arxiv.org/pdf/1512.03385.pdf">https://arxiv.org/pdf/1512.03385.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_ch1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of filters/kernels to compute in the first convolutional
+layer.</li>
+<li><strong>out_ch2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of filters/kernels to compute in the second
+convolutional layer.</li>
+<li><strong>kernel_shape1</strong> (<em>2-tuple</em>) – The dimension of a single 2D filter/kernel in the first
+convolutional layer.</li>
+<li><strong>kernel_shape2</strong> (<em>2-tuple</em>) – The dimension of a single 2D filter/kernel in the second
+convolutional layer.</li>
+<li><strong>kernel_shape_skip</strong> (<em>2-tuple</em>) – The dimension of a single 2D filter/kernel in the “skip”
+convolutional layer.</li>
+<li><strong>stride1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride/hop of the convolution kernels in the first
+convolutional layer. Default is 1.</li>
+<li><strong>stride2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride/hop of the convolution kernels in the second
+convolutional layer. Default is 1.</li>
+<li><strong>stride_skip</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride/hop of the convolution kernels in the “skip”
+convolutional layer. Default is 1.</li>
+<li><strong>pad1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a><em>, or </em><em>'same'</em>) – The number of rows/columns of 0’s to pad the input to the first
+convolutional layer with. Default is 0.</li>
+<li><strong>pad2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a><em>, or </em><em>'same'</em>) – The number of rows/columns of 0’s to pad the input to the second
+convolutional layer with. Default is 0.</li>
+<li><strong>act_fn</strong> (<a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activation</span></a> object or None) – The activation function for computing <code class="docutils literal notranslate"><span class="pre">Y[t]</span></code>. If None, use the
+identity <span class="math notranslate nohighlight">\(f(x) = x\)</span> by default. Default is None.</li>
+<li><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – A small smoothing constant to use during
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm2D" title="numpy_ml.neural_nets.layers.BatchNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2D</span></code></a> computation to
+avoid divide-by-zero errors. Default is 1e-5.</li>
+<li><strong>momentum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The momentum term for the running mean/running std calculations in
+the <a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm2D" title="numpy_ml.neural_nets.layers.BatchNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2D</span></code></a> layers.  The
+closer this is to 1, the less weight will be given to the mean/std
+of the current batch (i.e., higher smoothing). Default is 0.9.</li>
+<li><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The weight initialization strategy. Valid entries are
+{‘glorot_normal’, ‘glorot_uniform’, ‘he_normal’, ‘he_uniform’}.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object) – The optimization strategy to use when performing gradient updates
+within the <code class="xref py py-class docutils literal notranslate"><span class="pre">update</span></code> method.  If None, use the
+<a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with
+default parameters. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L802-L817"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L819-L860"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module hyperparameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L862-L886"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of intermediate values computed during the
+forward/backward passes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L888-L903"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the accumulated module parameter gradients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X</em>, <em>retain_derived=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L905-L946"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the layer output given input volume <cite>X</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_ch)</cite>) – The input volume consisting of <cite>n_ex</cite> examples, each with dimension
+(<cite>in_rows</cite>, <cite>in_cols</cite>, <cite>in_ch</cite>).</li>
+<li><strong>retain_derived</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to retain the variables calculated during the forward pass
+for use later during backprop. If False, this suggests the layer
+will not be expected to backprop through wrt. this input. Default
+is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, out_rows, out_cols, out_ch)</cite>) – The module output volume.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionConvModule.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>dLdY</em>, <em>retain_grads=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L948-L984"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionConvModule.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the gradient of the loss with respect to the module parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dLdy</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, out_rows, out_cols, out_ch)</cite>) – </li>
+<li><strong>list of arrays</strong> (<em>or</em>) – The gradient(s) of the loss with respect to the module output(s).</li>
+<li><strong>retain_grads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to include the intermediate parameter gradients computed
+during the backward pass in the final parameter update. Default is
+True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>dX</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_ch)</cite>) – The gradient of the loss with respect to the module input volume.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="skipconnectionidentitymodule">
+<h2><code class="docutils literal notranslate"><span class="pre">SkipConnectionIdentityModule</span></code><a class="headerlink" href="#skipconnectionidentitymodule" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.modules.</code><code class="descname">SkipConnectionIdentityModule</code><span class="sig-paren">(</span><em>out_ch</em>, <em>kernel_shape1</em>, <em>kernel_shape2</em>, <em>stride1=1</em>, <em>stride2=1</em>, <em>act_fn=None</em>, <em>epsilon=1e-05</em>, <em>momentum=0.9</em>, <em>optimizer=None</em>, <em>init='glorot_uniform'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L360-L612"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ResNet-like “identity” shortcut module.</p>
+<p class="rubric">Notes</p>
+<p>The identity module enforces <cite>same</cite> padding during each convolution to
+ensure module output has same dims as its input.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X -&gt; Conv2D -&gt; Act_fn -&gt; BatchNorm2D -&gt; Conv2D -&gt; BatchNorm2D -&gt; + -&gt; Act_fn
+ \______________________________________________________________/
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>He et al. (2015). “Deep residual learning for image
+recognition.” <a class="reference external" href="https://arxiv.org/pdf/1512.03385.pdf">https://arxiv.org/pdf/1512.03385.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>out_ch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of filters/kernels to compute in the first convolutional
+layer.</li>
+<li><strong>kernel_shape1</strong> (<em>2-tuple</em>) – The dimension of a single 2D filter/kernel in the first
+convolutional layer.</li>
+<li><strong>kernel_shape2</strong> (<em>2-tuple</em>) – The dimension of a single 2D filter/kernel in the second
+convolutional layer.</li>
+<li><strong>stride1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride/hop of the convolution kernels in the first
+convolutional layer. Default is 1.</li>
+<li><strong>stride2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The stride/hop of the convolution kernels in the second
+convolutional layer. Default is 1.</li>
+<li><strong>act_fn</strong> (<a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activation</span></a> object or None) – The activation function for computing Y[t]. If None, use the
+identity <span class="math notranslate nohighlight">\(f(x) = x\)</span> by default. Default is None.</li>
+<li><strong>epsilon</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – A small smoothing constant to use during
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm2D" title="numpy_ml.neural_nets.layers.BatchNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2D</span></code></a> computation to
+avoid divide-by-zero errors. Default is 1e-5.</li>
+<li><strong>momentum</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The momentum term for the running mean/running std calculations in
+the <a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.BatchNorm2D" title="numpy_ml.neural_nets.layers.BatchNorm2D"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchNorm2D</span></code></a> layers.  The
+closer this is to 1, the less weight will be given to the mean/std
+of the current batch (i.e., higher smoothing). Default is 0.9.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object or None) – The optimization strategy to use when performing gradient updates
+within the <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method.  If None, use the
+<a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with
+default parameters. Default is None.</li>
+<li><strong>init</strong> (<em>{'glorot_normal'</em><em>, </em><em>'glorot_uniform'</em><em>, </em><em>'he_normal'</em><em>, </em><em>'he_uniform'}</em>) – The weight initialization strategy. Default is ‘glorot_uniform’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L474-L485"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L487-L511"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module hyperparameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L513-L531"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of intermediate values computed during the
+forward/backward passes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L533-L544"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the accumulated module parameter gradients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X</em>, <em>retain_derived=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L546-L581"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the module output given input volume <cite>X</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n_ex, in_rows, in_cols, in_ch)) – The input volume consisting of <cite>n_ex</cite> examples, each with dimension
+(<cite>in_rows</cite>, <cite>in_cols</cite>, <cite>in_ch</cite>).</li>
+<li><strong>retain_derived</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to retain the variables calculated during the forward pass
+for use later during backprop. If False, this suggests the layer
+will not be expected to backprop through wrt. this input. Default
+is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n_ex, out_rows, out_cols, out_ch)) – The module output volume.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>dLdY</em>, <em>retain_grads=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L583-L612"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.SkipConnectionIdentityModule.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the gradient of the loss with respect to the layer parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>dLdy</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (<cite>n_ex, out_rows, out_cols, out_ch</cite>) or list of arrays) – The gradient(s) of the loss with respect to the module output(s).</li>
+<li><strong>retain_grads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to include the intermediate parameter gradients computed
+during the backward pass in the final parameter update. Default is
+True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>dX</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n_ex, in_rows, in_cols, in_ch)) – The gradient of the loss with respect to the module input volume.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="wavenetresidualmodule">
+<h2><code class="docutils literal notranslate"><span class="pre">WavenetResidualModule</span></code><a class="headerlink" href="#wavenetresidualmodule" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.modules.</code><code class="descname">WavenetResidualModule</code><span class="sig-paren">(</span><em>ch_residual</em>, <em>ch_dilation</em>, <em>dilation</em>, <em>kernel_width</em>, <em>optimizer=None</em>, <em>init='glorot_uniform'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L119-L357"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>A WaveNet-like residual block with causal dilated convolutions.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>*Skip path in* &gt;-------------------------------------------&gt; + ---&gt; *Skip path out*
+                  Causal      |--&gt; Tanh --|                  |
+*Main    |--&gt; Dilated Conv1D -|           * --&gt; 1x1 Conv1D --|
+ path &gt;--|                    |--&gt; Sigm --|                  |
+ in*     |-------------------------------------------------&gt; + ---&gt; *Main path out*
+                             *Residual path*
+</pre></div>
+</div>
+<p>On the final block, the output of the skip path is further processed to
+produce the network predictions.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>van den Oord et al. (2016). “Wavenet: a generative model for raw
+audio”. <a class="reference external" href="https://arxiv.org/pdf/1609.03499.pdf">https://arxiv.org/pdf/1609.03499.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>ch_residual</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of output channels for the 1x1
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv1D" title="numpy_ml.neural_nets.layers.Conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv1D</span></code></a> layer in the main path.</li>
+<li><strong>ch_dilation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of output channels for the causal dilated
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv1D" title="numpy_ml.neural_nets.layers.Conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv1D</span></code></a> layer in the main path.</li>
+<li><strong>dilation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The dilation rate for the causal dilated
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv1D" title="numpy_ml.neural_nets.layers.Conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv1D</span></code></a> layer in the main path.</li>
+<li><strong>kernel_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The width of the causal dilated
+<a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Conv1D" title="numpy_ml.neural_nets.layers.Conv1D"><code class="xref py py-class docutils literal notranslate"><span class="pre">Conv1D</span></code></a> kernel in the main
+path.</li>
+<li><strong>init</strong> (<em>{'glorot_normal'</em><em>, </em><em>'glorot_uniform'</em><em>, </em><em>'he_normal'</em><em>, </em><em>'he_uniform'}</em>) – The weight initialization strategy. Default is ‘glorot_uniform’.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object or None) – The optimization strategy to use when performing gradient updates
+within the <code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code> method.  If None, use the
+<a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with default
+parameters. Default is None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L215-L226"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L228-L253"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module hyperparameters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L255-L272"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of intermediate values computed during the
+forward/backward passes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L274-L285"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of the module parameter gradients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X_main</em>, <em>X_skip=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L287-L328"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the module output on a single minibatch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X_main</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_ch)</cite>) – The input volume consisting of <cite>n_ex</cite> examples, each with dimension
+(<cite>in_rows</cite>, <cite>in_cols</cite>, <cite>in_ch</cite>).</li>
+<li><strong>X_skip</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_ch)</cite>, or None) – The output of the preceding skip-connection if this is not the
+first module in the network.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>Y_main</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, out_rows, out_cols, out_ch)</cite>) – The output of the main pathway.</li>
+<li><strong>Y_skip</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, out_rows, out_cols, out_ch)</cite>) – The output of the skip-connection pathway.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.modules.WavenetResidualModule.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>dY_skip</em>, <em>dY_main=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/modules/modules.py#L330-L357"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.modules.WavenetResidualModule.backward" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

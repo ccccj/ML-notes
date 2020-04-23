@@ -1,0 +1,685 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Loss functions &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Optimizers" href="numpy_ml.neural_nets.optimizers.html" />
+    <link rel="prev" title="Activations" href="numpy_ml.neural_nets.activations.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.activations.html">Activations</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Loss functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crossentropy"><code class="docutils literal notranslate"><span class="pre">CrossEntropy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#squarederror"><code class="docutils literal notranslate"><span class="pre">SquaredError</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nceloss"><code class="docutils literal notranslate"><span class="pre">NCELoss</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vaeloss"><code class="docutils literal notranslate"><span class="pre">VAELoss</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wgan-gploss"><code class="docutils literal notranslate"><span class="pre">WGAN_GPLoss</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html">Optimizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html">Wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.models.html">Full networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.neural_nets.html">Neural networks</a><ul>
+      <li>Previous: <a href="numpy_ml.neural_nets.activations.html" title="previous chapter">Activations</a></li>
+      <li>Next: <a href="numpy_ml.neural_nets.optimizers.html" title="next chapter">Optimizers</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="loss-functions">
+<h1>Loss functions<a class="headerlink" href="#loss-functions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="crossentropy">
+<h2><code class="docutils literal notranslate"><span class="pre">CrossEntropy</span></code><a class="headerlink" href="#crossentropy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.losses.CrossEntropy">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.losses.</code><code class="descname">CrossEntropy</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L110-L222"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.CrossEntropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cross-entropy loss.</p>
+<p class="rubric">Notes</p>
+<p>For a one-hot target <strong>y</strong> and predicted class probabilities
+<span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>, the cross entropy is</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{y}, \hat{\mathbf{y}})
+    = \sum_i y_i \log \hat{y}_i\]</div>
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.CrossEntropy.loss">
+<em class="property">static </em><code class="descname">loss</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L132-L167"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.CrossEntropy.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the cross-entropy (log) loss.</p>
+<p class="rubric">Notes</p>
+<p>This method returns the sum (not the average!) of the losses for each
+sample.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Class labels (one-hot with <cite>m</cite> possible classes) for each of <cite>n</cite>
+examples.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Probabilities of each of <cite>m</cite> classes for the <cite>n</cite> examples in the
+batch.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>loss</strong> (<em>float</em>) – The sum of the cross-entropy across classes and examples.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.CrossEntropy.grad">
+<em class="property">static </em><code class="descname">grad</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L169-L222"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.CrossEntropy.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the gradient of the cross entropy loss with regard to the
+softmax input, <cite>z</cite>.</p>
+<p class="rubric">Notes</p>
+<p>The gradient for this method goes through both the cross-entropy loss
+AND the softmax non-linearity to return <span class="math notranslate nohighlight">\(\frac{\partial
+\mathcal{L}}{\partial \mathbf{z}}\)</span> (rather than <span class="math notranslate nohighlight">\(\frac{\partial
+\mathcal{L}}{\partial \text{softmax}(\mathbf{z})}\)</span>).</p>
+<p>In particular, let:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{z})
+    = \text{cross_entropy}(\text{softmax}(\mathbf{z})).\]</div>
+<p>The current method computes:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \mathcal{L}}{\partial \mathbf{z}}
+    &amp;= \text{softmax}(\mathbf{z}) - \mathbf{y} \\
+    &amp;=  \hat{\mathbf{y}} - \mathbf{y}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n, m)</cite>) – A one-hot encoding of the true class labels. Each row constitues a
+training example, and each column is a different class.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n, m)</cite>) – The network predictions for the probability of each of <cite>m</cite> class
+labels on each of <cite>n</cite> examples in a batch.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>grad</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – The gradient of the cross-entropy loss with respect to the <em>input</em>
+to the softmax function.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="squarederror">
+<h2><code class="docutils literal notranslate"><span class="pre">SquaredError</span></code><a class="headerlink" href="#squarederror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.losses.SquaredError">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.losses.</code><code class="descname">SquaredError</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L26-L107"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.SquaredError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A squared-error / <cite>L2</cite> loss.</p>
+<p class="rubric">Notes</p>
+<p>For real-valued target <strong>y</strong> and predictions <span class="math notranslate nohighlight">\(\hat{\mathbf{y}}\)</span>, the
+squared error is</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}(\mathbf{y}, \hat{\mathbf{y}})
+    = 0.5 ||\hat{\mathbf{y}} - \mathbf{y}||_2^2\]</div>
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.SquaredError.loss">
+<em class="property">static </em><code class="descname">loss</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L48-L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.SquaredError.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the squared error between <cite>y</cite> and <cite>y_pred</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Ground truth values for each of <cite>n</cite> examples</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Predictions for the <cite>n</cite> examples in the batch.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>loss</strong> (<em>float</em>) – The sum of the squared error across dimensions and examples.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.SquaredError.grad">
+<em class="property">static </em><code class="descname">grad</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em>, <em>z</em>, <em>act_fn</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L67-L107"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.SquaredError.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gradient of the squared error loss with respect to the pre-nonlinearity
+input, <cite>z</cite>.</p>
+<p class="rubric">Notes</p>
+<p>The current method computes the gradient <span class="math notranslate nohighlight">\(\frac{\partial
+\mathcal{L}}{\partial \mathbf{z}}\)</span>, where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathcal{L}(\mathbf{z})
+    &amp;=  \text{squared_error}(\mathbf{y}, g(\mathbf{z})) \\
+g(\mathbf{z})
+    &amp;=  \text{act_fn}(\mathbf{z})\end{split}\]</div>
+<p>The gradient with respect to <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> is then</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}}{\partial \mathbf{z}}
+    = (g(\mathbf{z}) - \mathbf{y}) \left(
+        \frac{\partial g}{\partial \mathbf{z}} \right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Ground truth values for each of <cite>n</cite> examples.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – Predictions for the <cite>n</cite> examples in the batch.</li>
+<li><strong>act_fn</strong> (<a class="reference internal" href="numpy_ml.neural_nets.activations.html"><span class="doc">Activation</span></a> object) – The activation function for the output layer of the network.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>grad</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n, m)) – The gradient of the squared error loss with respect to <cite>z</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="nceloss">
+<h2><code class="docutils literal notranslate"><span class="pre">NCELoss</span></code><a class="headerlink" href="#nceloss" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.losses.NCELoss">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.losses.</code><code class="descname">NCELoss</code><span class="sig-paren">(</span><em>n_classes</em>, <em>noise_sampler</em>, <em>num_negative_samples</em>, <em>optimizer=None</em>, <em>init='glorot_uniform'</em>, <em>subtract_log_label_prob=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L514-L924"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>A noise contrastive estimation (NCE) loss function.</p>
+<p class="rubric">Notes</p>
+<p>Noise contrastive estimation is a candidate sampling method often
+used to reduce the computational challenge of training a softmax
+layer on problems with a large number of output classes. It proceeds by
+training a logistic regression model to discriminate between samples
+from the true data distribution and samples from an artificial noise
+distribution.</p>
+<p>It can be shown that as the ratio of negative samples to data samples
+goes to infinity, the gradient of the NCE loss converges to the
+original softmax gradient.</p>
+<p>For input data <strong>X</strong>, target labels <cite>targets</cite>, loss parameters <strong>W</strong> and
+<strong>b</strong>, and noise samples <cite>noise</cite> sampled from the noise distribution <cite>Q</cite>,
+the NCE loss is</p>
+<div class="math notranslate nohighlight">
+\[\text{NCE}(X, targets) =
+    \text{cross_entropy}(\mathbf{y}_{targets}, \hat{\mathbf{y}}_{targets}) +
+    \text{cross_entropy}(\mathbf{y}_{noise}, \hat{\mathbf{y}}_{noise})\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat{\mathbf{y}}_{targets}
+    &amp;=  \sigma(\mathbf{W}[targets] \mathbf{X} + \mathbf{b}[targets] - \log Q(targets)) \\
+\hat{\mathbf{y}}_{noise}
+    &amp;=  \sigma(\mathbf{W}[noise] \mathbf{X} + \mathbf{b}[noise] - \log Q(noise))\end{split}\]</div>
+<p>In the above equations, <span class="math notranslate nohighlight">\(\sigma\)</span> is the logistic sigmoid
+function, and <span class="math notranslate nohighlight">\(Q(x)\)</span> corresponds to the probability of the values
+in <cite>x</cite> under <cite>Q</cite>.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Gutmann, M. &amp; Hyvarinen, A. (2010). Noise-contrastive
+estimation: A new estimation principle for unnormalized statistical
+models. <em>AISTATS, 13</em>: 297-304.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td>Minh, A. &amp; Teh, Y. W. (2012). A fast and simple algorithm for
+training neural probabilistic language models. <em>ICML, 29</em>: 1751-1758.</td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The total number of output classes in the model.</li>
+<li><strong>noise_sampler</strong> (<a class="reference internal" href="numpy_ml.utils.data_structures.html#numpy_ml.utils.data_structures.DiscreteSampler" title="numpy_ml.utils.data_structures.DiscreteSampler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiscreteSampler</span></code></a> instance) – The negative sampler. Defines a distribution over all classes in
+the dataset.</li>
+<li><strong>num_negative_samples</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of negative samples to draw for each target / batch of
+targets.</li>
+<li><strong>init</strong> (<em>{'glorot_normal'</em><em>, </em><em>'glorot_uniform'</em><em>, </em><em>'he_normal'</em><em>, </em><em>'he_uniform'}</em>) – The weight initialization strategy. Default is ‘glorot_uniform’.</li>
+<li><strong>optimizer</strong> (str, <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object, or None) – The optimization strategy to use when performing gradient updates
+within the <a class="reference internal" href="#numpy_ml.neural_nets.losses.NCELoss.update" title="numpy_ml.neural_nets.losses.NCELoss.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method.  If None, use the <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a> optimizer with
+default parameters. Default is None.</li>
+<li><strong>subtract_log_label_prob</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to subtract the log of the probability of each label under
+the noise distribution from its respective logit. Set to False for
+negative sampling, True for NCE. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LSTM.gradients" title="numpy_ml.neural_nets.layers.LSTM.gradients"><strong>gradients</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The accumulated parameter gradients.</li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LSTM.parameters" title="numpy_ml.neural_nets.layers.LSTM.parameters"><strong>parameters</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The loss parameter values.</li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.Add.hyperparameters" title="numpy_ml.neural_nets.layers.Add.hyperparameters"><strong>hyperparameters</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – The loss hyperparameter values.</li>
+<li><a class="reference internal" href="numpy_ml.neural_nets.layers.html#numpy_ml.neural_nets.layers.LSTM.derived_variables" title="numpy_ml.neural_nets.layers.LSTM.derived_variables"><strong>derived_variables</strong></a> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Useful intermediate values computed during the loss computation.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L647-L661"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.freeze">
+<code class="descname">freeze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L674-L679"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.freeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Freeze the loss parameters at their current values so they can no
+longer be updated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.unfreeze">
+<code class="descname">unfreeze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L681-L683"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.unfreeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unfreeze the layer parameters so they can be updated.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.flush_gradients">
+<code class="descname">flush_gradients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L685-L693"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.flush_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Erase all the layer’s derived variables and gradients.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>cur_loss=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L695-L705"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the loss parameters using the accrued gradients and optimizer.
+Flush all gradients once the update is complete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.loss">
+<code class="descname">loss</code><span class="sig-paren">(</span><em>X</em>, <em>target</em>, <em>neg_samples=None</em>, <em>retain_derived=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L707-L758"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the NCE loss for a collection of inputs and associated targets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_c, n_in)</cite>) – Layer input. A minibatch of <cite>n_ex</cite> examples, where each example is
+an <cite>n_c</cite> by <cite>n_in</cite> matrix (e.g., the matrix of <cite>n_c</cite> context
+embeddings, each of dimensionality <cite>n_in</cite>, for a CBOW model).</li>
+<li><strong>target</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex,)</cite>) – Integer indices of the target class(es) for each example in the
+minibatch (e.g., the target word id for an example in a CBOW model).</li>
+<li><strong>neg_samples</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (<cite>num_negative_samples</cite>,) or None) – An optional array of negative samples to use during the loss
+calculation. These will be used instead of samples draw from
+<code class="docutils literal notranslate"><span class="pre">self.noise_sampler</span></code>. Default is None.</li>
+<li><strong>retain_derived</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to retain the variables calculated during the forward pass
+for use later during backprop. If False, this suggests the layer
+will not be expected to backprop through with regard to this input.
+Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>loss</strong> (<em>float</em>) – The NCE loss summed over the minibatch and samples.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (<cite>n_ex</cite>, <cite>n_c</cite>)) – The network predictions for the conditional probability of each
+target given each context: entry (<cite>i</cite>, <cite>j</cite>) gives the predicted
+probability of target <cite>i</cite> under context vector <cite>j</cite>.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.NCELoss.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>retain_grads=True</em>, <em>update_params=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L818-L856"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.NCELoss.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the gradient of the NCE loss with regard to the inputs,
+weights, and biases.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>retain_grads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to include the intermediate parameter gradients computed
+during the backward pass in the final parameter update. Default is
+True.</li>
+<li><strong>update_params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to perform a single step of gradient descent on the layer
+weights and bias using the calculated gradients. If <cite>retain_grads</cite>
+is False, this option is ignored and the parameter gradients are
+not updated. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>dLdX</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (<cite>n_ex</cite>, <cite>n_in</cite>) or list of arrays) – The gradient of the loss with regard to the layer input(s) <cite>X</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vaeloss">
+<h2><code class="docutils literal notranslate"><span class="pre">VAELoss</span></code><a class="headerlink" href="#vaeloss" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.losses.VAELoss">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.losses.</code><code class="descname">VAELoss</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L225-L328"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.VAELoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>The variational lower bound for a variational autoencoder with Bernoulli
+units.</p>
+<p class="rubric">Notes</p>
+<p>The VLB to the sum of the binary cross entropy between the true input and
+the predicted output (the “reconstruction loss”) and the KL divergence
+between the learned variational distribution <span class="math notranslate nohighlight">\(q\)</span> and the prior,
+<span class="math notranslate nohighlight">\(p\)</span>, assumed to be a unit Gaussian.</p>
+<div class="math notranslate nohighlight">
+\[\text{VAELoss} =
+    \text{cross_entropy}(\mathbf{y}, \hat{\mathbf{y}})
+        + \mathbb{KL}[q \ || \ p]\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbb{KL}[q \ || \ p]\)</span> is the Kullback-Leibler
+divergence between the distributions <span class="math notranslate nohighlight">\(q\)</span> and <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Kingma, D. P. &amp; Welling, M. (2014). “Auto-encoding variational Bayes”.
+<em>arXiv preprint arXiv:1312.6114.</em> <a class="reference external" href="https://arxiv.org/pdf/1312.6114.pdf">https://arxiv.org/pdf/1312.6114.pdf</a></td></tr>
+</tbody>
+</table>
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.VAELoss.loss">
+<em class="property">static </em><code class="descname">loss</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em>, <em>t_mean</em>, <em>t_log_var</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L260-L293"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.VAELoss.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Variational lower bound for a Bernoulli VAE.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, N)</cite>) – The original images.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, N)</cite>) – The VAE reconstruction of the images.</li>
+<li><strong>t_mean</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – Mean of the variational distribution <span class="math notranslate nohighlight">\(q(t \mid x)\)</span>.</li>
+<li><strong>t_log_var</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – Log of the variance vector of the variational distribution
+<span class="math notranslate nohighlight">\(q(t \mid x)\)</span>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>loss</strong> (<em>float</em>) – The VLB, averaged across the batch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="numpy_ml.neural_nets.losses.VAELoss.grad">
+<em class="property">static </em><code class="descname">grad</code><span class="sig-paren">(</span><em>y</em>, <em>y_pred</em>, <em>t_mean</em>, <em>t_log_var</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L295-L328"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.VAELoss.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the gradient of the VLB with regard to the network parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, N)</cite>) – The original images.</li>
+<li><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, N)</cite>) – The VAE reconstruction of the images.</li>
+<li><strong>t_mean</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – Mean of the variational distribution <span class="math notranslate nohighlight">\(q(t | x)\)</span>.</li>
+<li><strong>t_log_var</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – Log of the variance vector of the variational distribution
+<span class="math notranslate nohighlight">\(q(t | x)\)</span>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>dY_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, N)</cite>) – The gradient of the VLB with regard to <cite>y_pred</cite>.</li>
+<li><strong>dLogVar</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – The gradient of the VLB with regard to <cite>t_log_var</cite>.</li>
+<li><strong>dMean</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, T)</cite>) – The gradient of the VLB with regard to <cite>t_mean</cite>.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="wgan-gploss">
+<h2><code class="docutils literal notranslate"><span class="pre">WGAN_GPLoss</span></code><a class="headerlink" href="#wgan-gploss" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.losses.WGAN_GPLoss">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.losses.</code><code class="descname">WGAN_GPLoss</code><span class="sig-paren">(</span><em>lambda_=10</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L331-L511"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.WGAN_GPLoss" title="Permalink to this definition">¶</a></dt>
+<dd><p>The loss function for a Wasserstein GAN <a class="footnote-reference" href="#id6" id="id4">[*]</a> <a class="footnote-reference" href="#id7" id="id5">[†]</a> with gradient penalty.</p>
+<p class="rubric">Notes</p>
+<p>Assuming an optimal critic, minimizing this quantity wrt. the generator
+parameters corresponds to minimizing the Wasserstein-1 (earth-mover)
+distance between the fake and real data distributions.</p>
+<p>The formula for the WGAN-GP critic loss is</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{WGANLoss}
+    &amp;=  \sum_{x \in X_{real}} p(x) D(x)
+        - \sum_{x' \in X_{fake}} p(x') D(x') \\
+\text{WGANLossGP}
+    &amp;=  \text{WGANLoss} + \lambda
+        (||\nabla_{X_{interp}} D(X_{interp})||_2 - 1)^2\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}X_{fake}  &amp;=   \text{Generator}(\mathbf{z}) \\
+X_{interp}   &amp;=   \alpha X_{real} + (1 - \alpha) X_{fake} \\\end{split}\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{z}  &amp;\sim  \mathcal{N}(0, \mathbb{1}) \\
+\alpha  &amp;\sim  \text{Uniform}(0, 1)\end{split}\]</div>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[*]</a></td><td>Gulrajani, I., Ahmed, F., Arjovsky, M., Dumoulin, V., &amp;
+Courville, A. (2017) “Improved training of Wasserstein GANs”
+<em>Advances in Neural Information Processing Systems, 31</em>: 5769-5779.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[†]</a></td><td>Goodfellow, I. J, Abadie, P. A., Mirza, M., Xu, B., Farley, D.
+W., Ozair, S., Courville, A., &amp; Bengio, Y. (2014) “Generative
+adversarial nets” <em>Advances in Neural Information Processing
+Systems, 27</em>: 2672-2680.</td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lambda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The gradient penalty coefficient. Default is 10.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.WGAN_GPLoss.loss">
+<code class="descname">loss</code><span class="sig-paren">(</span><em>Y_fake</em>, <em>module</em>, <em>Y_real=None</em>, <em>gradInterp=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L415-L455"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.WGAN_GPLoss.loss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the generator and critic loss using the WGAN-GP value
+function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Y_fake</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape (n_ex,)) – The output of the critic for <cite>X_fake</cite>.</li>
+<li><strong>module</strong> (<em>{'C'</em><em>, </em><em>'G'}</em>) – Whether to calculate the loss for the critic (‘C’) or the generator
+(‘G’). If calculating loss for the critic, <cite>Y_real</cite> and
+<cite>gradInterp</cite> must not be None.</li>
+<li><strong>Y_real</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex,)</cite> or None) – The output of the critic for <cite>X_real</cite>. Default is None.</li>
+<li><strong>gradInterp</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_feats)</cite> or None) – The gradient of the critic output for <cite>X_interp</cite> wrt. <cite>X_interp</cite>.
+Default is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>loss</strong> (<em>float</em>) – Depending on the setting for <cite>module</cite>, either the critic or
+generator loss, averaged over examples in the minibatch.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.losses.WGAN_GPLoss.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>Y_fake</em>, <em>module</em>, <em>Y_real=None</em>, <em>gradInterp=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/losses/losses.py#L457-L511"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.losses.WGAN_GPLoss.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the gradient of the generator or critic loss with regard to
+its inputs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>Y_fake</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex,)</cite>) – The output of the critic for <cite>X_fake</cite>.</li>
+<li><strong>module</strong> (<em>{'C'</em><em>, </em><em>'G'}</em>) – Whether to calculate the gradient for the critic loss (‘C’) or the
+generator loss (‘G’). If calculating grads for the critic, <cite>Y_real</cite>
+and <cite>gradInterp</cite> must not be None.</li>
+<li><strong>Y_real</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex,)</cite> or None) – The output of the critic for <cite>X_real</cite>. Default is None.</li>
+<li><strong>gradInterp</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_feats)</cite> or None) – The gradient of the critic output on <cite>X_interp</cite> wrt. <cite>X_interp</cite>.
+Default is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>grads</strong> (<em>tuple</em>) – If <cite>module</cite> == ‘C’, returns a 3-tuple containing the gradient of
+the critic loss with regard to (<cite>Y_fake</cite>, <cite>Y_real</cite>, <cite>gradInterp</cite>).
+If <cite>module</cite> == ‘G’, returns the gradient of the generator with
+regard to <cite>Y_fake</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.losses.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

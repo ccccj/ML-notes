@@ -1,0 +1,210 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KernelRegression &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tree-based models" href="numpy_ml.trees.html" />
+    <link rel="prev" title="GPRegression" href="numpy_ml.nonparametric.gp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.nonparametric.knn.html"><code class="docutils literal notranslate"><span class="pre">KNN</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.nonparametric.gp.html"><code class="docutils literal notranslate"><span class="pre">GPRegression</span></code></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">KernelRegression</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.nonparametric.html">Nonparametric models</a><ul>
+      <li>Previous: <a href="numpy_ml.nonparametric.gp.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">GPRegression</span></code></a></li>
+      <li>Next: <a href="numpy_ml.trees.html" title="next chapter">Tree-based models</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="kernelregression">
+<h1><code class="docutils literal notranslate"><span class="pre">KernelRegression</span></code><a class="headerlink" href="#kernelregression" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.nonparametric.KernelRegression">
+<em class="property">class </em><code class="descclassname">numpy_ml.nonparametric.</code><code class="descname">KernelRegression</code><span class="sig-paren">(</span><em>kernel=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/nonparametric/kernel_regression.py#L4-L70"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.nonparametric.KernelRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Nadaraya-Watson kernel regression model.</p>
+<p class="rubric">Notes</p>
+<p>The Nadaraya-Watson regression model is</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \sum_i w_i(x) y_i\]</div>
+<p>where the sample weighting functions, <span class="math notranslate nohighlight">\(w_i\)</span>, are simply</p>
+<div class="math notranslate nohighlight">
+\[w_i(x) = \frac{k(x, x_i)}{\sum_j k(x, x_j)}\]</div>
+<p>with <cite>k</cite> being the kernel function.</p>
+<p>Observe that <cite>k</cite>-nearest neighbors
+(<a class="reference internal" href="numpy_ml.nonparametric.knn.html#numpy_ml.nonparametric.KNN" title="numpy_ml.nonparametric.KNN"><code class="xref py py-class docutils literal notranslate"><span class="pre">KNN</span></code></a>) regression is a special case of
+kernel regression where the <cite>k</cite> closest observations have a weight
+<cite>1/k</cite>, and all others have weight 0.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>kernel</strong> (str, <a class="reference internal" href="numpy_ml.utils.kernels.html"><span class="doc">Kernel</span></a> object, or dict) – The kernel to use. If None, default to
+<a class="reference internal" href="numpy_ml.utils.kernels.html#numpy_ml.utils.kernels.LinearKernel" title="numpy_ml.utils.kernels.LinearKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearKernel</span></code></a>. Default is None.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.nonparametric.KernelRegression.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/nonparametric/kernel_regression.py#L40-L51"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.nonparametric.KernelRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the regression model to the data and targets in <cite>X</cite> and <cite>y</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – An array of N examples to generate predictions on</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, …)</cite>) – Predicted targets for the <cite>N</cite> rows in <cite>X</cite></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.nonparametric.KernelRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/nonparametric/kernel_regression.py#L53-L70"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.nonparametric.KernelRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate predictions for the targets associated with the rows in <cite>X</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N’, M’)</cite>) – An array of <cite>N’</cite> examples to generate predictions on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N’, …)</cite>) – Predicted targets for the <cite>N’</cite> rows in <cite>X</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.nonparametric.kernel_regression.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

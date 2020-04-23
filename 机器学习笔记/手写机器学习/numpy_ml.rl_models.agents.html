@@ -1,0 +1,756 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Agents &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Training" href="numpy_ml.rl_models.trainer.html" />
+    <link rel="prev" title="Reinforcement learning" href="numpy_ml.rl_models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crossentropyagent"><code class="docutils literal notranslate"><span class="pre">CrossEntropyAgent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dynaagent"><code class="docutils literal notranslate"><span class="pre">DynaAgent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#montecarloagent"><code class="docutils literal notranslate"><span class="pre">MonteCarloAgent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temporaldifferenceagent"><code class="docutils literal notranslate"><span class="pre">TemporalDifferenceAgent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.trainer.html">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.rl_models.html">Reinforcement learning</a><ul>
+      <li>Previous: <a href="numpy_ml.rl_models.html" title="previous chapter">Reinforcement learning</a></li>
+      <li>Next: <a href="numpy_ml.rl_models.trainer.html" title="next chapter">Training</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="agents">
+<h1>Agents<a class="headerlink" href="#agents" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="crossentropyagent">
+<h2><code class="docutils literal notranslate"><span class="pre">CrossEntropyAgent</span></code><a class="headerlink" href="#crossentropyagent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models.agents.</code><code class="descname">CrossEntropyAgent</code><span class="sig-paren">(</span><em>env</em>, <em>n_samples_per_episode=500</em>, <em>retain_prcnt=0.2</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L60-L338"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A cross-entropy method agent.</p>
+<p class="rubric">Notes</p>
+<p>The cross-entropy method agent only operates on <code class="docutils literal notranslate"><span class="pre">envs</span></code> with discrete
+action spaces.</p>
+<p>On each episode the agent generates <cite>n_theta_samples</cite> of the parameters
+(<span class="math notranslate nohighlight">\(\theta\)</span>) for its behavior policy. The <cite>i</cite>’th sample at
+timestep <cite>t</cite> is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\theta_i  &amp;=  \{\mathbf{W}_i^{(t)}, \mathbf{b}_i^{(t)} \} \\
+\theta_i  &amp;\sim  \mathcal{N}(\mu^{(t)}, \Sigma^{(t)})\end{split}\]</div>
+<p>Weights (<span class="math notranslate nohighlight">\(\mathbf{W}_i\)</span>) and bias (<span class="math notranslate nohighlight">\(\mathbf{b}_i\)</span>) are the
+parameters of the softmax policy:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{z}_i  &amp;=  \text{obs} \cdot \mathbf{W}_i + \mathbf{b}_i \\
+p(a_i^{(t + 1)})  &amp;=  \frac{e^{\mathbf{z}_i}}{\sum_j e^{z_{ij}}} \\
+a^{(t + 1)}  &amp;=  \arg \max_j p(a_j^{(t+1)})\end{split}\]</div>
+<p>At the end of each episode, the agent takes the top <cite>retain_prcnt</cite>
+highest scoring <span class="math notranslate nohighlight">\(\theta\)</span> samples and combines them to generate
+the mean and variance of the distribution of <span class="math notranslate nohighlight">\(\theta\)</span> for the
+next episode:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mu^{(t+1)}  &amp;=  \text{avg}(\texttt{best_thetas}^{(t)}) \\
+\Sigma^{(t+1)}  &amp;=  \text{var}(\texttt{best_thetas}^{(t)})\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>env</strong> (<code class="xref py py-meth docutils literal notranslate"><span class="pre">gym.wrappers()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">gym.envs()</span></code> instance) – The environment to run the agent on.</li>
+<li><strong>n_samples_per_episode</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of theta samples to evaluate on each episode. Default is 500.</li>
+<li><strong>retain_prcnt</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The percentage of <cite>n_samples_per_episode</cite> to use when calculating
+the parameter update at the end of the episode. Default is 0.2.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L145-L186"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate actions according to a softmax policy.</p>
+<p class="rubric">Notes</p>
+<p>The softmax policy assumes that the pmf over actions in state <span class="math notranslate nohighlight">\(x_t\)</span> is
+given by:</p>
+<div class="math notranslate nohighlight">
+\[\pi(a | x^{(t)}) = \text{softmax}(
+    \text{obs}^{(t)} \cdot \mathbf{W}_i^{(t)} + \mathbf{b}_i^{(t)} )\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{W}\)</span> is a learned weight matrix, <cite>obs</cite> is the observation
+at timestep <cite>t</cite>, and <strong>b</strong> is a learned bias vector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obs</strong> (int or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – An observation from the environment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>action</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – An action sampled from the distribution over actions defined by the
+softmax policy.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent.run_episode">
+<code class="descname">run_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L188-L226"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent.run_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the agent on a single episode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode, averaged over the theta samples.</li>
+<li><strong>steps</strong> (<em>float</em>) – The total number of steps taken on the episode, averaged over the
+theta samples.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L278-L298"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\Sigma\)</span> according to the rewards accrued on
+the current episode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>avg_reward</strong> (<em>float</em>) – The average reward earned by the best <cite>retain_prcnt</cite> theta samples
+on the current episode.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent.greedy_policy">
+<code class="descname">greedy_policy</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L310-L338"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent.greedy_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a greedy policy using the current agent parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run the episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during execution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>total_reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>n_steps</strong> (<em>float</em>) – The total number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.CrossEntropyAgent.flush_history">
+<code class="descname">flush_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L38-L41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.CrossEntropyAgent.flush_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the episode history</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dynaagent">
+<h2><code class="docutils literal notranslate"><span class="pre">DynaAgent</span></code><a class="headerlink" href="#dynaagent" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.rl_models.agents.DynaAgent">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models.agents.</code><code class="descname">DynaAgent</code><span class="sig-paren">(</span><em>env, lr=0.4, epsilon=0.1, n_tilings=8, obs_max=None, obs_min=None, q_plus=False, grid_dims=[8, 8], explore_weight=0.05, temporal_discount=0.9, n_simulated_actions=50</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1213-L1776"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Dyna-<cite>Q</cite> / Dyna-<cite>Q+</cite> agent with full TD(0) <cite>Q</cite>-learning updates via
+prioritized-sweeping.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>env</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to run the agent on</li>
+<li><strong>lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Learning rate for the <cite>Q</cite> function updates. Default is 0.05.</li>
+<li><strong>epsilon</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The epsilon value in the epsilon-soft policy. Larger values
+encourage greater exploration during training. Default is 0.1.</li>
+<li><strong>n_tilings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of overlapping tilings to use if the env observation
+space is continuous. Unused if observation space is discrete.
+Default is 8.</li>
+<li><strong>obs_max</strong> (float or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> or None) – The value to treat as the max value of the observation space when
+calculating the grid widths if the observation space is continuous.
+If None, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">env.observation_space.high()</span></code>. Unused if observation
+space is discrete. Default is None.</li>
+<li><strong>obs_min</strong> (float or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> or None) – The value to treat as the min value of the observation space when
+calculating grid widths if the observation space is continuous. If
+None, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">env.observation_space.low()</span></code>. Unused if observation
+space is discrete. Default is None.</li>
+<li><strong>grid_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – The number of rows and columns in each tiling grid if the env
+observation space is continuous. Unused if observation space is
+discrete. Default is <cite>[8, 8]</cite>.</li>
+<li><strong>q_plus</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to add incentives for visiting states that the agent hasn’t
+encountered recently. Default is False.</li>
+<li><strong>explore_weight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Amount to incentivize exploring states that the agent hasn’t
+recently visited. Only used if <cite>q_plus</cite> is True. Default is 0.05.</li>
+<li><strong>temporal_discount</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The discount factor used for downweighting future rewards. Smaller
+values result in greater discounting of future rewards. Default is
+0.9.</li>
+<li><strong>n_simulated_actions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – THe number of simulated actions to perform for each “real” action.
+Default is 50.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1340-L1357"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the behavior policy–an <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policy used to
+generate actions during training.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obs</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> as returned by <code class="docutils literal notranslate"><span class="pre">env.step(action)</span></code>) – An observation from the environment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>action</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – An action sampled from the distribution over actions defined by the
+epsilon-soft policy.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1460-L1478"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the priority queue with the most recent (state, action) pair and
+perform random-sample one-step tabular Q-planning.</p>
+<p class="rubric">Notes</p>
+<p>The planning algorithm uses a priority queue to retrieve the
+state-action pairs from the agent’s history which will result in the
+largest change to its <cite>Q</cite>-value if backed up. When the first pair in
+the queue is backed up, the effect on each of its predecessor pairs is
+computed. If the predecessor’s priority is greater than a small
+threshold the pair is added to the queue and the process is repeated
+until either the queue is empty or we exceed <cite>n_simulated_actions</cite>
+updates.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.run_episode">
+<code class="descname">run_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1612-L1632"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.run_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the agent on a single episode without performing <cite>Q</cite>-function
+backups.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>steps</strong> (<em>float</em>) – The number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.train_episode">
+<code class="descname">train_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1634-L1655"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.train_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the agent on a single episode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>steps</strong> (<em>float</em>) – The number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.greedy_policy">
+<code class="descname">greedy_policy</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1729-L1776"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.greedy_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a deterministic greedy policy using the current agent
+parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run the episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during execution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>total_reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>n_steps</strong> (<em>float</em>) – The total number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.DynaAgent.flush_history">
+<code class="descname">flush_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L38-L41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.DynaAgent.flush_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the episode history</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="montecarloagent">
+<h2><code class="docutils literal notranslate"><span class="pre">MonteCarloAgent</span></code><a class="headerlink" href="#montecarloagent" title="Permalink to this headline">¶</a></h2>
+<p>Monte Carlo methods are ways of solving RL problems based on averaging
+sample returns for each state-action pair. Parameters are updated only at
+the completion of an episode.</p>
+<p>In on-policy learning, the agent maintains a single policy that it updates
+over the course of training. In order to ensure the policy converges to a
+(near-) optimal policy, the agent must maintain that the policy assigns
+non-zero probability to ALL state-action pairs during training to ensure
+continual exploration.</p>
+<ul class="simple">
+<li>Thus on-policy learning is a compromise–it learns action values not for the optimal policy, but for a <em>near</em>-optimal policy that still explores.</li>
+</ul>
+<p>In off-policy learning, the agent maintains two separate policies:</p>
+<ol class="arabic simple">
+<li><strong>Target policy</strong>: The policy that is learned during training and that will eventually become the optimal policy.</li>
+<li><strong>Behavior policy</strong>: A policy that is more exploratory and is used to generate behavior during training.</li>
+</ol>
+<p>Off-policy methods are often of greater variance and are slower to
+converge. On the other hand, off-policy methods are more powerful and
+general than on-policy methods.</p>
+<dl class="class">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models.agents.</code><code class="descname">MonteCarloAgent</code><span class="sig-paren">(</span><em>env</em>, <em>off_policy=False</em>, <em>temporal_discount=0.9</em>, <em>epsilon=0.1</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L341-L738"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Monte-Carlo learning agent trained using either first-visit Monte
+Carlo updates (on-policy) or incremental weighted importance sampling
+(off-policy).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>env</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to run the agent on.</li>
+<li><strong>off_policy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to use a behavior policy separate from the target policy
+during training. If False, use the same epsilon-soft policy for
+both behavior and target policies. Default is False.</li>
+<li><strong>temporal_discount</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The discount factor used for downweighting future rewards. Smaller
+values result in greater discounting of future rewards. Default is
+0.9.</li>
+<li><strong>epsilon</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The epsilon value in the epsilon-soft policy. Larger values
+encourage greater exploration during training. Default is 0.1.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L590-L607"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the behavior policy–an <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policy used to
+generate actions during training.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obs</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> as returned by <code class="docutils literal notranslate"><span class="pre">env.step(action)</span></code>) – An observation from the environment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>action</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – An action sampled from the distribution over actions defined by the
+epsilon-soft policy.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent.run_episode">
+<code class="descname">run_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L609-L631"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent.run_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the agent on a single episode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>steps</strong> (<em>float</em>) – The number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L680-L691"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the parameters of the model following the completion of an
+episode. Flush the episode history after the update is complete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent.greedy_policy">
+<code class="descname">greedy_policy</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L693-L738"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent.greedy_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a greedy policy using the current agent parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run the episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during execution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>total_reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>n_steps</strong> (<em>float</em>) – The total number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.MonteCarloAgent.flush_history">
+<code class="descname">flush_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L38-L41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.MonteCarloAgent.flush_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the episode history</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="temporaldifferenceagent">
+<h2><code class="docutils literal notranslate"><span class="pre">TemporalDifferenceAgent</span></code><a class="headerlink" href="#temporaldifferenceagent" title="Permalink to this headline">¶</a></h2>
+<p>Temporal difference methods are examples of bootstrapping in that they update
+their estimate for the value of state <cite>s</cite> on the basis of a previous estimate.</p>
+<p>Advantages of TD algorithms:</p>
+<ol class="arabic simple">
+<li>They do not require a model of the environment, its reward, or its next-state probability distributions.</li>
+<li>They are implemented in an online, fully incremental fashion. This allows them to be used with infinite-horizons / when episodes take prohibitively long to finish.</li>
+<li>TD algorithms learn from each transition regardless of what subsequent actions are taken.</li>
+<li>In practice, TD methods have usually been found to converge faster than constant-<span class="math notranslate nohighlight">\(\alpha\)</span> Monte Carlo methods on stochastic tasks.</li>
+</ol>
+<dl class="class">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models.agents.</code><code class="descname">TemporalDifferenceAgent</code><span class="sig-paren">(</span><em>env, lr=0.4, epsilon=0.1, n_tilings=8, obs_max=None, obs_min=None, grid_dims=[8, 8], off_policy=False, temporal_discount=0.99</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L741-L1210"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A temporal difference learning agent with expected SARSA (on-policy) or
+TD(0) <cite>Q</cite>-learning (off-policy) updates.</p>
+<p class="rubric">Notes</p>
+<p>The agent requires a discrete action space, but will try to discretize
+the observation space via tiling if it is continuous.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>env</strong> (<em>gym.wrappers</em><em> or </em><em>gym.envs instance</em>) – The environment to run the agent on.</li>
+<li><strong>lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Learning rate for the Q function updates. Default is 0.05.</li>
+<li><strong>epsilon</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The epsilon value in the epsilon-soft policy. Larger values
+encourage greater exploration during training. Default is 0.1.</li>
+<li><strong>n_tilings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of overlapping tilings to use if the <code class="docutils literal notranslate"><span class="pre">env</span></code> observation
+space is continuous. Unused if observation space is discrete.
+Default is 8.</li>
+<li><strong>obs_max</strong> (float or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – The value to treat as the max value of the observation space when
+calculating the grid widths if the observation space is continuous.
+If None, use <code class="docutils literal notranslate"><span class="pre">env.observation_space.high</span></code>. Unused if observation
+space is discrete. Default is None.</li>
+<li><strong>obs_min</strong> (float or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – The value to treat as the min value of the observation space when
+calculating grid widths if the observation space is continuous. If
+None, use <code class="docutils literal notranslate"><span class="pre">env.observation_space.low</span></code>. Unused if observation
+space is discrete. Default is None.</li>
+<li><strong>grid_dims</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – The number of rows and columns in each tiling grid if the env
+observation space is continuous. Unused if observation space is
+discrete. Default is [8, 8].</li>
+<li><strong>off_policy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to use a behavior policy separate from the target policy
+during training. If False, use the same epsilon-soft policy for
+both behavior and target policies. Default is False.</li>
+<li><strong>temporal_discount</strong> (<em>float between</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The discount factor used for downweighting future rewards. Smaller
+values result in greater discounting of future rewards. Default is
+0.9.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.run_episode">
+<code class="descname">run_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L856-L876"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.run_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the agent on a single episode without updating the priority queue
+or performing backups.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode, averaged over the theta samples.</li>
+<li><strong>steps</strong> (<em>float</em>) – The total number of steps taken on the episode, averaged over the
+theta samples.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.train_episode">
+<code class="descname">train_episode</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L878-L901"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.train_episode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the agent on a single episode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run an episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during training.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>steps</strong> (<em>float</em>) – The number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1131-L1142"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the parameters of the model online after each new state-action.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.act">
+<code class="descname">act</code><span class="sig-paren">(</span><em>obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1144-L1161"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the behavior policy–an <span class="math notranslate nohighlight">\(\epsilon\)</span>-soft policy used to
+generate actions during training.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obs</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> as returned by <code class="docutils literal notranslate"><span class="pre">env.step(action)</span></code>) – An observation from the environment.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>action</strong> (int, float, or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>) – An action sampled from the distribution over actions defined by the
+epsilon-soft policy.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.greedy_policy">
+<code class="descname">greedy_policy</code><span class="sig-paren">(</span><em>max_steps</em>, <em>render=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L1163-L1210"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.greedy_policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute a deterministic greedy policy using the current agent
+parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>max_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of steps to run the episode.</li>
+<li><strong>render</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to render the episode during execution.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>total_reward</strong> (<em>float</em>) – The total reward on the episode.</li>
+<li><strong>n_steps</strong> (<em>float</em>) – The total number of steps taken on the episode.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models.agents.TemporalDifferenceAgent.flush_history">
+<code class="descname">flush_history</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/agents.py#L38-L41"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models.agents.TemporalDifferenceAgent.flush_history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the episode history</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.rl_models.agents.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

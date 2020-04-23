@@ -1,0 +1,434 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>General &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Digital signal processing" href="numpy_ml.preprocessing.dsp.html" />
+    <link rel="prev" title="Preprocessing" href="numpy_ml.preprocessing.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">General</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#featurehasher"><code class="docutils literal notranslate"><span class="pre">FeatureHasher</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onehotencoder"><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-numpy_ml.preprocessing.general"><code class="docutils literal notranslate"><span class="pre">minibatch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.dsp.html">Digital signal processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.nlp.html">Natural language processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.preprocessing.html">Preprocessing</a><ul>
+      <li>Previous: <a href="numpy_ml.preprocessing.html" title="previous chapter">Preprocessing</a></li>
+      <li>Next: <a href="numpy_ml.preprocessing.dsp.html" title="next chapter">Digital signal processing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="general">
+<h1>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="featurehasher">
+<h2><code class="docutils literal notranslate"><span class="pre">FeatureHasher</span></code><a class="headerlink" href="#featurehasher" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.general.FeatureHasher">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.general.</code><code class="descname">FeatureHasher</code><span class="sig-paren">(</span><em>n_dim=256</em>, <em>sparse=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L275-L388"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.FeatureHasher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a collection of features to a fixed-dimensional matrix using
+the hashing trick.</p>
+<p class="rubric">Notes</p>
+<p>Uses the md5 hash.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The dimensionality of each example in the output feature matrix.
+Small numbers of features are likely to cause hash collisions, but
+large numbers will cause larger overall parameter dimensions for
+any (linear) learning agent. Default is 256.</li>
+<li><strong>sparse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the resulting feature matrix should be a sparse
+<code class="xref py py-class docutils literal notranslate"><span class="pre">csr_matrix</span></code> or dense
+<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a>. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.FeatureHasher.encode">
+<code class="descname">encode</code><span class="sig-paren">(</span><em>examples</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L301-L346"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.FeatureHasher.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Encode a collection of multi-featured examples into a
+<cite>n_dim</cite>-dimensional feature matrix via feature hashing.</p>
+<p class="rubric">Notes</p>
+<p>Feature hashing works by applying a hash function to the features of an
+example and using the hash values as column indices in the resulting
+feature matrix. The entries at each hashed feature column correspond to
+the values for that example and feature. For example, given the
+following two input examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
+<span class="go">    {&quot;furry&quot;: 1, &quot;quadruped&quot;: 1, &quot;domesticated&quot;: 1},</span>
+<span class="go">    {&quot;nocturnal&quot;: 1, &quot;quadruped&quot;: 1},</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<p>and a hypothetical hash function <cite>H</cite> mapping strings to [0, 127], we have:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">feature_mat</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ex1_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">H</span><span class="p">(</span><span class="s2">&quot;furry&quot;</span><span class="p">),</span> <span class="n">H</span><span class="p">(</span><span class="s2">&quot;quadruped&quot;</span><span class="p">),</span> <span class="n">H</span><span class="p">(</span><span class="s2">&quot;domesticated&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ex2_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">H</span><span class="p">(</span><span class="s2">&quot;nocturnal&quot;</span><span class="p">),</span> <span class="n">H</span><span class="p">(</span><span class="s2">&quot;quadruped&quot;</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat_mat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">ex1_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat_mat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">ex2_cols</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>To better handle hash collisions, it is common to multiply the feature
+value by the sign of the digest for the corresponding feature name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>examples</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em> or </em><em>list of dicts</em>) – A collection of <cite>N</cite> examples, each represented as a dict where keys
+correspond to the feature name and values correspond to the feature
+value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>table</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">csr_matrix</span></code> of shape <cite>(N, n_dim)</cite>) – The encoded feature matrix</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="onehotencoder">
+<h2><code class="docutils literal notranslate"><span class="pre">OneHotEncoder</span></code><a class="headerlink" href="#onehotencoder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.general.OneHotEncoder">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.general.</code><code class="descname">OneHotEncoder</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L54-L138"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.OneHotEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert between category labels and their one-hot vector
+representations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>categories</strong> (list of length <cite>C</cite>) – List of the unique category labels for the items to encode.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.OneHotEncoder.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>categories</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L72-L84"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.OneHotEncoder.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create mappings between columns and category labels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>categories</strong> (list of length <cite>C</cite>) – List of the unique category labels for the items to encode.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.OneHotEncoder.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>labels</em>, <em>categories=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L86-L117"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.OneHotEncoder.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of labels into a one-hot encoding.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>labels</strong> (list of length <cite>N</cite>) – A list of category labels.</li>
+<li><strong>categories</strong> (list of length <cite>C</cite>) – List of the unique category labels for the items to encode. Default
+is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>Y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – The one-hot encoded labels. Each row corresponds to an example,
+with a single 1 in the column corresponding to the respective
+label.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.OneHotEncoder.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>Y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L119-L138"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.OneHotEncoder.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a one-hot encoding back into the corresponding labels</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – One-hot encoded labels. Each row corresponds to an example, with a
+single 1 in the column associated with the label for that example</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>labels</strong> (list of length <cite>N</cite>) – The list of category labels corresponding to the nonzero columns in
+<cite>Y</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="standardizer">
+<h2><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code><a class="headerlink" href="#standardizer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.general.Standardizer">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.general.</code><code class="descname">Standardizer</code><span class="sig-paren">(</span><em>with_mean=True</em>, <em>with_std=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L141-L272"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Feature-wise standardization for vector inputs.</p>
+<p class="rubric">Notes</p>
+<p>Due to the sensitivity of empirical mean and standard deviation
+calculations to extreme values, <cite>Standardizer</cite> cannot guarantee
+balanced feature scales in the presence of outliers. In particular,
+note that because outliers for each feature can have different
+magnitudes, the spread of the transformed data on each feature can be
+very different.</p>
+<p>Similar to sklearn, <cite>Standardizer</cite> uses a biased estimator for the
+standard deviation: <code class="docutils literal notranslate"><span class="pre">numpy.std(x,</span> <span class="pre">ddof=0)</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>with_mean</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to scale samples to have 0 mean during transformation.
+Default is True.</li>
+<li><strong>with_std</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to scale samples to have unit variance during
+transformation. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.general.Standardizer.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L171-L174"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.general.Standardizer.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L176-L182"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer.parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.Standardizer.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L187-L214"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store the feature-wise mean and standard deviation across the samples
+in <cite>X</cite> for future scaling.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – An array of N samples, each with dimensionality <cite>C</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.Standardizer.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L216-L242"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Standardize features by removing the mean and scaling to unit variance.</p>
+<p>For a sample <cite>x</cite>, the standardized score is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[z = (x - u) / s\]</div>
+<p>where <cite>u</cite> is the mean of the training samples or zero if <cite>with_mean</cite> is
+False, and <cite>s</cite> is the standard deviation of the training samples or 1
+if <cite>with_std</cite> is False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – An array of N samples, each with dimensionality <cite>C</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>Z</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – The feature-wise standardized version of <cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.general.Standardizer.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>Z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L244-L272"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.Standardizer.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a collection of standardized features back into the original
+feature space.</p>
+<p>For a standardized sample <cite>z</cite>, the unstandardized score is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[x = z s + u\]</div>
+<p>where <cite>u</cite> is the mean of the training samples or zero if <cite>with_mean</cite> is
+False, and <cite>s</cite> is the standard deviation of the training samples or 1
+if <cite>with_std</cite> is False.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>Z</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – An array of <cite>N</cite> standardized samples, each with dimensionality <cite>C</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, C)</cite>) – The unstandardixed samples from <cite>Z</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-numpy_ml.preprocessing.general">
+<span id="minibatch"></span><h2><code class="docutils literal notranslate"><span class="pre">minibatch</span></code><a class="headerlink" href="#module-numpy_ml.preprocessing.general" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.general.minibatch">
+<code class="descclassname">numpy_ml.preprocessing.general.</code><code class="descname">minibatch</code><span class="sig-paren">(</span><em>X</em>, <em>batchsize=256</em>, <em>shuffle=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/general.py#L16-L51"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.general.minibatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the minibatch indices for a training dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, *)</cite>) – The dataset to divide into minibatches. Assumes the first dimension
+represents the number of training examples.</li>
+<li><strong>batchsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The desired size of each minibatch. Note, however, that if <code class="docutils literal notranslate"><span class="pre">X.shape[0]</span> <span class="pre">%</span>
+<span class="pre">batchsize</span> <span class="pre">&gt;</span> <span class="pre">0</span></code> then the final batch will contain fewer than batchsize
+entries. Default is 256.</li>
+<li><strong>shuffle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to shuffle the entries in the dataset before dividing into
+minibatches. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>mb_generator</strong> (<em>generator</em>) – A generator which yields the indices into <cite>X</cite> for each batch.</li>
+<li><strong>n_batches</strong> (<em>int</em>) – The number of batches.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.preprocessing.general.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

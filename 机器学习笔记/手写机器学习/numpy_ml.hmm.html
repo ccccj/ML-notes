@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Hidden Markov models &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MultinomialHMM" href="numpy_ml.hmm.MultinomialHMM.html" />
+    <link rel="prev" title="Welcome to numpy-ml" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Hidden Markov models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.hmm.MultinomialHMM.html"><code class="docutils literal notranslate"><span class="pre">MultinomialHMM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to numpy-ml</a></li>
+      <li>Next: <a href="numpy_ml.hmm.MultinomialHMM.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">MultinomialHMM</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="hidden-markov-models">
+<h1>Hidden Markov models<a class="headerlink" href="#hidden-markov-models" title="Permalink to this headline">¶</a></h1>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Hidden_Markov_model">hidden Markov model</a> (HMM) is a generative model for sequences of observations.</p>
+<div class="figure align-center" id="id2">
+<a class="reference internal image-reference" href="_images/hmm_model.png"><img alt="_images/hmm_model.png" src="_images/hmm_model.png" style="width: 333.0px; height: 333.0px;" /></a>
+<p class="caption"><span class="caption-text">Graphical model for an HMM with <span class="math notranslate nohighlight">\(T=4\)</span> timesteps.</span></p>
+</div>
+<p>An HMM assumes:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The observations, <cite>O</cite>, are generated by a process whose states,
+<span class="math notranslate nohighlight">\(S\)</span>, are <em>hidden</em> from the observer.</li>
+<li>Each hidden state is a discrete random variable.</li>
+<li>The hidden state at time <cite>t</cite> is independent of all hidden states before
+time <span class="math notranslate nohighlight">\(t - 1\)</span>.</li>
+<li>The observation <span class="math notranslate nohighlight">\(O_t\)</span> is independent of all previous states and
+observations given the current hidden state, <span class="math notranslate nohighlight">\(S_t\)</span>.</li>
+</ol>
+</div></blockquote>
+<p>The parameters of an HMM model are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><span class="math notranslate nohighlight">\(\pi\)</span>, the prior specifying <span class="math notranslate nohighlight">\(P(S_1)\)</span>.</li>
+<li><span class="math notranslate nohighlight">\(\theta\)</span>, the <span class="math notranslate nohighlight">\(K \times K\)</span> transition matrix specifying
+<span class="math notranslate nohighlight">\(P(S_t \mid S_{t-1})\)</span>.</li>
+<li><span class="math notranslate nohighlight">\(\phi\)</span>, the output model defining <span class="math notranslate nohighlight">\(P(Y_t \mid S_t)\)</span>. If the
+observations are discrete, this is a <span class="math notranslate nohighlight">\(K \times L\)</span> emission matrix,
+where <cite>L</cite> is the number of unique observation symbols.</li>
+</ul>
+</div></blockquote>
+<p>The HMM joint distribution of a sequence of states and observations is:</p>
+<div class="math notranslate nohighlight">
+\[P(S_{1:T}, O_{1:T}) = P(S_1) P(O_1 \mid S_1) \prod_{t=2}^T P(S_t \mid S_{t-1})P(O_t \mid S_t)\]</div>
+<p>where <span class="math notranslate nohighlight">\(X_{1:T}\)</span> is shorthand for <span class="math notranslate nohighlight">\(X_1, \ldots, X_T\)</span>.</p>
+<p>As with other latent-variable models, we use the <a class="reference external" href="https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm">expectation-maximization
+(EM) algorithm</a> to learn the model parameters.  The HMM-optimized version of
+the EM algorithm is known as the <a class="reference external" href="https://en.wikipedia.org/wiki/Forward%E2%80%93backward_algorithm">forward-backward</a> / <a class="reference external" href="https://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm">Baum-Welch algorithm</a>.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.hmm.MultinomialHMM.html#numpy_ml.hmm.MultinomialHMM" title="numpy_ml.hmm.MultinomialHMM"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultinomialHMM</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Ghahramani, Z. (2001). “An Intro to HMMs and Bayesian networks”.
+<em>International Journal of Pattern Recognition and AI, 15(1)</em>: 9-42.</td></tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.hmm.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

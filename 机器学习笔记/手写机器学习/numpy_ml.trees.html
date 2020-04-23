@@ -1,0 +1,295 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Tree-based models &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DecisionTree" href="numpy_ml.trees.dt.html" />
+    <link rel="prev" title="KernelRegression" href="numpy_ml.nonparametric.kernel_regression.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tree-based models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.trees.dt.html"><code class="docutils literal notranslate"><span class="pre">DecisionTree</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.trees.rf.html"><code class="docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.trees.gbdt.html"><code class="docutils literal notranslate"><span class="pre">GradientBoostedDecisionTree</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="numpy_ml.nonparametric.kernel_regression.html" title="previous chapter"><code class="docutils literal notranslate"><span class="pre">KernelRegression</span></code></a></li>
+      <li>Next: <a href="numpy_ml.trees.dt.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">DecisionTree</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="tree-based-models">
+<h1>Tree-based models<a class="headerlink" href="#tree-based-models" title="Permalink to this headline">¶</a></h1>
+<h2>Decision Trees</h2><p><a class="reference external" href="https://en.wikipedia.org/wiki/Decision_tree_learning">Decision trees</a> <a class="footnote-reference" href="#id2" id="id1">[1]</a> are popular nonparametric models that iteratively split a
+training dataset into smaller, more homogenous subsets. Each node in the tree
+is associated with a decision rule, which dictates how to divide the data the
+node inherits from its parent among each of its children. Each leaf node is
+associated with at least one data point from the original training set.</p>
+<div class="figure align-center" id="id17">
+<a class="reference internal image-reference" href="_images/decision_tree.png"><img alt="_images/decision_tree.png" src="_images/decision_tree.png" style="width: 95%;" /></a>
+<p class="caption"><span class="caption-text">A binary decision tree trained on the dataset <span class="math notranslate nohighlight">\(X = \{ \mathbf{x}_1,
+\ldots, \mathbf{x}_{10} \}\)</span>. Each example in the dataset is a 5-dimensional
+vector of real-valued features labeled <span class="math notranslate nohighlight">\(x_1, \ldots, x_5\)</span>. Unshaded
+circles correspond to internal decision nodes, while shaded circles
+correspond to leaf nodes. Each leaf node is associated with a subset of the
+examples in <cite>X</cite>, selected based on the decision rules along the path from
+root to leaf.</span></p>
+</div>
+<p>At test time, new examples travel from the tree root to one of the leaves,
+their path through the tree determined by the decision rules at each of the
+nodes it visits. When a test example arrives at a leaf node, the targets for
+the training examples at that leaf node are used to compute the model’s
+prediction.</p>
+<p>Training decision trees corresponds to learning the set of decision rules to
+partition the training data. This learning process proceeds greedily by
+selecting the decision rule at each node that results in the greatest reduction
+in an inhomogeneity or “impurity” metric, <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>. One popular
+metric is the <strong>information entropy</strong>:</p>
+<div class="math notranslate nohighlight">
+\[-\sum_j P_n(\omega_j) \log P_n(\omega_j)\]</div>
+<p>where <span class="math notranslate nohighlight">\(P_n(\omega_j)\)</span> is the fraction of data points at split <cite>n</cite> that are
+associated with category <span class="math notranslate nohighlight">\(\omega_j\)</span>. Another useful metric is the <strong>Gini
+impurity</strong>:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i \neq j} P_n(\omega_i) P_n(\omega_j) = 1 - \sum_{j} P_n(\omega_j)^2\]</div>
+<p>For a binary tree (where each node has only two children), the reduction in
+impurity after a particular split is</p>
+<div class="math notranslate nohighlight">
+\[\Delta \mathcal{L} = \mathcal{L}(\text{Parent}) -
+    P_{left} \mathcal{L}(\text{Left child}) -
+        (1 - P_{left})\mathcal{L}(\text{Right child})\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{L}(x)\)</span> is the impurity of the dataset at node <cite>x</cite>,
+and <span class="math notranslate nohighlight">\(P_{left}\)</span>/<span class="math notranslate nohighlight">\(P_{right}\)</span> are the proportion of examples at the
+current node that are partitioned into the left / right children, respectively,
+by the proposed split.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.trees.dt.html#numpy_ml.trees.DecisionTree" title="numpy_ml.trees.DecisionTree"><code class="xref py py-class docutils literal notranslate"><span class="pre">DecisionTree</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Breiman, L., Friedman, J. H., Olshen, R. A., and Stone, C. J. (1984).
+Classification and regression trees. Monterey, CA: Wadsworth &amp; Brooks/Cole
+Advanced Books &amp; Software.</td></tr>
+</tbody>
+</table>
+<h2>Bootstrap Aggregating</h2><p><a class="reference external" href="https://en.wikipedia.org/wiki/Bootstrap_aggregating">Bootstrap aggregating</a> (bagging) methods <a class="footnote-reference" href="#id7" id="id3">[2]</a> are an <a class="reference external" href="https://en.wikipedia.org/wiki/Ensemble_learning">ensembling approach</a> that
+proceeds by creating <cite>n</cite> bootstrapped samples of a training dataset by sampling
+from it with replacement. A separate learner is fit on each of the <cite>n</cite>
+bootstrapped datasets, with the final bootstrap aggregated model prediction
+corresponding to the average (or majority vote, for classifiers) across each
+of the <cite>n</cite> learners’ predictions for a given datapoint.</p>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Random_forest">random forest</a> model <a class="footnote-reference" href="#id8" id="id4">[3]</a> <a class="footnote-reference" href="#id9" id="id5">[4]</a> is a canonical example of bootstrap
+aggregating. For this approach, each of the <cite>n</cite> learners is a different
+decision tree. In addition to training each decision tree on a different
+bootstrapped dataset, random forests employ a <a class="reference external" href="https://en.wikipedia.org/wiki/Random_subspace_method">random subspace</a> approach <a class="footnote-reference" href="#id10" id="id6">[5]</a>:
+each decision tree is trained on a subsample (without replacement) of the full
+collection of dataset features.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.trees.rf.html#numpy_ml.trees.RandomForest" title="numpy_ml.trees.RandomForest"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomForest</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id7" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>Breiman, L. (1994). “Bagging predictors”. <em>Technical Report 421.
+Statistics Department, UC Berkeley</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[3]</a></td><td>Ho, T. K. (1995). “Random decision forests”. <em>Proceedings of the Third
+International Conference on Document Analysis and Recognition, 1</em>: 278-282.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id9" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[4]</a></td><td>Breiman, L. (2001). “Random forests”. <em>Machine Learning. 45(1)</em>: 5-32.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id10" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[5]</a></td><td>Ho, T. K. (1998). “The random subspace method for constructing decision
+forests”. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence.
+20(8)</em>: 832-844.</td></tr>
+</tbody>
+</table>
+<h2>Gradient Boosting</h2><p><a class="reference external" href="https://en.wikipedia.org/wiki/Gradient_boosting">Gradient boosting</a> <a class="footnote-reference" href="#id14" id="id11">[6]</a> <a class="footnote-reference" href="#id15" id="id12">[7]</a> <a class="footnote-reference" href="#id16" id="id13">[8]</a> is another popular <a class="reference external" href="https://en.wikipedia.org/wiki/Ensemble_learning">ensembling technique</a>
+that proceeds by iteratively fitting a sequence of <cite>m</cite> weak learners such that:</p>
+<div class="math notranslate nohighlight">
+\[f_m(X) = b(X) + \eta w_1 g_1 + \ldots + \eta w_m g_m\]</div>
+<p>where <cite>b</cite> is a fixed initial estimate for the targets, <span class="math notranslate nohighlight">\(\eta\)</span> is
+a learning rate parameter, and <span class="math notranslate nohighlight">\(w_{i}\)</span> and <span class="math notranslate nohighlight">\(g_{i}\)</span>
+denote the weights and predictions for <cite>i</cite> th learner.</p>
+<p>At each training iteration a new weak learner is fit to predict the negative
+gradient of the loss with respect to the previous prediction,
+<span class="math notranslate nohighlight">\(\nabla_{f_{i-1}} \mathcal{L}(y, \ f_{i-1}(X))\)</span>.  We then use the
+element-wise product of the predictions of this weak learner, <span class="math notranslate nohighlight">\(g_i\)</span>, with
+a weight, <span class="math notranslate nohighlight">\(w_i\)</span>, computed via, e.g., <a class="reference external" href="https://en.wikipedia.org/wiki/Line_search">line-search</a> on the objective
+<span class="math notranslate nohighlight">\(w_i = \arg \min_{w} \sum_{j=1}^n \mathcal{L}(y_j, f_{i-1}(x_j) + w g_i)\)</span>
+, to adjust the predictions of the model from the previous iteration,
+<span class="math notranslate nohighlight">\(f_{i-1}(X)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[f_i(X) := f_{i-1}(X) + w_i g_i\]</div>
+<p>The current module implements gradient boosting using decision trees as the
+weak learners.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.trees.gbdt.html#numpy_ml.trees.GradientBoostedDecisionTree" title="numpy_ml.trees.GradientBoostedDecisionTree"><code class="xref py py-class docutils literal notranslate"><span class="pre">GradientBoostedDecisionTree</span></code></a></li>
+</ul>
+<p><strong>References</strong></p>
+<table class="docutils footnote" frame="void" id="id14" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id11">[6]</a></td><td>Breiman, L. (1997). “Arcing the edge”. <em>Technical Report 486.
+Statistics Department, UC Berkeley</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id15" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id12">[7]</a></td><td>Friedman, J. H. (1999). “Greedy function approximation: A gradient
+boosting machine”. <em>IMS 1999 Reitz Lecture</em>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id16" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id13">[8]</a></td><td>Mason, L., Baxter, J., Bartlett, P. L., Frean, M. (1999). “Boosting
+algorithms as gradient descent” <em>Advances in Neural Information Processing
+Systems, 12</em>: 512–518.</td></tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.trees.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

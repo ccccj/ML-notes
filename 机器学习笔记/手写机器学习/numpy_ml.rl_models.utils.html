@@ -1,0 +1,428 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Utilities &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Nonparametric models" href="numpy_ml.nonparametric.html" />
+    <link rel="prev" title="Training" href="numpy_ml.rl_models.trainer.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.rl_models.trainer.html">Training</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.rl_models.html">Reinforcement learning</a><ul>
+      <li>Previous: <a href="numpy_ml.rl_models.trainer.html" title="previous chapter">Training</a></li>
+      <li>Next: <a href="numpy_ml.nonparametric.html" title="next chapter">Nonparametric models</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-numpy_ml.rl_models._utils">
+<span id="utilities"></span><h1>Utilities<a class="headerlink" href="#module-numpy_ml.rl_models._utils" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.rl_models._utils.EnvModel">
+<em class="property">class </em><code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">EnvModel</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L11-L103"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.EnvModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple tabular environment model that maintains the counts of each
+reward-outcome pair given the state and action that preceded them. The
+model can be queried with</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M</span> <span class="o">=</span> <span class="n">EnvModel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="p">[(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="p">[(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">,</span> <span class="n">reward</span><span class="p">,</span> <span class="n">next_state</span><span class="p">)]</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="o">.</span><span class="n">state_action_pairs</span><span class="p">()</span>
+<span class="go">[(state, action)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M</span><span class="o">.</span><span class="n">outcome_probs</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+<span class="go">[(next_state, 1)]</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="numpy_ml.rl_models._utils.EnvModel.state_action_pairs">
+<code class="descname">state_action_pairs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L45-L49"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.EnvModel.state_action_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all (state, action) pairs in the environment model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models._utils.EnvModel.reward_outcome_pairs">
+<code class="descname">reward_outcome_pairs</code><span class="sig-paren">(</span><em>s</em>, <em>a</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L51-L56"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.EnvModel.reward_outcome_pairs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all (reward, next_state) pairs associated with taking action <cite>a</cite>
+in state <cite>s</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models._utils.EnvModel.outcome_probs">
+<code class="descname">outcome_probs</code><span class="sig-paren">(</span><em>s</em>, <em>a</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L58-L80"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.EnvModel.outcome_probs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the probability under the environment model of each outcome
+state after taking action <cite>a</cite> in state <cite>s</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>s</strong> (int as returned by <code class="docutils literal notranslate"><span class="pre">self._obs2num</span></code>) – The id for the state/observation.</li>
+<li><strong>a</strong> (int as returned by <code class="docutils literal notranslate"><span class="pre">self._action2num</span></code>) – The id for the action taken from state <cite>s</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>outcome_probs</strong> (<em>list of (state, prob) tuples</em>) – A list of each possible outcome and its associated probability
+under the model.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.rl_models._utils.EnvModel.state_action_pairs_leading_to_outcome">
+<code class="descname">state_action_pairs_leading_to_outcome</code><span class="sig-paren">(</span><em>outcome</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L82-L103"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.EnvModel.state_action_pairs_leading_to_outcome" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all (state, action) pairs that have a nonzero probability of
+producing <cite>outcome</cite> under the current model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>outcome</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The outcome state.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>pairs</strong> (<em>list of (state, action) tuples</em>) – A list of all (state, action) pairs with a nonzero probability of
+producing <cite>outcome</cite> under the model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.tile_state_space">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">tile_state_space</code><span class="sig-paren">(</span><em>env</em>, <em>env_stats</em>, <em>n_tilings</em>, <em>obs_max=None</em>, <em>obs_min=None</em>, <em>state_action=False</em>, <em>grid_size=(4</em>, <em>4)</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L106-L179"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.tile_state_space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a function to encode the continous observations generated by <cite>env</cite>
+in terms of a collection of <cite>n_tilings</cite> overlapping tilings (each with
+dimension <cite>grid_size</cite>) of the state space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers.time_limit.TimeLimit</span></code> instance) – An openAI environment.</li>
+<li><strong>n_tilings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of overlapping tilings to use. Should be a power of 2. This
+determines the dimension of the discretized tile-encoded state vector.</li>
+<li><strong>obs_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><em>np.ndarray</em>) – The value to treat as the max value of the observation space when
+calculating the grid widths. If None, use
+<code class="docutils literal notranslate"><span class="pre">env.observation_space.high</span></code>. Default is None.</li>
+<li><strong>obs_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><em>np.ndarray</em>) – The value to treat as the min value of the observation space when
+calculating the grid widths. If None, use
+<code class="docutils literal notranslate"><span class="pre">env.observation_space.low</span></code>. Default is None.</li>
+<li><strong>state_action</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to use tile coding to encode state-action values (True) or just
+state values (False). Default is False.</li>
+<li><strong>grid_size</strong> (<em>list of length 2</em>) – A list of ints representing the coarseness of the tilings. E.g., a
+<cite>grid_size</cite> of [4, 4] would mean each tiling consisted of a 4x4 tile
+grid. Default is [4, 4].</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>encode_obs_as_tile</strong> (<em>function</em>) – A function which takes as input continous observation vector and
+returns a set of the indices of the active tiles in the tile coded
+observation space.</li>
+<li><strong>n_states</strong> (<em>int</em>) – An integer reflecting the total number of unique states possible under
+this tile coding regimen.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.get_gym_environs">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">get_gym_environs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L182-L184"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.get_gym_environs" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all valid OpenAI <code class="docutils literal notranslate"><span class="pre">gym</span></code> environment ids.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.get_gym_stats">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">get_gym_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L187-L214"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.get_gym_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a pandas DataFrame of the environment IDs.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.is_tuple">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">is_tuple</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L217-L240"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.is_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the action and observation spaces for <cite>env</cite> are instances of
+<code class="docutils literal notranslate"><span class="pre">gym.spaces.Tuple</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.spaces.Dict</span></code>.</p>
+<p class="rubric">Notes</p>
+<p>A tuple space is a tuple of <em>several</em> (possibly multidimensional)
+action/observation spaces. For our purposes, a tuple space is necessarily
+multidimensional.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>tuple_action</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s action space is an instance of <code class="docutils literal notranslate"><span class="pre">gym.spaces.Tuple</span></code>
+or <code class="docutils literal notranslate"><span class="pre">gym.spaces.Dict</span></code>.</li>
+<li><strong>tuple_obs</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s observation space is an instance of
+<code class="docutils literal notranslate"><span class="pre">gym.spaces.Tuple</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.spaces.Dict</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.is_multidimensional">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">is_multidimensional</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L243-L280"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.is_multidimensional" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the action and observation spaces for <cite>env</cite> are multidimensional
+or <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> spaces.</p>
+<p class="rubric">Notes</p>
+<p>A multidimensional space is any space whose actions / observations have
+more than one element in them. This includes <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> spaces, but also
+includes single action/observation spaces with several dimensions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to evaluate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>md_action</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s action space is multidimensional.</li>
+<li><strong>md_obs</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s observation space is multidimensional.</li>
+<li><strong>tuple_action</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s action space is a <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> instance.</li>
+<li><strong>tuple_obs</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s observation space is a <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> instance.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.is_continuous">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">is_continuous</code><span class="sig-paren">(</span><em>env</em>, <em>tuple_action</em>, <em>tuple_obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L283-L317"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.is_continuous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if an <cite>env</cite>’s observation and action spaces are continuous.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to evaluate.</li>
+<li><strong>tuple_action</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s action space is an instance of <cite>gym.spaces.Tuple</cite>
+or <cite>gym.spaces.Dict</cite>.</li>
+<li><strong>tuple_obs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s observation space is an instance of <cite>gym.spaces.Tuple</cite>
+or <cite>gym.spaces.Dict</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>cont_action</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s action space is continuous.</li>
+<li><strong>cont_obs</strong> (<em>bool</em>) – Whether the <cite>env</cite>’s observation space is continuous.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.action_stats">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">action_stats</code><span class="sig-paren">(</span><em>env</em>, <em>md_action</em>, <em>cont_action</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L320-L365"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.action_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information on <cite>env</cite>’s action space.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>md_action</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s action space is multidimensional.</li>
+<li><strong>cont_action</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s action space is continuous.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>n_actions_per_dim</strong> (<em>list of length (action_dim,)</em>) – The number of possible actions for each dimension of the action space.</li>
+<li><strong>action_ids</strong> (<em>list or None</em>) – A list of all valid actions within the space. If <cite>cont_action</cite> is
+True, this value will be None.</li>
+<li><strong>action_dim</strong> (<em>int or None</em>) – The number of dimensions in a single action.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.obs_stats">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">obs_stats</code><span class="sig-paren">(</span><em>env</em>, <em>md_obs</em>, <em>cont_obs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L368-L413"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.obs_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information on the observation space for <cite>env</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to evaluate.</li>
+<li><strong>md_obs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s action space is multidimensional.</li>
+<li><strong>cont_obs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the <cite>env</cite>’s observation space is multidimensional.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>n_obs_per_dim</strong> (<em>list of length (obs_dim,)</em>) – The number of possible observation classes for each dimension of the
+observation space.</li>
+<li><strong>obs_ids</strong> (<em>list or None</em>) – A list of all valid observations within the space. If <cite>cont_obs</cite> is
+True, this value will be None.</li>
+<li><strong>obs_dim</strong> (<em>int or None</em>) – The number of dimensions in a single observation.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="numpy_ml.rl_models._utils.env_stats">
+<code class="descclassname">numpy_ml.rl_models._utils.</code><code class="descname">env_stats</code><span class="sig-paren">(</span><em>env</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/rl_models/_utils.py#L416-L457"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.rl_models._utils.env_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute statistics for the current environment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>env</strong> (<code class="docutils literal notranslate"><span class="pre">gym.wrappers</span></code> or <code class="docutils literal notranslate"><span class="pre">gym.envs</span></code> instance) – The environment to evaluate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>env_info</strong> (<em>dict</em>) – A dictionary containing information about the action and observation
+spaces of <cite>env</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.rl_models.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,483 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>LinearRegression &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing" href="numpy_ml.preprocessing.html" />
+    <link rel="prev" title="Linear models" href="numpy_ml.linear_models.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ridgeregression"><code class="docutils literal notranslate"><span class="pre">RidgeRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logisticregression"><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bayesianlinearregressionunknownvariance"><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionUnknownVariance</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#bayesianlinearregressionknownvariance"><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionKnownVariance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.linear_models.html">Linear models</a><ul>
+      <li>Previous: <a href="numpy_ml.linear_models.html" title="previous chapter">Linear models</a></li>
+      <li>Next: <a href="numpy_ml.preprocessing.html" title="next chapter">Preprocessing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="linearregression">
+<h1><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code><a class="headerlink" href="#linearregression" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.linear_models.LinearRegression">
+<em class="property">class </em><code class="descclassname">numpy_ml.linear_models.</code><code class="descname">LinearRegression</code><span class="sig-paren">(</span><em>fit_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L5-L56"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LinearRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ordinary least squares regression model fit via the normal equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fit_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fit an additional intercept term in addition to the
+model coefficients. Default is True.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.linear_models.LinearRegression.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L19-L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LinearRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the regression coefficients via maximum likelihood.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – A dataset consisting of <cite>N</cite> examples, each of dimension <cite>M</cite>.</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, K)</cite>) – The targets for each of the <cite>N</cite> examples in <cite>X</cite>, where each target
+has dimension <cite>K</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.linear_models.LinearRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L38-L56"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LinearRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used the trained model to generate predictions on a new collection of
+data points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, M)</cite>) – A dataset consisting of <cite>Z</cite> new examples, each of dimension <cite>M</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, K)</cite>) – The model predictions for the items in <cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="ridgeregression">
+<h1><code class="docutils literal notranslate"><span class="pre">RidgeRegression</span></code><a class="headerlink" href="#ridgeregression" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.linear_models.RidgeRegression">
+<em class="property">class </em><code class="descclassname">numpy_ml.linear_models.</code><code class="descname">RidgeRegression</code><span class="sig-paren">(</span><em>alpha=1</em>, <em>fit_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L59-L115"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.RidgeRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ridge regression model fit via the normal equation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – L2 regularization coefficient. Higher values correspond to larger
+penalty on the L2 norm of the model coefficients. Default is 1.</li>
+<li><strong>fit_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fit an additional intercept term in addition to the
+model coefficients. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.linear_models.RidgeRegression.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L77-L95"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.RidgeRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the regression coefficients via maximum likelihood.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – A dataset consisting of <cite>N</cite> examples, each of dimension <cite>M</cite>.</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, K)</cite>) – The targets for each of the <cite>N</cite> examples in <cite>X</cite>, where each target
+has dimension <cite>K</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.linear_models.RidgeRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L97-L115"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.RidgeRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to generate predictions on a new collection of
+data points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, M)</cite>) – A dataset consisting of <cite>Z</cite> new examples, each of dimension <cite>M</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, K)</cite>) – The model predictions for the items in <cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="logisticregression">
+<h1><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code><a class="headerlink" href="#logisticregression" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.linear_models.LogisticRegression">
+<em class="property">class </em><code class="descclassname">numpy_ml.linear_models.</code><code class="descname">LogisticRegression</code><span class="sig-paren">(</span><em>penalty='l2'</em>, <em>gamma=0</em>, <em>fit_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L118-L223"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LogisticRegression" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple logistic regression model fit via gradient descent on the
+penalized negative log likelihood.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>penalty</strong> (<em>{'l1'</em><em>, </em><em>'l2'}</em>) – The type of regularization penalty to apply on the coefficients
+<cite>beta</cite>. Default is ‘l2’.</li>
+<li><strong>gamma</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>]</em>) – The regularization weight. Larger values correspond to larger
+regularization penalties, and a value of 0 indicates no penalty.
+Default is 0.</li>
+<li><strong>fit_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fit an intercept term in addition to the coefficients in
+b. If True, the estimates for <cite>beta</cite> will have <cite>M + 1</cite> dimensions,
+where the first dimension corresponds to the intercept. Default is
+True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.linear_models.LogisticRegression.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em>, <em>lr=0.01</em>, <em>tol=1e-07</em>, <em>max_iter=10000000.0</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L146-L175"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LogisticRegression.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the regression coefficients via gradient descent on the negative
+log likelihood.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – A dataset consisting of <cite>N</cite> examples, each of dimension <cite>M</cite>.</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The binary targets for each of the <cite>N</cite> examples in <cite>X</cite>.</li>
+<li><strong>lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The gradient descent learning rate. Default is 1e-7.</li>
+<li><strong>max_iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The maximum number of iterations to run the gradient descent
+solver. Default is 1e7.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.linear_models.LogisticRegression.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L205-L223"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.LogisticRegression.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use the trained model to generate prediction probabilities on a new
+collection of data points.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, M)</cite>) – A dataset consisting of <cite>Z</cite> new examples, each of dimension <cite>M</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z,)</cite>) – The model prediction probabilities for the items in <cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="bayesianlinearregressionunknownvariance">
+<h1><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionUnknownVariance</span></code><a class="headerlink" href="#bayesianlinearregressionunknownvariance" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance">
+<em class="property">class </em><code class="descclassname">numpy_ml.linear_models.</code><code class="descname">BayesianLinearRegressionUnknownVariance</code><span class="sig-paren">(</span><em>alpha=1</em>, <em>beta=2</em>, <em>b_mean=0</em>, <em>b_V=None</em>, <em>fit_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L226-L367"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bayesian linear regression model with unknown variance and conjugate
+Normal-Gamma prior on <cite>b</cite> and <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p class="rubric">Notes</p>
+<p>Uses a conjugate Normal-Gamma prior on <cite>b</cite> and <span class="math notranslate nohighlight">\(\sigma^2\)</span>. The
+joint and marginal posteriors over error variance and model parameters
+are:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b, \sigma^2  &amp;\sim  \text{NG}(b_{mean}, b_{V}, \alpha, \beta) \\
+\sigma^2  &amp;\sim  \text{InverseGamma}(\alpha, \beta) \\
+b  &amp;\sim  \mathcal{N}(b_{mean}, \sigma^2 * b_V)\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The shape parameter for the Inverse-Gamma prior on
+<span class="math notranslate nohighlight">\(\sigma^2\)</span>. Must be strictly greater than 0. Default is 1.</li>
+<li><strong>beta</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The scale parameter for the Inverse-Gamma prior on
+<span class="math notranslate nohighlight">\(\sigma^2\)</span>. Must be strictly greater than 0. Default is 1.</li>
+<li><strong>b_mean</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M,)</cite> or float) – The mean of the Gaussian prior on <cite>b</cite>. If a float, assume <cite>b_mean</cite>
+is <code class="docutils literal notranslate"><span class="pre">np.ones(M)</span> <span class="pre">*</span> <span class="pre">b_mean</span></code>. Default is 0.</li>
+<li><strong>b_V</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, N)</cite> or <cite>(N,)</cite> or None) – A symmetric positive definite matrix that when multiplied
+element-wise by <span class="math notranslate nohighlight">\(b_sigma^2\)</span> gives the covariance matrix for
+the Gaussian prior on <cite>b</cite>. If a list, assume <code class="docutils literal notranslate"><span class="pre">b_V</span> <span class="pre">=</span>
+<span class="pre">diag(b_V)</span></code>. If None, assume <cite>b_V</cite> is the identity matrix.
+Default is None.</li>
+<li><strong>fit_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fit an intercept term in addition to the coefficients in
+b. If True, the estimates for b will have <cite>M + 1</cite> dimensions, where
+the first dimension corresponds to the intercept. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L288-L339"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the posterior over model parameters using the data in <cite>X</cite> and
+<cite>y</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – A dataset consisting of <cite>N</cite> examples, each of dimension <cite>M</cite>.</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, K)</cite>) – The targets for each of the <cite>N</cite> examples in <cite>X</cite>, where each target
+has dimension <cite>K</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L341-L367"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the MAP prediction for the targets associated with <cite>X</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, M)</cite>) – A dataset consisting of <cite>Z</cite> new examples, each of dimension <cite>M</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, K)</cite>) – The model predictions for the items in <cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="bayesianlinearregressionknownvariance">
+<h1><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionKnownVariance</span></code><a class="headerlink" href="#bayesianlinearregressionknownvariance" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionKnownVariance">
+<em class="property">class </em><code class="descclassname">numpy_ml.linear_models.</code><code class="descname">BayesianLinearRegressionKnownVariance</code><span class="sig-paren">(</span><em>b_mean=0</em>, <em>b_sigma=1</em>, <em>b_V=None</em>, <em>fit_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L370-L494"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionKnownVariance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bayesian linear regression model with known error variance and
+conjugate Gaussian prior on model parameters.</p>
+<p class="rubric">Notes</p>
+<p>Uses a conjugate Gaussian prior on the model coefficients. The
+posterior over model parameters is</p>
+<div class="math notranslate nohighlight">
+\[b \mid b_{mean}, \sigma^2, b_V \sim \mathcal{N}(b_{mean}, \sigma^2 b_V)\]</div>
+<p>Ridge regression is a special case of this model where <span class="math notranslate nohighlight">\(b_{mean}\)</span>
+= 0, <span class="math notranslate nohighlight">\(\sigma\)</span> = 1 and <cite>b_V</cite> = I (ie., the prior on <cite>b</cite> is a
+zero-mean, unit covariance Gaussian).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>b_mean</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M,)</cite> or float) – The mean of the Gaussian prior on <cite>b</cite>. If a float, assume <cite>b_mean</cite> is
+<code class="docutils literal notranslate"><span class="pre">np.ones(M)</span> <span class="pre">*</span> <span class="pre">b_mean</span></code>. Default is 0.</li>
+<li><strong>b_sigma</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – A scaling term for covariance of the Gaussian prior on <cite>b</cite>. Default
+is 1.</li>
+<li><strong>b_V</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,N)</cite> or <cite>(N,)</cite> or None) – A symmetric positive definite matrix that when multiplied
+element-wise by <cite>b_sigma^2</cite> gives the covariance matrix for the
+Gaussian prior on <cite>b</cite>. If a list, assume <code class="docutils literal notranslate"><span class="pre">b_V</span> <span class="pre">=</span> <span class="pre">diag(b_V)</span></code>. If None,
+assume <cite>b_V</cite> is the identity matrix. Default is None.</li>
+<li><strong>fit_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to fit an intercept term in addition to the coefficients in
+b. If True, the estimates for b will have <cite>M + 1</cite> dimensions, where
+the first dimension corresponds to the intercept. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionKnownVariance.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L429-L466"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionKnownVariance.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the posterior over model parameters using the data in <cite>X</cite> and
+<cite>y</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, M)</cite>) – A dataset consisting of <cite>N</cite> examples, each of dimension <cite>M</cite>.</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, K)</cite>) – The targets for each of the <cite>N</cite> examples in <cite>X</cite>, where each target
+has dimension <cite>K</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.linear_models.BayesianLinearRegressionKnownVariance.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/linear_models/lm.py#L468-L494"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.linear_models.BayesianLinearRegressionKnownVariance.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the MAP prediction for the targets associated with <cite>X</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, M)</cite>) – A dataset consisting of <cite>Z</cite> new examples, each of dimension <cite>M</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>y_pred</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(Z, K)</cite>) – The MAP predictions for the targets associated with the items in
+<cite>X</cite>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.linear_models.lm.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

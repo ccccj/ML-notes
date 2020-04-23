@@ -1,0 +1,399 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Learning rate schedulers &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Wrappers" href="numpy_ml.neural_nets.wrappers.html" />
+    <link rel="prev" title="Optimizers" href="numpy_ml.neural_nets.optimizers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.layers.html">Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.activations.html">Activations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.losses.html">Loss functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html">Optimizers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Learning rate schedulers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constantscheduler"><code class="docutils literal notranslate"><span class="pre">ConstantScheduler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exponentialscheduler"><code class="docutils literal notranslate"><span class="pre">ExponentialScheduler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kingscheduler"><code class="docutils literal notranslate"><span class="pre">KingScheduler</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#noamscheduler"><code class="docutils literal notranslate"><span class="pre">NoamScheduler</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html">Wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.models.html">Full networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.neural_nets.html">Neural networks</a><ul>
+      <li>Previous: <a href="numpy_ml.neural_nets.optimizers.html" title="previous chapter">Optimizers</a></li>
+      <li>Next: <a href="numpy_ml.neural_nets.wrappers.html" title="next chapter">Wrappers</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="learning-rate-schedulers">
+<h1>Learning rate schedulers<a class="headerlink" href="#learning-rate-schedulers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="constantscheduler">
+<h2><code class="docutils literal notranslate"><span class="pre">ConstantScheduler</span></code><a class="headerlink" href="#constantscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.schedulers.ConstantScheduler">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.schedulers.</code><code class="descname">ConstantScheduler</code><span class="sig-paren">(</span><em>lr=0.01</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L43-L69"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ConstantScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a fixed learning rate, regardless of the current step.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>initial_lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The learning rate. Default is 0.01</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ConstantScheduler.learning_rate">
+<code class="descname">learning_rate</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L60-L69"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ConstantScheduler.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current learning rate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>lr</strong> (<em>float</em>) – The learning rate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ConstantScheduler.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L27-L29"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ConstantScheduler.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the current object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ConstantScheduler.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>hparam_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L31-L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ConstantScheduler.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scheduler hyperparameters from a dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="exponentialscheduler">
+<h2><code class="docutils literal notranslate"><span class="pre">ExponentialScheduler</span></code><a class="headerlink" href="#exponentialscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.schedulers.ExponentialScheduler">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.schedulers.</code><code class="descname">ExponentialScheduler</code><span class="sig-paren">(</span><em>initial_lr=0.01</em>, <em>stage_length=500</em>, <em>staircase=False</em>, <em>decay=0.1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L72-L141"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ExponentialScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>An exponential learning rate scheduler.</p>
+<p class="rubric">Notes</p>
+<p>The exponential scheduler decays the learning rate by <cite>decay</cite> every
+<cite>stage_length</cite> steps, starting from <cite>initial_lr</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">initial_lr</span> <span class="o">*</span> <span class="n">decay</span> <span class="o">**</span> <span class="n">curr_stage</span>
+</pre></div>
+</div>
+<p>where:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curr_stage</span> <span class="o">=</span> <span class="n">step</span> <span class="o">/</span> <span class="n">stage_length</span>          <span class="k">if</span> <span class="n">staircase</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">curr_stage</span> <span class="o">=</span> <span class="n">floor</span><span class="p">(</span><span class="n">step</span> <span class="o">/</span> <span class="n">stage_length</span><span class="p">)</span>   <span class="k">if</span> <span class="n">staircase</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The learning rate at the first step. Default is 0.01.</li>
+<li><strong>stage_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The length of each stage, in steps. Default is 500.</li>
+<li><strong>staircase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, only adjusts the learning rate at the stage transitions,
+producing a step-like decay schedule. If False, adjusts the
+learning rate after each step, creating a smooth decay schedule.
+Default is False.</li>
+<li><strong>decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The amount to decay the learning rate at each new stage. Default is
+0.1.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ExponentialScheduler.learning_rate">
+<code class="descname">learning_rate</code><span class="sig-paren">(</span><em>step</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L124-L141"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ExponentialScheduler.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current learning rate as a function of <cite>step</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The current step number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>lr</strong> (<em>float</em>) – The learning rate for the current step.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ExponentialScheduler.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L27-L29"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ExponentialScheduler.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the current object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.ExponentialScheduler.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>hparam_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L31-L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.ExponentialScheduler.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scheduler hyperparameters from a dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="kingscheduler">
+<h2><code class="docutils literal notranslate"><span class="pre">KingScheduler</span></code><a class="headerlink" href="#kingscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.schedulers.KingScheduler">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.schedulers.</code><code class="descname">KingScheduler</code><span class="sig-paren">(</span><em>initial_lr=0.01</em>, <em>patience=1000</em>, <em>decay=0.99</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L198-L362"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.KingScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Davis King / DLib learning rate scheduler.</p>
+<p class="rubric">Notes</p>
+<p>The KingScheduler computes the probability that the slope of the OLS
+fit to the loss history is negative. If the probability that it is
+negative is less than 51% over the last <cite>patience</cite> steps, the scheduler
+exponentially decreases the current learning rate by <cite>decay</cite>.</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>King, D. (2018). “Automatic learning rate scheduling that really
+works”. <a class="reference external" href="http://blog.dlib.net/2018/02/automatic-learning-rate-scheduling-that.html">http://blog.dlib.net/2018/02/automatic-learning-rate-scheduling-that.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initial_lr</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The learning rate to begin at. Default is 0.01.</li>
+<li><strong>patience</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Amount of time to maintain the current learning rate without a
+decrease in loss before adjustment. Default is 1000.</li>
+<li><strong>decay</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The amount to decay the learning rate at each new stage. Default is
+0.99.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.KingScheduler.learning_rate">
+<code class="descname">learning_rate</code><span class="sig-paren">(</span><em>step</em>, <em>cur_loss</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L325-L362"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.KingScheduler.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the updated learning rate for the current step and loss.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The current step number. Unused.</li>
+<li><strong>cur_loss</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The loss at the current step.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>lr</strong> (<em>float</em>) – The learning rate for the current step.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.KingScheduler.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L27-L29"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.KingScheduler.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the current object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.KingScheduler.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>hparam_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L31-L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.KingScheduler.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scheduler hyperparameters from a dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="noamscheduler">
+<h2><code class="docutils literal notranslate"><span class="pre">NoamScheduler</span></code><a class="headerlink" href="#noamscheduler" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.schedulers.NoamScheduler">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.schedulers.</code><code class="descname">NoamScheduler</code><span class="sig-paren">(</span><em>model_dim=512</em>, <em>scale_factor=1</em>, <em>warmup_steps=4000</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L144-L195"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.NoamScheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Noam learning rate scheduler, originally used in conjunction with
+the Adam optimizer in [1].</p>
+<p class="rubric">Notes</p>
+<p>The Noam scheduler increases the learning rate linearly for the first
+<cite>warmup_steps</cite> steps, and decreases it thereafter proportionally to the
+inverse square root of the step number:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lr</span> <span class="o">=</span> <span class="n">scale_factor</span> <span class="o">*</span> <span class="p">(</span> <span class="p">(</span><span class="n">model_dim</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">))</span> <span class="o">*</span> <span class="n">adj_step</span> <span class="p">)</span>
+<span class="n">adj_step</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">step_num</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">step_num</span> <span class="o">*</span> <span class="n">warmup_steps</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">))</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Vaswani et al. (2017) “Attention is all you need”. <em>31st
+Conference on Neural Information Processing Systems</em>,
+<a class="reference external" href="https://arxiv.org/pdf/1706.03762.pdf">https://arxiv.org/pdf/1706.03762.pdf</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_dim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of units in the layer output. Default is 512.</li>
+<li><strong>scale_factor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – A fixed coefficient for rescaling the final learning rate. Default
+is 1.</li>
+<li><strong>warmup_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of steps in the warmup stage of training. Default is
+4000.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.NoamScheduler.learning_rate">
+<code class="descname">learning_rate</code><span class="sig-paren">(</span><em>step</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L192-L195"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.NoamScheduler.learning_rate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.NoamScheduler.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L27-L29"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.NoamScheduler.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a copy of the current object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.schedulers.NoamScheduler.set_params">
+<code class="descname">set_params</code><span class="sig-paren">(</span><em>hparam_dict</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/schedulers/schedulers.py#L31-L36"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.schedulers.NoamScheduler.set_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scheduler hyperparameters from a dictionary.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.schedulers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

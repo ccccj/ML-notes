@@ -1,0 +1,527 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Natural language processing &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utilities" href="numpy_ml.utils.html" />
+    <link rel="prev" title="Digital signal processing" href="numpy_ml.preprocessing.dsp.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.general.html">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.dsp.html">Digital signal processing</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Natural language processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#huffmanencoder"><code class="docutils literal notranslate"><span class="pre">HuffmanEncoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tfidfencoder"><code class="docutils literal notranslate"><span class="pre">TFIDFEncoder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#token"><code class="docutils literal notranslate"><span class="pre">Token</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ngrams"><code class="docutils literal notranslate"><span class="pre">ngrams</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remove-stop-words"><code class="docutils literal notranslate"><span class="pre">remove_stop_words</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strip-punctuation"><code class="docutils literal notranslate"><span class="pre">strip_punctuation</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tokenize-chars"><code class="docutils literal notranslate"><span class="pre">tokenize_chars</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tokenize-words"><code class="docutils literal notranslate"><span class="pre">tokenize_words</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.preprocessing.html">Preprocessing</a><ul>
+      <li>Previous: <a href="numpy_ml.preprocessing.dsp.html" title="previous chapter">Digital signal processing</a></li>
+      <li>Next: <a href="numpy_ml.utils.html" title="next chapter">Utilities</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="natural-language-processing">
+<h1>Natural language processing<a class="headerlink" href="#natural-language-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="huffmanencoder">
+<h2><code class="docutils literal notranslate"><span class="pre">HuffmanEncoder</span></code><a class="headerlink" href="#huffmanencoder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">HuffmanEncoder</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L409-L541"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L410-L439"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a Huffman tree for the tokens in <cite>text</cite> and compute each token’s
+binary encoding.</p>
+<p class="rubric">Notes</p>
+<p>In a Huffman code, tokens that occur more frequently are (generally)
+represented using fewer bits. Huffman codes produce the minimum expected
+codeword length among all methods for encoding tokens individually.</p>
+<p>Huffman codes correspond to paths through a binary tree, with 1
+corresponding to “move right” and 0 corresponding to “move left”. In
+contrast to standard binary trees, the Huffman tree is constructed from the
+bottom up. Construction begins by initializing a min-heap priority queue
+consisting of each token in the corpus, with priority corresponding to the
+token frequency. At each step, the two most infrequent tokens in the corpus
+are removed and become the children of a parent pseudotoken whose
+“frequency” is the sum of the frequencies of its children. This new parent
+pseudotoken is added to the priority queue and the process is repeated
+recursively until no tokens remain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (list of strs or <a class="reference internal" href="#numpy_ml.preprocessing.nlp.Vocabulary" title="numpy_ml.preprocessing.nlp.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> instance) – The tokenized text or a pretrained <a class="reference internal" href="#numpy_ml.preprocessing.nlp.Vocabulary" title="numpy_ml.preprocessing.nlp.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> object to use for
+building the Huffman code.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>text</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L441-L460"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the words in <cite>text</cite> into their Huffman-code representations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>text</strong> (list of <cite>N</cite> strings) – The list of words to encode</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>codes</strong> (list of <cite>N</cite> binary strings) – The encoded words in <cite>text</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder.inverse_transform">
+<code class="descname">inverse_transform</code><span class="sig-paren">(</span><em>codes</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L462-L481"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder.inverse_transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform an encoded sequence of bit-strings back into words.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>codes</strong> (list of <cite>N</cite> binary strings) – A list of encoded bit-strings, represented as strings.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>text</strong> (list of <cite>N</cite> strings) – The decoded text.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder.tokens">
+<code class="descname">tokens</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L483-L485"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder.tokens" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.nlp.HuffmanEncoder.codes">
+<code class="descname">codes</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L487-L489"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.HuffmanEncoder.codes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tfidfencoder">
+<h2><code class="docutils literal notranslate"><span class="pre">TFIDFEncoder</span></code><a class="headerlink" href="#tfidfencoder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.nlp.TFIDFEncoder">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">TFIDFEncoder</code><span class="sig-paren">(</span><em>vocab=None</em>, <em>lowercase=True</em>, <em>min_count=0</em>, <em>smooth_idf=True</em>, <em>max_tokens=None</em>, <em>input_type='filename'</em>, <em>filter_stopwords=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L558-L942"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.TFIDFEncoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object for compiling and encoding the term-frequency
+inverse-document-frequency (TF-IDF) representation of the tokens in a
+text corpus.</p>
+<p class="rubric">Notes</p>
+<p>TF-IDF is intended to reflect how important a word is to a document in
+a collection or corpus. For a word token <cite>w</cite> in a document <cite>d</cite>, and a
+corpus, <span class="math notranslate nohighlight">\(D = \{d_1, \ldots, d_N\}\)</span>, we have:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{TF}(w, d)  &amp;=  \text{num. occurences of }`w`\text{ in document }`d` \\
+\text{IDF}(w, D)  &amp;=  \log \frac{|D|}{|\{ d \in D: t \in d \}|}\end{split}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>vocab</strong> (<a class="reference internal" href="#numpy_ml.preprocessing.nlp.Vocabulary" title="numpy_ml.preprocessing.nlp.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> object or list-like) – An existing vocabulary to filter the tokens in the corpus against.
+Default is None.</li>
+<li><strong>lowercase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to convert each string to lowercase before tokenization.
+Default is True.</li>
+<li><strong>min_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Minimum number of times a token must occur in order to be included
+in vocab. Default is 0.</li>
+<li><strong>smooth_idf</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to add 1 to the denominator of the IDF calculation to avoid
+divide-by-zero errors. Default is True.</li>
+<li><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Only add the <cite>max_tokens</cite> most frequent tokens that occur more
+than <cite>min_count</cite> to the vocabulary.  If None, add all tokens
+greater that occur more than than <cite>min_count</cite>. Default is None.</li>
+<li><strong>input_type</strong> (<em>{'filename'</em><em>, </em><em>'strings'}</em>) – If ‘files’, the sequence input to <cite>fit</cite> is expected to be a list
+of filepaths. If ‘strings’, the input is expected to be a list of
+lists, each sublist containing the raw strings for a single
+document in the corpus. Default is ‘filename’.</li>
+<li><strong>filter_stopwords</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to remove stopwords before encoding the words in the
+corpus. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.TFIDFEncoder.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus_seq</em>, <em>encoding='utf-8-sig'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L648-L720"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.TFIDFEncoder.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute term-frequencies and inverse document frequencies on a
+collection of documents.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>corpus_seq</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of strs</em>) – The filepath / list of filepaths / raw string contents of the
+document(s) to be encoded, in accordance with the <cite>input_type</cite>
+parameter passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> method. Each document is
+expected to be a newline-separated strings of text, with adjacent
+tokens separated by a whitespace character.</li>
+<li><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Specifies the text encoding for corpus if <cite>input_type</cite> is <cite>files</cite>.
+Common entries are either ‘utf-8’ (no header byte), or ‘utf-8-sig’
+(header byte). Default is ‘utf-8-sig’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.TFIDFEncoder.transform">
+<code class="descname">transform</code><span class="sig-paren">(</span><em>ignore_special_chars=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L901-L942"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.TFIDFEncoder.transform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate the term-frequency inverse-document-frequency encoding of a
+text corpus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore_special_chars</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to drop columns corresponding to “&lt;eol&gt;”, “&lt;bol&gt;”, and
+“&lt;unk&gt;” tokens from the final tfidf encoding. Default is True.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>tfidf</strong> (numpy array of shape <cite>(D, M [- 3])</cite>) – The encoded corpus, with each row corresponding to a single
+document, and each column corresponding to a token id. The mapping
+between column numbers and tokens is stored in the <cite>idx2token</cite>
+attribute IFF <cite>ignore_special_chars</cite> is False. Otherwise, the
+mappings are not accurate.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vocabulary">
+<h2><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code><a class="headerlink" href="#vocabulary" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">Vocabulary</code><span class="sig-paren">(</span><em>lowercase=True</em>, <em>min_count=None</em>, <em>max_tokens=None</em>, <em>filter_stopwords=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L945-L1217"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object for compiling and encoding the unique tokens in a text corpus.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lowercase</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to convert each string to lowercase before tokenization.
+Default is True.</li>
+<li><strong>min_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Minimum number of times a token must occur in order to be included
+in vocab. If <cite>None</cite>, include all tokens from <cite>corpus_fp</cite> in vocab.
+Default is None.</li>
+<li><strong>max_tokens</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Only add the <cite>max_tokens</cite> most frequent tokens that occur more
+than <cite>min_count</cite> to the vocabulary.  If None, add all tokens
+greater that occur more than than <cite>min_count</cite>. Default is None.</li>
+<li><strong>filter_stopwords</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to remove stopwords before encoding the words in the
+corpus. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.n_tokens">
+<code class="descname">n_tokens</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L994-L997"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.n_tokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of unique word tokens in the vocabulary</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.n_words">
+<code class="descname">n_words</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L999-L1002"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.n_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>The total number of words in the corpus</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.shape">
+<code class="descname">shape</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1004-L1007"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.shape" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of unique word tokens in the vocabulary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.most_common">
+<code class="descname">most_common</code><span class="sig-paren">(</span><em>n=5</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1009-L1011"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.most_common" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the top <cite>n</cite> most common tokens in the corpus</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.words_with_count">
+<code class="descname">words_with_count</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1013-L1015"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.words_with_count" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all tokens that occur <cite>k</cite> times in the corpus</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>words</em>, <em>unk=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1017-L1038"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter or replace any word in <cite>words</cite> that does not occur in
+<cite>Vocabulary</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>words</strong> (<em>list of strs</em>) – A list of words to filter</li>
+<li><strong>unk</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to replace any out of vocabulary words in <cite>words</cite> with the
+&lt;unk&gt; token (unk = True) or skip them entirely (unk = False).
+Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>filtered</strong> (<em>list of strs</em>) – The list of words filtered against the vocabulary.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.words_to_indices">
+<code class="descname">words_to_indices</code><span class="sig-paren">(</span><em>words</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1040-L1058"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.words_to_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the words in <cite>words</cite> to their token indices. If a word is not
+in the vocabulary, return the index for the &lt;unk&gt; token</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>words</strong> (<em>list of strs</em>) – A list of words to filter</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>indices</strong> (<em>list of ints</em>) – The token indices for each word in <cite>words</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.indices_to_words">
+<code class="descname">indices_to_words</code><span class="sig-paren">(</span><em>indices</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1060-L1076"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.indices_to_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the indices in <cite>indices</cite> to their word values. If an index is
+not in the vocabulary, return the the &lt;unk&gt; token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>indices</strong> (<em>list of ints</em>) – The token indices for each word in <cite>words</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>words</strong> (<em>list of strs</em>) – The word strings corresponding to each token index in <cite>indices</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.preprocessing.nlp.Vocabulary.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>corpus_fps</em>, <em>encoding='utf-8-sig'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L1078-L1154"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Vocabulary.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the vocabulary across a collection of documents.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>corpus_fps</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><em>list of strs</em>) – The filepath / list of filepaths for the document(s) to be encoded.
+Each document is expected to be encoded as newline-separated
+string of text, with adjacent tokens separated by a whitespace
+character.</li>
+<li><strong>encoding</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Specifies the text encoding for corpus. Common entries are either
+‘utf-8’ (no header byte), or ‘utf-8-sig’ (header byte). Default is
+‘utf-8-sig’.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="token">
+<h2><code class="docutils literal notranslate"><span class="pre">Token</span></code><a class="headerlink" href="#token" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.preprocessing.nlp.Token">
+<em class="property">class </em><code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">Token</code><span class="sig-paren">(</span><em>word</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L549-L555"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.Token" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="ngrams">
+<h2><code class="docutils literal notranslate"><span class="pre">ngrams</span></code><a class="headerlink" href="#ngrams" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.nlp.ngrams">
+<code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">ngrams</code><span class="sig-paren">(</span><em>sequence</em>, <em>N</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L340-L343"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.ngrams" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all <cite>N</cite>-grams of the elements in <cite>sequence</cite></p>
+</dd></dl>
+
+</div>
+<div class="section" id="remove-stop-words">
+<h2><code class="docutils literal notranslate"><span class="pre">remove_stop_words</span></code><a class="headerlink" href="#remove-stop-words" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.nlp.remove_stop_words">
+<code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">remove_stop_words</code><span class="sig-paren">(</span><em>words</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L366-L368"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.remove_stop_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove stop words from a list of word strings</p>
+</dd></dl>
+
+</div>
+<div class="section" id="strip-punctuation">
+<h2><code class="docutils literal notranslate"><span class="pre">strip_punctuation</span></code><a class="headerlink" href="#strip-punctuation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.nlp.strip_punctuation">
+<code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">strip_punctuation</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L371-L373"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.strip_punctuation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove punctuation from a string</p>
+</dd></dl>
+
+</div>
+<div class="section" id="tokenize-chars">
+<h2><code class="docutils literal notranslate"><span class="pre">tokenize_chars</span></code><a class="headerlink" href="#tokenize-chars" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.nlp.tokenize_chars">
+<code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">tokenize_chars</code><span class="sig-paren">(</span><em>line</em>, <em>lowercase=True</em>, <em>filter_punctuation=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L355-L363"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.tokenize_chars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a string into individual lower-case words, optionally removing
+punctuation and stop-words in the process</p>
+</dd></dl>
+
+</div>
+<div class="section" id="tokenize-words">
+<h2><code class="docutils literal notranslate"><span class="pre">tokenize_words</span></code><a class="headerlink" href="#tokenize-words" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.nlp.tokenize_words">
+<code class="descclassname">numpy_ml.preprocessing.nlp.</code><code class="descname">tokenize_words</code><span class="sig-paren">(</span><em>line</em>, <em>lowercase=True</em>, <em>filter_stopwords=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/nlp.py#L346-L352"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.nlp.tokenize_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split a string into individual lower-case words, optionally removing
+punctuation and stop-words in the process</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.preprocessing.nlp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

@@ -1,0 +1,289 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Linear models &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LinearRegression" href="numpy_ml.linear_models.lm.html" />
+    <link rel="prev" title="Utilities" href="numpy_ml.neural_nets.utils.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linear models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.linear_models.lm.html"><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.linear_models.lm.html#ridgeregression"><code class="docutils literal notranslate"><span class="pre">RidgeRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.linear_models.lm.html#logisticregression"><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.linear_models.lm.html#bayesianlinearregressionunknownvariance"><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionUnknownVariance</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.linear_models.lm.html#bayesianlinearregressionknownvariance"><code class="docutils literal notranslate"><span class="pre">BayesianLinearRegressionKnownVariance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="numpy_ml.neural_nets.utils.html" title="previous chapter">Utilities</a></li>
+      <li>Next: <a href="numpy_ml.linear_models.lm.html" title="next chapter"><code class="docutils literal notranslate"><span class="pre">LinearRegression</span></code></a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="linear-models">
+<h1>Linear models<a class="headerlink" href="#linear-models" title="Permalink to this headline">¶</a></h1>
+<p>The linear models module contains several popular instances of the generalized linear model (GLM).</p>
+<h2>Linear Regression</h2><p>The simple linear regression model is</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y} = \mathbf{bX} + \mathbf{\epsilon}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\epsilon \sim \mathcal{N}(0, \sigma^2 I)\]</div>
+<p>In probabilistic terms this corresponds to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{y} - \mathbf{bX}  &amp;\sim  \mathcal{N}(0, \sigma^2 I) \\
+\mathbf{y} \mid \mathbf{X}, \mathbf{b}  &amp;\sim  \mathcal{N}(\mathbf{bX}, \sigma^2 I)\end{split}\]</div>
+<p>The loss for the model is simply the squared error between the model
+predictions and the true values:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = ||\mathbf{y} - \mathbf{bX}||_2^2\]</div>
+<p>The MLE for the model parameters <strong>b</strong> can be computed in closed form via
+the normal equation:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{b}_{MLE} = (\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top \mathbf{y}\]</div>
+<p>where <span class="math notranslate nohighlight">\((\mathbf{X}^\top \mathbf{X})^{-1} \mathbf{X}^\top\)</span> is known
+as the pseudoinverse / Moore-Penrose inverse.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.linear_models.lm.html#numpy_ml.linear_models.LinearRegression" title="numpy_ml.linear_models.LinearRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearRegression</span></code></a></li>
+</ul>
+<h2>Ridge Regression</h2><p>Ridge regression uses the same simple linear regression model but adds an
+additional penalty on the <cite>L2</cite>-norm of the coefficients to the loss function.
+This is sometimes known as Tikhonov regularization.</p>
+<p>In particular, the ridge model is still simply</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y} = \mathbf{bX} + \mathbf{\epsilon}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\epsilon \sim \mathcal{N}(0, \sigma^2 I)\]</div>
+<p>except now the error for the model is calcualted as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L} = ||\mathbf{y} - \mathbf{bX}||_2^2 + \alpha ||\mathbf{b}||_2^2\]</div>
+<p>The MLE for the model parameters <strong>b</strong> can be computed in closed form via
+the adjusted normal equation:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{b}_{MLE} = (\mathbf{X}^\top \mathbf{X} + \alpha I)^{-1} \mathbf{X}^\top \mathbf{y}\]</div>
+<p>where <span class="math notranslate nohighlight">\((\mathbf{X}^\top \mathbf{X} + \alpha I)^{-1}
+\mathbf{X}^\top\)</span> is the pseudoinverse / Moore-Penrose inverse adjusted for
+the <cite>L2</cite> penalty on the model coefficients.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.linear_models.lm.html#numpy_ml.linear_models.RidgeRegression" title="numpy_ml.linear_models.RidgeRegression"><code class="xref py py-class docutils literal notranslate"><span class="pre">RidgeRegression</span></code></a></li>
+</ul>
+<h2>Bayesian Linear Regression</h2><p>In its general form, Bayesian linear regression extends the simple linear
+regression model by introducing priors on model parameters b and/or the
+error variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>.</p>
+<p>The introduction of a prior allows us to quantify the uncertainty in our
+parameter estimates for b by replacing the MLE point estimate in simple
+linear regression with an entire posterior <em>distribution</em>, <span class="math notranslate nohighlight">\(p(b \mid X, y,
+\sigma)\)</span>, simply by applying Bayes rule:</p>
+<div class="math notranslate nohighlight">
+\[p(b \mid X, y) = \frac{ p(y \mid X, b) p(b \mid \sigma) }{p(y \mid X)}\]</div>
+<p>We can also quantify the uncertainty in our predictions <span class="math notranslate nohighlight">\(y^*\)</span> for some new
+data <span class="math notranslate nohighlight">\(X^*\)</span> with the posterior predictive distribution:</p>
+<div class="math notranslate nohighlight">
+\[p(y^* \mid X^*, X, Y) = \int_{b} p(y^* \mid X^*, b) p(b \mid X, y) db\]</div>
+<p>Depending on the choice of prior it may be impossible to compute an
+analytic form for the posterior / posterior predictive distribution. In
+these cases, it is common to use approximations, either via MCMC or
+variational inference.</p>
+<h4>Known variance</h4><hr class="docutils" />
+<p>If we happen to already know the error variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>, the conjugate
+prior on <cite>b</cite> is Gaussian. A common parameterization is:</p>
+<div class="math notranslate nohighlight">
+\[b | \sigma, b_V  \sim  \mathcal{N}(b_{mean}, \sigma^2 b_V)\]</div>
+<p>where <span class="math notranslate nohighlight">\(b_{mean}\)</span>, <span class="math notranslate nohighlight">\(\sigma\)</span> and <span class="math notranslate nohighlight">\(b_V\)</span> are hyperparameters. Ridge
+regression is a special case of this model where <span class="math notranslate nohighlight">\(b_{mean}\)</span> = 0,
+<span class="math notranslate nohighlight">\(\sigma\)</span> = 1 and <span class="math notranslate nohighlight">\(b_V = I\)</span> (ie., the prior on <cite>b</cite> is a zero-mean,
+unit covariance Gaussian).</p>
+<p>Due to the conjugacy of the above prior with the Gaussian likelihood, there
+exists a closed-form solution for the posterior over the model
+parameters:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A  &amp;=  (b_V^{-1} + X^\top X)^{-1} \\
+\mu_b  &amp;=  A b_V^{-1} b_{mean} + A X^\top y \\
+\text{cov}_b  &amp;=  \sigma^2 A \\\end{split}\]</div>
+<p>The model posterior is then</p>
+<div class="math notranslate nohighlight">
+\[b \mid X, y  \sim  \mathcal{N}(\mu_b, \text{cov}_b)\]</div>
+<p>We can also compute a closed-form solution for the posterior predictive distribution as
+well:</p>
+<div class="math notranslate nohighlight">
+\[y^* \mid X^*, X, Y \sim \mathcal{N}(X^* \mu_b, \ \ X^* \text{cov}_b X^{* \top} + I)\]</div>
+<p>where <span class="math notranslate nohighlight">\(X^*\)</span> is the matrix of new data we wish to predict, and <span class="math notranslate nohighlight">\(y^*\)</span>
+are the predicted targets for those data.</p>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.linear_models.lm.html#numpy_ml.linear_models.BayesianLinearRegressionKnownVariance" title="numpy_ml.linear_models.BayesianLinearRegressionKnownVariance"><code class="xref py py-class docutils literal notranslate"><span class="pre">BayesianLinearRegressionKnownVariance</span></code></a></li>
+</ul>
+<h4>Unknown variance</h4><hr class="docutils" />
+<p>If <em>both</em> b and the error variance <span class="math notranslate nohighlight">\(\sigma^2\)</span> are unknown, the
+conjugate prior for the Gaussian likelihood is the Normal-Gamma
+distribution (univariate likelihood) or the Normal-Inverse-Wishart
+distribution (multivariate likelihood).</p>
+<blockquote>
+<div><p><strong>Univariate</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b, \sigma^2  &amp;\sim  \text{NG}(b_{mean}, b_{V}, \alpha, \beta) \\
+\sigma^2  &amp;\sim  \text{InverseGamma}(\alpha, \beta) \\
+b \mid \sigma^2  &amp;\sim  \mathcal{N}(b_{mean}, \sigma^2 b_{V})\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\alpha, \beta, b_{V}\)</span>, and <span class="math notranslate nohighlight">\(b_{mean}\)</span> are
+parameters of the prior.</p>
+<p><strong>Multivariate</strong></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}b, \Sigma  &amp;\sim  \mathcal{NIW}(b_{mean}, \lambda, \Psi, \rho) \\
+\Sigma  &amp;\sim  \mathcal{W}^{-1}(\Psi, \rho) \\
+b \mid \Sigma  &amp;\sim  \mathcal{N}(b_{mean}, \frac{1}{\lambda} \Sigma)\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(b_{mean}, \lambda, \Psi\)</span>, and <span class="math notranslate nohighlight">\(\rho\)</span> are
+parameters of the prior.</p>
+</div></blockquote>
+<p>Due to the conjugacy of the above priors with the Gaussian likelihood,
+there exists a closed-form solution for the posterior over the model
+parameters:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}B  &amp;=  y - X b_{mean} \\
+\text{shape}  &amp;=  N + \alpha \\
+\text{scale}  &amp;=  \frac{1}{\text{shape}} (\alpha \beta + B^\top (X b_V X^\top + I)^{-1} B) \\\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma^2 \mid X, y  &amp;\sim  \text{InverseGamma}(\text{shape}, \text{scale}) \\
+A  &amp;=  (b_V^{-1} + X^\top X)^{-1} \\
+\mu_b  &amp;=  A b_V^{-1} b_{mean} + A X^\top y \\
+\text{cov}_b  &amp;=  \sigma^2 A\end{split}\]</div>
+<p>The model posterior is then</p>
+<div class="math notranslate nohighlight">
+\[b | X, y, \sigma^2 \sim \mathcal{N}(\mu_b, \text{cov}_b)\]</div>
+<p>We can also compute a closed-form solution for the posterior predictive distribution:</p>
+<div class="math notranslate nohighlight">
+\[y^* \mid X^*, X, Y \sim \mathcal{N}(X^* \mu_b, \ X^* \text{cov}_b X^{* \top} + I)\]</div>
+<p><strong>Models</strong></p>
+<ul class="simple">
+<li><a class="reference internal" href="numpy_ml.linear_models.lm.html#numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance" title="numpy_ml.linear_models.BayesianLinearRegressionUnknownVariance"><code class="xref py py-class docutils literal notranslate"><span class="pre">BayesianLinearRegressionUnknownVariance</span></code></a></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.linear_models.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

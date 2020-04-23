@@ -1,0 +1,687 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Activations &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Loss functions" href="numpy_ml.neural_nets.losses.html" />
+    <link rel="prev" title="Layers" href="numpy_ml.neural_nets.layers.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.layers.html">Layers</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Activations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#affine"><code class="docutils literal notranslate"><span class="pre">Affine</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elu"><code class="docutils literal notranslate"><span class="pre">ELU</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exponential"><code class="docutils literal notranslate"><span class="pre">Exponential</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hardsigmoid"><code class="docutils literal notranslate"><span class="pre">HardSigmoid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#leakyrelu"><code class="docutils literal notranslate"><span class="pre">LeakyReLU</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#relu"><code class="docutils literal notranslate"><span class="pre">ReLU</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selu"><code class="docutils literal notranslate"><span class="pre">SELU</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sigmoid"><code class="docutils literal notranslate"><span class="pre">Sigmoid</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#softplus"><code class="docutils literal notranslate"><span class="pre">SoftPlus</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tanh"><code class="docutils literal notranslate"><span class="pre">Tanh</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.losses.html">Loss functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.optimizers.html">Optimizers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.schedulers.html">Learning rate schedulers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.wrappers.html">Wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.modules.html">Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.models.html">Full networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.neural_nets.utils.html">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.neural_nets.html">Neural networks</a><ul>
+      <li>Previous: <a href="numpy_ml.neural_nets.layers.html" title="previous chapter">Layers</a></li>
+      <li>Next: <a href="numpy_ml.neural_nets.losses.html" title="next chapter">Loss functions</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="activations">
+<h1>Activations<a class="headerlink" href="#activations" title="Permalink to this headline">¶</a></h1>
+<p>Popular (and some not-so-popular) activation functions for use within arbitrary
+neural networks.</p>
+<div class="section" id="affine">
+<h2><code class="docutils literal notranslate"><span class="pre">Affine</span></code><a class="headerlink" href="#affine" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.Affine">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">Affine</code><span class="sig-paren">(</span><em>slope=1</em>, <em>intercept=0</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L242-L291"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Affine" title="Permalink to this definition">¶</a></dt>
+<dd><p>An affine activation function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>slope</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Activation slope. Default is 1.</li>
+<li><strong>intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Intercept/offset term. Default is 0.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Affine.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L261-L269"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Affine.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the Affine activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\text{Affine}(z_i)  =  \text{slope} \times z_i + \text{intercept}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Affine.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L271-L280"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Affine.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the Affine activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \text{Affine}}{\partial x_i}  =  \text{slope}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Affine.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L282-L291"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Affine.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the Affine activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{Affine}}{\partial x_i^2}  =  0\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="elu">
+<h2><code class="docutils literal notranslate"><span class="pre">ELU</span></code><a class="headerlink" href="#elu" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.ELU">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">ELU</code><span class="sig-paren">(</span><em>alpha=1.0</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L310-L386"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ELU" title="Permalink to this definition">¶</a></dt>
+<dd><p>An exponential linear unit (ELU).</p>
+<p class="rubric">Notes</p>
+<p>ELUs are intended to address the fact that ReLUs are strictly nonnegative
+and thus have an average activation &gt; 0, increasing the chances of internal
+covariate shift and slowing down learning. ELU units address this by (1)
+allowing negative values when <span class="math notranslate nohighlight">\(x &lt; 0\)</span>, which (2) are bounded by a value
+<span class="math notranslate nohighlight">\(-\alpha\)</span>. Similar to <a class="reference internal" href="#numpy_ml.neural_nets.activations.LeakyReLU" title="numpy_ml.neural_nets.activations.LeakyReLU"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeakyReLU</span></code></a>, the negative activation
+values help to push the average unit activation towards 0. Unlike
+<a class="reference internal" href="#numpy_ml.neural_nets.activations.LeakyReLU" title="numpy_ml.neural_nets.activations.LeakyReLU"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeakyReLU</span></code></a>, however, the boundedness of the negative activation
+allows for greater robustness in the face of large negative values,
+allowing the function to avoid conveying the <em>degree</em> of “absence”
+(negative activation) in the input. <a class="footnote-reference" href="#id2" id="id1">[*]</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Slope of negative segment. Default is 1.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[*]</a></td><td>Clevert, D. A., Unterthiner, T., Hochreiter, S. (2016). “Fast
+and accurate deep network learning by exponential linear units
+(ELUs)”. <em>4th International Conference on Learning
+Representations</em>.</td></tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ELU.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L347-L358"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ELU.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the ELU activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{ELU}(z_i)
+    &amp;=  z_i \ \ \ \ &amp;&amp;\text{if }z_i &gt; 0 \\
+    &amp;=  \alpha (e^{z_i} - 1) \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ELU.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L360-L372"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ELU.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the ELU activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \text{ELU}}{\partial x_i}
+    &amp;=  1 \ \ \ \ &amp;&amp;\text{if } x_i &gt; 0 \\
+    &amp;=  \alpha e^{x_i} \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ELU.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L374-L386"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ELU.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the ELU activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial^2 \text{ELU}}{\partial x_i^2}
+    &amp;=  0 \ \ \ \ &amp;&amp;\text{if } x_i &gt; 0 \\
+    &amp;=  \alpha e^{x_i} \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="exponential">
+<h2><code class="docutils literal notranslate"><span class="pre">Exponential</span></code><a class="headerlink" href="#exponential" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.Exponential">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">Exponential</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L389-L423"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Exponential" title="Permalink to this definition">¶</a></dt>
+<dd><p>An exponential (base e) activation function.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Exponential.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L399-L401"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Exponential.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the activation function <span class="math notranslate nohighlight">\(\text{Exponential}(z_i) = e^{z_i}\)</span>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Exponential.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L403-L412"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Exponential.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the exponential activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \text{Exponential}}{\partial x_i}  =  e^{x_i}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Exponential.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L414-L423"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Exponential.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the exponential activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{Exponential}}{\partial x_i^2}  =  e^{x_i}\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="hardsigmoid">
+<h2><code class="docutils literal notranslate"><span class="pre">HardSigmoid</span></code><a class="headerlink" href="#hardsigmoid" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.HardSigmoid">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">HardSigmoid</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L508-L558"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.HardSigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A “hard” sigmoid activation function.</p>
+<p class="rubric">Notes</p>
+<p>The hard sigmoid is a piecewise linear approximation of the logistic
+sigmoid that is computationally more efficient to compute.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.HardSigmoid.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L523-L534"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.HardSigmoid.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the hard sigmoid activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{HardSigmoid}(z_i)
+    &amp;= 0 \ \ \ \ &amp;&amp;\text{if }z_i &lt; -2.5 \\
+    &amp;= 0.2 z_i + 0.5 \ \ \ \ &amp;&amp;\text{if }-2.5 \leq z_i \leq 2.5 \\
+    &amp;= 1 \ \ \ \ &amp;&amp;\text{if }z_i &gt; 2.5\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.HardSigmoid.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L536-L547"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.HardSigmoid.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the hard sigmoid activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \text{HardSigmoid}}{\partial x_i}
+    &amp;=  0.2 \ \ \ \ &amp;&amp;\text{if } -2.5 \leq x_i \leq 2.5\\
+    &amp;=  0 \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.HardSigmoid.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L549-L558"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.HardSigmoid.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the hard sigmoid activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{HardSigmoid}}{\partial x_i^2} =  0\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="identity">
+<h2><code class="docutils literal notranslate"><span class="pre">Identity</span></code><a class="headerlink" href="#identity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.Identity">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">Identity</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L294-L307"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Identity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identity activation function.</p>
+<p class="rubric">Notes</p>
+<p><a class="reference internal" href="#numpy_ml.neural_nets.activations.Identity" title="numpy_ml.neural_nets.activations.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a> is just syntactic sugar for <a class="reference internal" href="#numpy_ml.neural_nets.activations.Affine" title="numpy_ml.neural_nets.activations.Affine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Affine</span></code></a> with
+slope = 1 and intercept = 0.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Identity.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L261-L269"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Identity.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the Affine activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\text{Affine}(z_i)  =  \text{slope} \times z_i + \text{intercept}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Identity.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L271-L280"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Identity.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the Affine activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \text{Affine}}{\partial x_i}  =  \text{slope}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Identity.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L282-L291"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Identity.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the Affine activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{Affine}}{\partial x_i^2}  =  0\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="leakyrelu">
+<h2><code class="docutils literal notranslate"><span class="pre">LeakyReLU</span></code><a class="headerlink" href="#leakyrelu" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.LeakyReLU">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">LeakyReLU</code><span class="sig-paren">(</span><em>alpha=0.3</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L133-L198"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.LeakyReLU" title="Permalink to this definition">¶</a></dt>
+<dd><p>‘Leaky’ version of a rectified linear unit (ReLU).</p>
+<p class="rubric">Notes</p>
+<p>Leaky ReLUs <a class="footnote-reference" href="#id4" id="id3">[†]</a> are designed to address the vanishing gradient problem in
+ReLUs by allowing a small non-zero gradient when <cite>x</cite> is negative.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>alpha</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Activation slope when x &lt; 0. Default is 0.3.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[†]</a></td><td>Mass, L. M., Hannun, A. Y, &amp; Ng, A. Y. (2013). “Rectifier
+nonlinearities improve neural network acoustic models”. <em>Proceedings of
+the 30th International Conference of Machine Learning, 30</em>.</td></tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.LeakyReLU.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L161-L173"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.LeakyReLU.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the leaky ReLU function on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{LeakyReLU}(z_i)
+    &amp;=  z_i \ \ \ \ &amp;&amp;\text{if } z_i &gt; 0 \\
+    &amp;=  \alpha z_i \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.LeakyReLU.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L175-L188"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.LeakyReLU.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the leaky ReLU function on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \text{LeakyReLU}}{\partial x_i}
+    &amp;=  1 \ \ \ \ &amp;&amp;\text{if }x_i &gt; 0 \\
+    &amp;=  \alpha \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.LeakyReLU.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L190-L198"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.LeakyReLU.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the leaky ReLU function on the elements of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{LeakyReLU}}{\partial x_i^2}  =  0\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="relu">
+<h2><code class="docutils literal notranslate"><span class="pre">ReLU</span></code><a class="headerlink" href="#relu" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.ReLU">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">ReLU</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L68-L130"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ReLU" title="Permalink to this definition">¶</a></dt>
+<dd><p>A rectified linear activation function.</p>
+<p class="rubric">Notes</p>
+<p>“ReLU units can be fragile during training and can “die”. For example, a
+large gradient flowing through a ReLU neuron could cause the weights to
+update in such a way that the neuron will never activate on any datapoint
+again. If this happens, then the gradient flowing through the unit will
+forever be zero from that point on. That is, the ReLU units can
+irreversibly die during training since they can get knocked off the data
+manifold.</p>
+<p>For example, you may find that as much as 40% of your network can be “dead”
+(i.e. neurons that never activate across the entire training dataset) if
+the learning rate is set too high. With a proper setting of the learning
+rate this is less frequently an issue.” <a class="footnote-reference" href="#id6" id="id5">[‡]</a></p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[‡]</a></td><td>Karpathy, A. “CS231n: Convolutional neural networks for visual recognition”.</td></tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ReLU.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L98-L108"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ReLU.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaulate the ReLU function on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{ReLU}(z_i)
+    &amp;=  z_i \ \ \ \ &amp;&amp;\text{if }z_i &gt; 0 \\
+    &amp;=  0 \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ReLU.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L110-L120"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ReLU.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaulate the first derivative of the ReLU function on the elements of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \text{ReLU}}{\partial x_i}
+    &amp;=  1 \ \ \ \ &amp;&amp;\text{if }x_i &gt; 0 \\
+    &amp;=  0   \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.ReLU.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L122-L130"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.ReLU.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaulate the second derivative of the ReLU function on the elements of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{ReLU}}{\partial x_i^2}  =  0\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selu">
+<h2><code class="docutils literal notranslate"><span class="pre">SELU</span></code><a class="headerlink" href="#selu" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.SELU">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">SELU</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L426-L505"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SELU" title="Permalink to this definition">¶</a></dt>
+<dd><p>A scaled exponential linear unit (SELU).</p>
+<p class="rubric">Notes</p>
+<p>SELU units, when used in conjunction with proper weight initialization and
+regularization techniques, encourage neuron activations to converge to
+zero-mean and unit variance without explicit use of e.g., batchnorm.</p>
+<p>For SELU units, the <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(\text{scale}\)</span> values are
+constants chosen so that the mean and variance of the inputs are preserved
+between consecutive layers. As such the authors propose weights be
+initialized using Lecun-Normal initialization: <span class="math notranslate nohighlight">\(w_{ij} \sim
+\mathcal{N}(0, 1 / \text{fan_in})\)</span>, and to use the dropout variant
+<span class="math notranslate nohighlight">\(\alpha\)</span>-dropout during regularization. <a class="footnote-reference" href="#id8" id="id7">[§]</a></p>
+<p>See the reference for more information (especially the appendix ;-) ).</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id8" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id7">[§]</a></td><td>Klambauer, G., Unterthiner, T., &amp; Hochreiter, S. (2017).
+“Self-normalizing neural networks.” <em>Advances in Neural Information
+Processing Systems, 30.</em></td></tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SELU.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L461-L477"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SELU.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the SELU activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\text{SELU}(z_i)  =  \text{scale} \times \text{ELU}(z_i, \alpha)\]</div>
+<p>which is simply</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{SELU}(z_i)
+    &amp;= \text{scale} \times z_i \ \ \ \ &amp;&amp;\text{if }z_i &gt; 0 \\
+    &amp;= \text{scale} \times \alpha (e^{z_i} - 1) \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SELU.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L479-L492"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SELU.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the SELU activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial \text{SELU}}{\partial x_i}
+    &amp;=  \text{scale} \ \ \ \ &amp;&amp;\text{if } x_i &gt; 0 \\
+    &amp;=  \text{scale} \times \alpha e^{x_i} \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SELU.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L494-L505"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SELU.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the SELU activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\frac{\partial^2 \text{SELU}}{\partial x_i^2}
+    &amp;=  0 \ \ \ \ &amp;&amp;\text{if } x_i &gt; 0 \\
+    &amp;=  \text{scale} \times \alpha e^{x_i} \ \ \ \ &amp;&amp;\text{otherwise}\end{split}\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="sigmoid">
+<h2><code class="docutils literal notranslate"><span class="pre">Sigmoid</span></code><a class="headerlink" href="#sigmoid" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.Sigmoid">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">Sigmoid</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L24-L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Sigmoid" title="Permalink to this definition">¶</a></dt>
+<dd><p>A logistic sigmoid activation function.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Sigmoid.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L34-L42"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Sigmoid.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the logistic sigmoid, <span class="math notranslate nohighlight">\(\sigma\)</span>, on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\sigma(x_i) = \frac{1}{1 + e^{-x_i}}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Sigmoid.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L44-L53"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Sigmoid.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the logistic sigmoid on the elements of <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \sigma}{\partial x_i} = \sigma(x_i) (1 - \sigma(x_i))\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Sigmoid.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L55-L65"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Sigmoid.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the logistic sigmoid on the elements of <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \sigma}{\partial x_i^2} =
+    \frac{\partial \sigma}{\partial x_i} (1 - 2 \sigma(x_i))\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="softplus">
+<h2><code class="docutils literal notranslate"><span class="pre">SoftPlus</span></code><a class="headerlink" href="#softplus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.SoftPlus">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">SoftPlus</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L561-L611"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SoftPlus" title="Permalink to this definition">¶</a></dt>
+<dd><p>A softplus activation function.</p>
+<p class="rubric">Notes</p>
+<p>In contrast to <a class="reference internal" href="#numpy_ml.neural_nets.activations.ReLU" title="numpy_ml.neural_nets.activations.ReLU"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReLU</span></code></a>, the softplus activation is differentiable
+everywhere (including 0). It is, however, less computationally efficient to
+compute.</p>
+<p>The derivative of the softplus activation is the logistic sigmoid.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SoftPlus.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L579-L587"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SoftPlus.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the softplus activation on the elements of input <cite>z</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\text{SoftPlus}(z_i) = \log(1 + e^{z_i})\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SoftPlus.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L589-L599"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SoftPlus.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the softplus activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \text{SoftPlus}}{\partial x_i} = \frac{e^{x_i}}{1 + e^{x_i}}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.SoftPlus.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L601-L611"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.SoftPlus.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the softplus activation on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \text{SoftPlus}}{\partial x_i^2} = \frac{e^{x_i}}{(1 + e^{x_i})^2}\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tanh">
+<h2><code class="docutils literal notranslate"><span class="pre">Tanh</span></code><a class="headerlink" href="#tanh" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="numpy_ml.neural_nets.activations.Tanh">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.activations.</code><code class="descname">Tanh</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L201-L239"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Tanh" title="Permalink to this definition">¶</a></dt>
+<dd><p>A hyperbolic tangent activation function.</p>
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Tanh.fn">
+<code class="descname">fn</code><span class="sig-paren">(</span><em>z</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L211-L215"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Tanh.fn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the tanh function on the elements of input <cite>z</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Tanh.grad">
+<code class="descname">grad</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L217-L226"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Tanh.grad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the first derivative of the tanh function on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \tanh}{\partial x_i}  =  1 - \tanh(x)^2\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.activations.Tanh.grad2">
+<code class="descname">grad2</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/activations/activations.py#L228-L239"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.activations.Tanh.grad2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the second derivative of the tanh function on the elements
+of input <cite>x</cite>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial^2 \tanh}{\partial x_i^2} =
+    -2 \tanh(x) \left(\frac{\partial \tanh}{\partial x_i}\right)\]</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.activations.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

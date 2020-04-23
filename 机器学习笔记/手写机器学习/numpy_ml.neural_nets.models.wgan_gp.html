@@ -1,0 +1,352 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WGAN-GP (neural_nets.models.wgan_gp) &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="wgan-gp-neural-nets-models-wgan-gp">
+<h1>WGAN-GP (<code class="docutils literal notranslate"><span class="pre">neural_nets.models.wgan_gp</span></code>)<a class="headerlink" href="#wgan-gp-neural-nets-models-wgan-gp" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-numpy_ml.neural_nets.models.wgan_gp"></span><dl class="class">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP">
+<em class="property">class </em><code class="descclassname">numpy_ml.neural_nets.models.wgan_gp.</code><code class="descname">WGAN_GP</code><span class="sig-paren">(</span><em>g_hidden=512</em>, <em>init='he_uniform'</em>, <em>optimizer='RMSProp(lr=0.0001)'</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L11-L528"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A Wasserstein generative adversarial network (WGAN) architecture with
+gradient penalty (GP).</p>
+<p class="rubric">Notes</p>
+<p>In contrast to a regular WGAN, WGAN-GP uses gradient penalty on the
+generator rather than weight clipping to encourage the 1-Lipschitz
+constraint:</p>
+<div class="math notranslate nohighlight">
+\[| \text{Generator}(\mathbf{x}_1) - \text{Generator}(\mathbf{x}_2) |
+    \leq |\mathbf{x}_1 - \mathbf{x}_2 | \ \ \ \ \forall \mathbf{x}_1, \mathbf{x}_2\]</div>
+<p>In other words, the generator must have input gradients with a norm of at
+most 1 under the <span class="math notranslate nohighlight">\(\mathbf{X}_{real}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}_{fake}\)</span>
+data distributions.</p>
+<p>To enforce this constraint, WGAN-GP penalizes the model if the generator
+gradient norm moves away from a target norm of 1. See
+<a class="reference internal" href="numpy_ml.neural_nets.losses.html#numpy_ml.neural_nets.losses.WGAN_GPLoss" title="numpy_ml.neural_nets.losses.WGAN_GPLoss"><code class="xref py py-class docutils literal notranslate"><span class="pre">WGAN_GPLoss</span></code></a> for more details.</p>
+<p>In contrast to a standard WGAN, WGAN-GP avoids using BatchNorm in the
+critic, as correlation between samples in a batch can impact the stability
+of the gradient penalty.</p>
+<p>WGAP-GP architecture:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>X_real ------------------------|
+                                &gt;---&gt; [Critic] --&gt; Y_out
+Z --&gt; [Generator] --&gt; X_fake --|
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">[Generator]</span></code> is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FC1 -&gt; ReLU -&gt; FC2 -&gt; ReLU -&gt; FC3 -&gt; ReLU -&gt; FC4
+</pre></div>
+</div>
+<p>and <code class="docutils literal notranslate"><span class="pre">[Critic]</span></code> is</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>FC1 -&gt; ReLU -&gt; FC2 -&gt; ReLU -&gt; FC3 -&gt; ReLU -&gt; FC4
+</pre></div>
+</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[Z \sim \mathcal{N}(0, 1)\]</div>
+<p>Wasserstein generative adversarial network with gradient penalty.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>g_hidden</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of units in the critic and generator hidden layers.
+Default is 512.</li>
+<li><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – The weight initialization strategy. Valid entries are
+{‘glorot_normal’, ‘glorot_uniform’, ‘he_normal’, ‘he_uniform’,
+‘std_normal’, ‘trunc_normal’}. Default is “he_uniform”.</li>
+<li><strong>optimizer</strong> (str or <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html"><span class="doc">Optimizer</span></a> object or None) – The optimization strategy to use when performing gradient updates.
+If None, use the <a class="reference internal" href="numpy_ml.neural_nets.optimizers.html#numpy_ml.neural_nets.optimizers.SGD" title="numpy_ml.neural_nets.optimizers.SGD"><code class="xref py py-class docutils literal notranslate"><span class="pre">SGD</span></code></a>
+optimizer with default parameters. Default is “RMSProp(lr=0.0001)”.</li>
+<li><strong>debug</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to store additional intermediate output within
+<code class="docutils literal notranslate"><span class="pre">self.derived_variables</span></code>. Default is False.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.hyperparameters">
+<code class="descname">hyperparameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L153-L167"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.parameters">
+<code class="descname">parameters</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L169-L176"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.parameters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.derived_variables">
+<code class="descname">derived_variables</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L178-L189"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.derived_variables" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.gradients">
+<code class="descname">gradients</code><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L191-L204"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.gradients" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.forward">
+<code class="descname">forward</code><span class="sig-paren">(</span><em>X</em>, <em>module</em>, <em>retain_derived=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L206-L244"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the forward pass for either the generator or the critic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(batchsize, *)</cite>) – Input data</li>
+<li><strong>module</strong> (<em>{'C'</em><em> or </em><em>'G'}</em>) – Whether to perform the forward pass for the critic (‘C’) or for the
+generator (‘G’).</li>
+<li><strong>retain_derived</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to retain the variables calculated during the forward pass
+for use later during backprop. If False, this suggests the layer
+will not be expected to backprop through wrt. this input. Default
+is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>out</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(batchsize, *)</cite>) – The output of the final layer of the module.</li>
+<li><strong>Xs</strong> (<em>dict</em>) – A dictionary with layer ids as keys and values corresponding to the
+input to each intermediate layer during the forward pass. Useful
+during debugging.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.backward">
+<code class="descname">backward</code><span class="sig-paren">(</span><em>grad</em>, <em>module</em>, <em>retain_grads=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L246-L282"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.backward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform the backward pass for either the generator or the critic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>grad</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(batchsize, *)</cite> or list of arrays) – Gradient of the loss with respect to module output(s).</li>
+<li><strong>module</strong> (<em>{'C'</em><em> or </em><em>'G'}</em>) – Whether to perform the backward pass for the critic (‘C’) or for the
+generator (‘G’).</li>
+<li><strong>retain_grads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to include the intermediate parameter gradients computed
+during the backward pass in the final parameter update. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>out</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(batchsize, *)</cite>) – The gradient of the loss with respect to the module input.</li>
+<li><strong>dXs</strong> (<em>dict</em>) – A dictionary with layer ids as keys and values corresponding to the
+input to each intermediate layer during the backward pass. Useful
+during debugging.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update_critic">
+<code class="descname">update_critic</code><span class="sig-paren">(</span><em>X_real</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L304-L393"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update_critic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute parameter gradients for the critic on a single minibatch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X_real</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(batchsize, n_feats)</cite>) – Input data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>C_loss</strong> (<em>float</em>) – The critic loss on the current data.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update_generator">
+<code class="descname">update_generator</code><span class="sig-paren">(</span><em>X_shape</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L395-L422"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute parameter gradients for the generator on a single minibatch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>X_shape</strong> (tuple of <cite>(batchsize, n_feats)</cite>) – Shape for the input batch.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>G_loss</strong> (<em>float</em>) – The generator loss on the fake data (generated during the critic
+update)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.flush_gradients">
+<code class="descname">flush_gradients</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L424-L434"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.flush_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset parameter gradients to 0 after an update.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>module</em>, <em>module_loss=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L436-L447"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform gradient updates and flush gradients upon completion</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>X_real</em>, <em>lambda_</em>, <em>n_steps=1000</em>, <em>batchsize=128</em>, <em>c_updates_per_epoch=5</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/models/wgan_gp.py#L449-L528"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.neural_nets.models.wgan_gp.WGAN_GP.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit WGAN_GP on a training dataset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X_real</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, n_feats)</cite>) – Training dataset</li>
+<li><strong>lambda</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Gradient penalty coefficient for the critic loss</li>
+<li><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The maximum number of generator updates to perform. Default is
+1000.</li>
+<li><strong>batchsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of examples to use in each training minibatch. Default is
+128.</li>
+<li><strong>c_updates_per_epoch</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of critic updates to perform at each generator update.</li>
+<li><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Print loss values after each update. If False, only print loss
+every 100 steps. Default is True.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.neural_nets.models.wgan_gp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

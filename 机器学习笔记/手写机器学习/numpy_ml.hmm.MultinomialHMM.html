@@ -1,0 +1,344 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MultinomialHMM &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Gaussian mixture models" href="numpy_ml.gmm.html" />
+    <link rel="prev" title="Hidden Markov models" href="numpy_ml.hmm.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">MultinomialHMM</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.hmm.html">Hidden Markov models</a><ul>
+      <li>Previous: <a href="numpy_ml.hmm.html" title="previous chapter">Hidden Markov models</a></li>
+      <li>Next: <a href="numpy_ml.gmm.html" title="next chapter">Gaussian mixture models</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="multinomialhmm">
+<h1><code class="docutils literal notranslate"><span class="pre">MultinomialHMM</span></code><a class="headerlink" href="#multinomialhmm" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="numpy_ml.hmm.MultinomialHMM">
+<em class="property">class </em><code class="descclassname">numpy_ml.hmm.</code><code class="descname">MultinomialHMM</code><span class="sig-paren">(</span><em>A=None</em>, <em>B=None</em>, <em>pi=None</em>, <em>eps=None</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/hmm/hmm.py#L4-L627"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.hmm.MultinomialHMM" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple hidden Markov model with multinomial emission distribution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>A</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, N)</cite> or None) – The transition matrix between latent states in the HMM. Index <cite>i</cite>,
+<cite>j</cite> gives the probability of transitioning from latent state <cite>i</cite> to
+latent state <cite>j</cite>. Default is None.</li>
+<li><strong>B</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, V)</cite> or None) – The emission matrix. Entry <cite>i</cite>, <cite>j</cite> gives the probability of latent
+state i emitting an observation of type <cite>j</cite>. Default is None.</li>
+<li><strong>pi</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite> or None) – The prior probability of each latent state. If None, use a uniform
+prior over states. Default is None.</li>
+<li><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – Epsilon value to avoid <span class="math notranslate nohighlight">\(\log(0)\)</span> errors. If None, defaults to
+the machine epsilon. Default is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>A</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, N)</cite>) – The transition matrix between latent states in the HMM. Index <cite>i</cite>,
+<cite>j</cite> gives the probability of transitioning from latent state <cite>i</cite> to
+latent state <cite>j</cite>.</li>
+<li><strong>B</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, V)</cite>) – The emission matrix. Entry <cite>i</cite>, <cite>j</cite> gives the probability of latent
+state <cite>i</cite> emitting an observation of type <cite>j</cite>.</li>
+<li><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of unique latent states</li>
+<li><strong>V</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of unique observation types</li>
+<li><strong>O</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(I, T)</cite>) – The collection of observed training sequences.</li>
+<li><strong>I</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of sequences in <cite>O</cite>.</li>
+<li><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of observations in each sequence in <cite>O</cite>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="numpy_ml.hmm.MultinomialHMM.generate">
+<code class="descname">generate</code><span class="sig-paren">(</span><em>n_steps</em>, <em>latent_state_types</em>, <em>obs_types</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/hmm/hmm.py#L79-L115"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.hmm.MultinomialHMM.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample a sequence from the HMM.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>n_steps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The length of the generated sequence</li>
+<li><strong>latent_state_types</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A collection of labels for the latent states</li>
+<li><strong>obs_types</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(V,)</cite>) – A collection of labels for the observations</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>states</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_steps,)</cite>) – The sampled latent states.</li>
+<li><strong>emissions</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_steps,)</cite>) – The sampled emissions.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.hmm.MultinomialHMM.log_likelihood">
+<code class="descname">log_likelihood</code><span class="sig-paren">(</span><em>O</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/hmm/hmm.py#L117-L172"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.hmm.MultinomialHMM.log_likelihood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the HMM parameterized by <span class="math notranslate nohighlight">\((A\)</span>, B, pi)` and an observation
+sequence <cite>O</cite>, compute the marginal likelihood of the observations:
+<span class="math notranslate nohighlight">\(P(O|A,B,\pi)\)</span>, summing over latent states.</p>
+<p class="rubric">Notes</p>
+<p>The log likelihood is computed efficiently via DP using the forward
+algorithm, which produces a 2D trellis, <code class="docutils literal notranslate"><span class="pre">forward</span></code> (sometimes referred
+to as <cite>alpha</cite> in the literature), where entry <cite>i</cite>, <cite>j</cite> represents the
+probability under the HMM of being in latent state <cite>i</cite> after seeing the
+first <cite>j</cite> observations:</p>
+<div class="math notranslate nohighlight">
+\[\mathtt{forward[i,j]} = P(o_1,\ldots,o_j,q_j=i \mid A,B,\pi)\]</div>
+<p>Here <span class="math notranslate nohighlight">\(q_j = i\)</span> indicates that the hidden state at time <cite>j</cite> is of
+type <cite>i</cite>.</p>
+<p>The DP step is:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\mathtt{forward[i,j]}  &amp;=  \sum_{s'=1}^N \mathtt{forward[s',j-1]}
+\cdot \mathtt{A[s',i]} \cdot \mathtt{B[i,o_j]} \\\                       &amp;=  \sum_{s'=1}^N
+                       P(o_1,\ldots,o_{j-1},q_{j-1}=s' \mid A,B,\pi)
+                       P(q_j=i|q_{j-1}=s') P(o_j \mid q_j=i)\end{aligned}\end{align} \]</div>
+<p>In words, <code class="docutils literal notranslate"><span class="pre">forward[i,j]</span></code> is the weighted sum of the values computed on
+the previous timestep. The weight on each previous state value is the
+product of the probability of transitioning from that state to state <cite>i</cite>
+and the probability of emitting observation <cite>j</cite> in state <cite>i</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>O</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(1, T)</cite>) – A single set of observations.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>likelihood</strong> (<em>float</em>) – The likelihood of the observations <cite>O</cite> under the HMM.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.hmm.MultinomialHMM.decode">
+<code class="descname">decode</code><span class="sig-paren">(</span><em>O</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/hmm/hmm.py#L174-L280"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.hmm.MultinomialHMM.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given the HMM parameterized by <span class="math notranslate nohighlight">\((A, B, \pi)\)</span> and an observation
+sequence <span class="math notranslate nohighlight">\(O = o_1, \ldots, o_T\)</span>, compute the most probable
+sequence of latent states, <span class="math notranslate nohighlight">\(Q = q_1, \ldots, q_T\)</span>.</p>
+<p class="rubric">Notes</p>
+<p>HMM decoding is done efficiently via DP using the Viterbi algorithm,
+which produces a 2D trellis, <code class="docutils literal notranslate"><span class="pre">viterbi</span></code>, where entry <cite>i</cite>, <cite>j</cite> represents the
+probability under the HMM of being in state <cite>i</cite> at time <cite>j</cite> after having
+passed through the <em>most probable</em> state sequence <span class="math notranslate nohighlight">\(q_1,\ldots,q_{j-1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\mathtt{viterbi[i,j]} =
+    \max_{q_1,\ldots,q_{j-1}} P(o_1,\ldots,o_j,q_1,\ldots,q_{j-1},q_j=i \mid A,B,\pi)\]</div>
+<p>Here <span class="math notranslate nohighlight">\(q_j = i\)</span> indicates that the hidden state at time <cite>j</cite> is of
+type <cite>i</cite>, and <span class="math notranslate nohighlight">\(\max_{q_1,\ldots,q_{j-1}}\)</span> represents the maximum over
+all possible latent state sequences for the first <cite>j-1</cite> observations.</p>
+<p>The DP step is:</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\mathtt{viterbi[i,j]}  &amp;=  \max_{s'=1}^N \mathtt{viterbi[s',j-1]} \cdot
+\mathtt{A[s',i]} \cdot \mathtt{B[i,o_j]} \\\                       &amp;=  \max_{s'=1}^N
+                       P(o_1,\ldots,o_j,q_1,\ldots,q_{j-1},q_j=i \mid A,B,\pi)
+                       P(q_j=i \mid q_{j-1}=s') P(o_j \mid q_j=i)\end{aligned}\end{align} \]</div>
+<p>In words, <code class="docutils literal notranslate"><span class="pre">viterbi[i,j]</span></code> is the weighted sum of the values computed
+on the previous timestep. The weight on each value is the product of
+the probability of transitioning from that state to state <cite>i</cite> and the
+probability of emitting observation <cite>j</cite> in state <cite>i</cite>.</p>
+<p>To compute the most probable state sequence we maintain a second
+trellis, <code class="docutils literal notranslate"><span class="pre">back_pointer</span></code>, whose <cite>i</cite>, <cite>j</cite> entry contains the value of the
+latent state at timestep <cite>j-1</cite> that is most likely to lead to latent
+state <cite>i</cite> at timestep <cite>j</cite>.</p>
+<p>When we have completed the <code class="docutils literal notranslate"><span class="pre">viterbi</span></code> and <code class="docutils literal notranslate"><span class="pre">back_pointer</span></code> trellises for
+all <cite>T</cite> timseteps/observations, we greedily move backwards through the
+<code class="docutils literal notranslate"><span class="pre">back_pointer</span></code> trellis to construct the best path for the full
+sequence of observations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>O</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(T,)</cite>) – An observation sequence of length <cite>T</cite>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><ul class="simple">
+<li><strong>best_path</strong> (list of length <cite>T</cite>) – The most probable sequence of latent states for observations <cite>O</cite>.</li>
+<li><strong>best_path_prob</strong> (<em>float</em>) – The probability of the latent state sequence in <cite>best_path</cite> under
+the HMM.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="numpy_ml.hmm.MultinomialHMM.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>O</em>, <em>latent_state_types</em>, <em>observation_types</em>, <em>pi=None</em>, <em>tol=1e-05</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/hmm/hmm.py#L403-L492"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.hmm.MultinomialHMM.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an observation sequence <cite>O</cite> and the set of possible latent states,
+learn the MLE HMM parameters <cite>A</cite> and <cite>B</cite>.</p>
+<p class="rubric">Notes</p>
+<p>Model fitting is done iterativly using the Baum-Welch/Forward-Backward
+algorithm, a special case of the EM algorithm.</p>
+<p>We begin with an intial estimate for the transition (<cite>A</cite>) and emission
+(<cite>B</cite>) matrices and then use these to derive better and better estimates
+by computing the forward probability for an observation and then
+dividing that probability mass among all the paths that contributed to
+it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>O</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(I, T)</cite>) – The set of <cite>I</cite> training observations, each of length <cite>T</cite>.</li>
+<li><strong>latent_state_types</strong> (list of length <cite>N</cite>) – The collection of valid latent states.</li>
+<li><strong>observation_types</strong> (list of length <cite>V</cite>) – The collection of valid observation states.</li>
+<li><strong>pi</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The prior probability of each latent state. If None, assume each
+latent state is equally likely a priori. Default is None.</li>
+<li><strong>tol</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The tolerance value. If the difference in log likelihood between
+two epochs is less than this value, terminate training. Default is
+1e-5.</li>
+<li><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Print training stats after each epoch. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>A</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, N)</cite>) – The estimated transition matrix.</li>
+<li><strong>B</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, V)</cite>) – The estimated emission matrix.</li>
+<li><strong>pi</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The estimated prior probabilities of each latent state.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.hmm.MultinomialHMM.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

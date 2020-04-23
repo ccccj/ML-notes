@@ -1,0 +1,805 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Digital signal processing &#8212; numpy-ml 0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Natural language processing" href="numpy_ml.preprocessing.nlp.html" />
+    <link rel="prev" title="General" href="numpy_ml.preprocessing.general.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">numpy-ml</a></h1>
+
+
+
+<p class="blurb">Machine learning, in NumPy</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=ddbourgin&repo=numpy-ml&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.hmm.html">Hidden Markov models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.gmm.html">Gaussian mixture models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.lda.html">Latent Dirichlet allocation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.ngram.html">N-gram smoothing models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.rl_models.html">Reinforcement learning</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.nonparametric.html">Nonparametric models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.trees.html">Tree-based models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.neural_nets.html">Neural networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.linear_models.html">Linear models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="numpy_ml.preprocessing.html">Preprocessing</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.general.html">General</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Digital signal processing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dct"><code class="docutils literal notranslate"><span class="pre">DCT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dft"><code class="docutils literal notranslate"><span class="pre">DFT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dft-bins"><code class="docutils literal notranslate"><span class="pre">dft_bins</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#magnitude-spectrum"><code class="docutils literal notranslate"><span class="pre">magnitude_spectrum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#power-spectrum"><code class="docutils literal notranslate"><span class="pre">power_spectrum</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#batch-resample"><code class="docutils literal notranslate"><span class="pre">batch_resample</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nn-interpolate-2d"><code class="docutils literal notranslate"><span class="pre">nn_interpolate_2D</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nn-interpolate-1d"><code class="docutils literal notranslate"><span class="pre">nn_interpolate_1D</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bilinear-interpolate"><code class="docutils literal notranslate"><span class="pre">bilinear_interpolate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#to-frames"><code class="docutils literal notranslate"><span class="pre">to_frames</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#autocorrelate1d"><code class="docutils literal notranslate"><span class="pre">autocorrelate1D</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#preemphasis"><code class="docutils literal notranslate"><span class="pre">preemphasis</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cepstral-lifter"><code class="docutils literal notranslate"><span class="pre">cepstral_lifter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mel-spectrogram"><code class="docutils literal notranslate"><span class="pre">mel_spectrogram</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mfcc"><code class="docutils literal notranslate"><span class="pre">mfcc</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mel2hz"><code class="docutils literal notranslate"><span class="pre">mel2hz</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hz2mel"><code class="docutils literal notranslate"><span class="pre">hz2mel</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mel-filterbank"><code class="docutils literal notranslate"><span class="pre">mel_filterbank</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numpy_ml.preprocessing.nlp.html">Natural language processing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="numpy_ml.utils.html">Utilities</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="numpy_ml.preprocessing.html">Preprocessing</a><ul>
+      <li>Previous: <a href="numpy_ml.preprocessing.general.html" title="previous chapter">General</a></li>
+      <li>Next: <a href="numpy_ml.preprocessing.nlp.html" title="next chapter">Natural language processing</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="digital-signal-processing">
+<h1>Digital signal processing<a class="headerlink" href="#digital-signal-processing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dct">
+<h2><code class="docutils literal notranslate"><span class="pre">DCT</span></code><a class="headerlink" href="#dct" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.DCT">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">DCT</code><span class="sig-paren">(</span><em>frame</em>, <em>orthonormal=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L161-L209"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.DCT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A naive <span class="math notranslate nohighlight">\(O(N^2)\)</span> implementation of the 1D discrete cosine transform-II
+(DCT-II).</p>
+<p class="rubric">Notes</p>
+<p>For a signal <span class="math notranslate nohighlight">\(\mathbf{x} = [x_1, \ldots, x_N]\)</span> consisting of <cite>N</cite>
+samples, the <cite>k</cite> th DCT coefficient, <span class="math notranslate nohighlight">\(c_k\)</span>, is</p>
+<div class="math notranslate nohighlight">
+\[c_k = 2 \sum_{n=0}^{N-1} x_n \cos(\pi k (2 n + 1) / (2 N))\]</div>
+<p>where <cite>k</cite> ranges from <span class="math notranslate nohighlight">\(0, \ldots, N-1\)</span>.</p>
+<p>The DCT is highly similar to the DFT – whereas in a DFT the basis
+functions are sinusoids, in a DCT they are restricted solely to cosines. A
+signal’s DCT representation tends to have more of its energy concentrated
+in a smaller number of coefficients when compared to the DFT, and is thus
+commonly used for signal compression. [1]</p>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>Smoother signals can be accurately approximated using fewer DFT / DCT
+coefficients, resulting in a higher compression ratio. The DCT naturally
+yields a continuous extension at the signal boundaries due its use of
+even basis functions (cosine). This in turn produces a smoother
+extension in comparison to DFT or DCT approximations, resulting in a
+higher compression.</td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>frame</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A signal frame consisting of N samples</li>
+<li><strong>orthonormal</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Scale to ensure the coefficient vector is orthonormal. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>dct</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The discrete cosine transform of the samples in <cite>frame</cite>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dft">
+<h2><code class="docutils literal notranslate"><span class="pre">DFT</span></code><a class="headerlink" href="#dft" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.DFT">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">DFT</code><span class="sig-paren">(</span><em>frame</em>, <em>positive_only=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L224-L273"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.DFT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A naive <span class="math notranslate nohighlight">\(O(N^2)\)</span> implementation of the 1D discrete Fourier transform (DFT).</p>
+<p class="rubric">Notes</p>
+<p>The Fourier transform decomposes a signal into a linear combination of
+sinusoids (ie., basis elements in the space of continuous periodic
+functions).  For a sequence <span class="math notranslate nohighlight">\(\mathbf{x} = [x_1, \ldots, x_N]\)</span> of N
+evenly spaced samples, the <cite>k</cite> th DFT coefficient is given by:</p>
+<div class="math notranslate nohighlight">
+\[c_k = \sum_{n=0}^{N-1} x_n \exp(-2 \pi i k n / N)\]</div>
+<p>where <cite>i</cite> is the imaginary unit, <cite>k</cite> is an index ranging from <cite>0, …, N-1</cite>,
+and <span class="math notranslate nohighlight">\(X_k\)</span> is the complex coefficient representing the phase
+(imaginary part) and amplitude (real part) of the <cite>k</cite> th sinusoid in the
+DFT spectrum. The frequency of the <cite>k</cite> th sinusoid is <span class="math notranslate nohighlight">\((k 2 \pi / N)\)</span>
+radians per sample.</p>
+<p>When applied to a real-valued input, the negative frequency terms are the
+complex conjugates of the positive-frequency terms and the overall spectrum
+is symmetric (excluding the first index, which contains the zero-frequency
+/ intercept term).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>frame</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A signal frame consisting of N samples</li>
+<li><strong>positive_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to only return the coefficients for the positive frequency
+terms. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>spectrum</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite> or <cite>(N // 2 + 1,)</cite> if <cite>real_only</cite>) – The coefficients of the frequency spectrum for <cite>frame</cite>, including
+imaginary components.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="dft-bins">
+<h2><code class="docutils literal notranslate"><span class="pre">dft_bins</span></code><a class="headerlink" href="#dft-bins" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.dft_bins">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">dft_bins</code><span class="sig-paren">(</span><em>N</em>, <em>fs=44000</em>, <em>positive_only=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L276-L301"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.dft_bins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calc the frequency bin centers for a DFT with <cite>N</cite> coefficients.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of frequency bins in the DFT</li>
+<li><strong>fs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample rate/frequency of the signal (in Hz). Default is 44000.</li>
+<li><strong>positive_only</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to only return the bins for the positive frequency
+terms. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>bins</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite> or <cite>(N // 2 + 1,)</cite> if <cite>positive_only</cite>) – The frequency bin centers associated with each coefficient in the
+DFT spectrum</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="magnitude-spectrum">
+<h2><code class="docutils literal notranslate"><span class="pre">magnitude_spectrum</span></code><a class="headerlink" href="#magnitude-spectrum" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.magnitude_spectrum">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">magnitude_spectrum</code><span class="sig-paren">(</span><em>frames</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L304-L320"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.magnitude_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the magnitude spectrum (i.e., absolute value of the DFT spectrum)
+for each frame in <cite>frames</cite>. Assumes each frame is real-valued only.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frames</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M, N)</cite>) – A sequence of <cite>M</cite> frames each consisting of <cite>N</cite> samples</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>magnitude_spec</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M, N // 2 + 1)</cite>) – The magnitude spectrum for each frame in <cite>frames</cite>. Only includes the
+coefficients for the positive spectrum frequencies.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="power-spectrum">
+<h2><code class="docutils literal notranslate"><span class="pre">power_spectrum</span></code><a class="headerlink" href="#power-spectrum" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.power_spectrum">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">power_spectrum</code><span class="sig-paren">(</span><em>frames</em>, <em>scale=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L323-L346"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.power_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the power spectrum for a signal represented as a collection of
+frames. Assumes each frame is real-valued only.</p>
+<p>The power spectrum is simply the square of the magnitude spectrum, possibly
+scaled by the number of FFT bins. It measures how the energy of the signal
+is distributed over the frequency domain.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>frames</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M, N)</cite>) – A sequence of <cite>M</cite> frames each consisting of <cite>N</cite> samples</li>
+<li><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether the scale by the number of DFT bins. Default is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>power_spec</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(M, N // 2 + 1)</cite>) – The power spectrum for each frame in <cite>frames</cite>. Only includes the
+coefficients for the positive spectrum frequencies.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="batch-resample">
+<h2><code class="docutils literal notranslate"><span class="pre">batch_resample</span></code><a class="headerlink" href="#batch-resample" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.batch_resample">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">batch_resample</code><span class="sig-paren">(</span><em>X</em>, <em>new_dim</em>, <em>mode='bilinear'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L11-L50"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.batch_resample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resample each image (or similar grid-based 2D signal) in a batch to
+<cite>new_dim</cite> using the specified resampling strategy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, in_rows, in_cols, in_channels)</cite>) – An input image volume</li>
+<li><strong>new_dim</strong> (2-tuple of <cite>(out_rows, out_cols)</cite>) – The dimension to resample each image to</li>
+<li><strong>mode</strong> (<em>{'bilinear'</em><em>, </em><em>'neighbor'}</em>) – The resampling strategy to employ. Default is ‘bilinear’.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>resampled</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_ex, out_rows, out_cols, in_channels)</cite>) – The resampled image volume.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="nn-interpolate-2d">
+<h2><code class="docutils literal notranslate"><span class="pre">nn_interpolate_2D</span></code><a class="headerlink" href="#nn-interpolate-2d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.nn_interpolate_2D">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">nn_interpolate_2D</code><span class="sig-paren">(</span><em>X</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L53-L81"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.nn_interpolate_2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates of the pixel values at the coordinates (x, y) in <cite>X</cite> using a
+nearest neighbor interpolation strategy.</p>
+<p class="rubric">Notes</p>
+<p>Assumes the current entries in <cite>X</cite> reflect equally-spaced samples from a 2D
+integer grid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(in_rows, in_cols, in_channels)</cite>) – An input image sampled along a grid of <cite>in_rows</cite> by <cite>in_cols</cite>.</li>
+<li><strong>x</strong> (list of length <cite>k</cite>) – A list of x-coordinates for the samples we wish to generate</li>
+<li><strong>y</strong> (list of length <cite>k</cite>) – A list of y-coordinates for the samples we wish to generate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>samples</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(k, in_channels)</cite>) – The samples for each (x,y) coordinate computed via nearest neighbor
+interpolation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="nn-interpolate-1d">
+<h2><code class="docutils literal notranslate"><span class="pre">nn_interpolate_1D</span></code><a class="headerlink" href="#nn-interpolate-1d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.nn_interpolate_1D">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">nn_interpolate_1D</code><span class="sig-paren">(</span><em>X</em>, <em>t</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L84-L103"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.nn_interpolate_1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates of the signal values at <cite>X[t]</cite> using a nearest neighbor
+interpolation strategy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(in_length, in_channels)</cite>) – An input image sampled along an integer <cite>in_length</cite></li>
+<li><strong>t</strong> (list of length <cite>k</cite>) – A list of coordinates for the samples we wish to generate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>samples</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(k, in_channels)</cite>) – The samples for each (x,y) coordinate computed via nearest neighbor
+interpolation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="bilinear-interpolate">
+<h2><code class="docutils literal notranslate"><span class="pre">bilinear_interpolate</span></code><a class="headerlink" href="#bilinear-interpolate" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.bilinear_interpolate">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">bilinear_interpolate</code><span class="sig-paren">(</span><em>X</em>, <em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L106-L153"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.bilinear_interpolate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimates of the pixel values at the coordinates (x, y) in <cite>X</cite> via bilinear
+interpolation.</p>
+<p class="rubric">Notes</p>
+<p>Assumes the current entries in X reflect equally-spaced
+samples from a 2D integer grid.</p>
+<p>Modified from <a class="reference external" href="https://bit.ly/2NMb1Dr">https://bit.ly/2NMb1Dr</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(in_rows, in_cols, in_channels)</cite>) – An input image sampled along a grid of <cite>in_rows</cite> by <cite>in_cols</cite>.</li>
+<li><strong>x</strong> (list of length <cite>k</cite>) – A list of x-coordinates for the samples we wish to generate</li>
+<li><strong>y</strong> (list of length <cite>k</cite>) – A list of y-coordinates for the samples we wish to generate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>samples</strong> (list of length <cite>(k, in_channels)</cite>) – The samples for each (x,y) coordinate computed via bilinear
+interpolation</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="to-frames">
+<h2><code class="docutils literal notranslate"><span class="pre">to_frames</span></code><a class="headerlink" href="#to-frames" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.to_frames">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">to_frames</code><span class="sig-paren">(</span><em>x</em>, <em>frame_width</em>, <em>stride</em>, <em>writeable=False</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L354-L413"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.to_frames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a 1D signal x into overlapping windows of width <cite>frame_width</cite> using
+a hop length of <cite>stride</cite>.</p>
+<p class="rubric">Notes</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">(len(x)</span> <span class="pre">-</span> <span class="pre">frame_width)</span> <span class="pre">%</span> <span class="pre">stride</span> <span class="pre">!=</span> <span class="pre">0</span></code> then some number of the samples
+in x will be dropped. Specifically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n_dropped_frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">frame_width</span> <span class="o">-</span> <span class="n">stride</span> <span class="o">*</span> <span class="p">(</span><span class="n">n_frames</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">n_frames</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">frame_width</span><span class="p">)</span> <span class="o">//</span> <span class="n">stride</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>This method uses low-level stride manipulation to avoid creating an
+additional copy of <cite>x</cite>. The downside is that if <code class="docutils literal notranslate"><span class="pre">writeable`=True</span></code>,
+modifying the <cite>frame</cite> output can result in unexpected behavior:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">out</span> <span class="o">=</span> <span class="n">to_frames</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">array([[0, 1, 2, 3, 4],</span>
+<span class="go">       [1, 2, 3, 4, 5]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">out</span>
+<span class="go">array([[ 0, 99,  2,  3,  4],</span>
+<span class="go">       [99,  2,  3,  4,  5]])</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A 1D signal consisting of N samples</li>
+<li><strong>frame_width</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The width of a single frame window in samples</li>
+<li><strong>stride</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The hop size / number of samples advanced between consecutive frames</li>
+<li><strong>writeable</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If set to False, the returned array will be readonly. Otherwise it will
+be writable if <cite>x</cite> was. It is advisable to set this to False whenever
+possible to avoid unexpected behavior (see NB 2 above). Default is False.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>frame</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_frames, frame_width)</cite>) – The collection of overlapping frames stacked into a matrix</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="autocorrelate1d">
+<h2><code class="docutils literal notranslate"><span class="pre">autocorrelate1D</span></code><a class="headerlink" href="#autocorrelate1d" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.autocorrelate1D">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">autocorrelate1D</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L416-L450"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.autocorrelate1D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autocorrelate a 1D signal <cite>x</cite> with itself.</p>
+<p class="rubric">Notes</p>
+<p>The <cite>k</cite> th term in the 1 dimensional autocorrelation is</p>
+<div class="math notranslate nohighlight">
+\[a_k = \sum_n x_{n + k} x_n\]</div>
+<p>NB. This is a naive <span class="math notranslate nohighlight">\(O(N^2)\)</span> implementation.  For a faster <span class="math notranslate nohighlight">\(O(N
+\log N)\)</span> approach using the FFT, see [1].</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><a class="reference external" href="https://en.wikipedia.org/wiki/Autocorrelation#Efficient%computation">https://en.wikipedia.org/wiki/Autocorrelation#Efficient%computation</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A 1D signal consisting of N samples</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>auto</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The autocorrelation of <cite>x</cite> with itself</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="preemphasis">
+<h2><code class="docutils literal notranslate"><span class="pre">preemphasis</span></code><a class="headerlink" href="#preemphasis" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.preemphasis">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">preemphasis</code><span class="sig-paren">(</span><em>x</em>, <em>alpha</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L458-L486"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.preemphasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increase the amplitude of high frequency bands + decrease the amplitude of
+lower bands.</p>
+<p class="rubric">Notes</p>
+<p>Preemphasis filtering is (was?) a common transform in speech processing,
+where higher frequencies tend to be more useful during signal
+disambiguation.</p>
+<div class="math notranslate nohighlight">
+\[\text{preemphasis}( x_t ) = x_t - \alpha x_{t-1}\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A 1D signal consisting of <cite>N</cite> samples</li>
+<li><strong>alpha</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>)</em>) – The preemphasis coefficient. A value of 0 corresponds to no
+filtering</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>out</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – The filtered signal</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="cepstral-lifter">
+<h2><code class="docutils literal notranslate"><span class="pre">cepstral_lifter</span></code><a class="headerlink" href="#cepstral-lifter" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.cepstral_lifter">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">cepstral_lifter</code><span class="sig-paren">(</span><em>mfccs</em>, <em>D</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L489-L520"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.cepstral_lifter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple sinusoidal filter applied in the Mel-frequency domain.</p>
+<p class="rubric">Notes</p>
+<p>Cepstral lifting helps to smooth the spectral envelope and dampen the
+magnitude of the higher MFCC coefficients while keeping the other
+coefficients unchanged. The filter function is:</p>
+<div class="math notranslate nohighlight">
+\[\text{lifter}( x_n ) = x_n \left(1 + \frac{D \sin(\pi n / D)}{2}\right)\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mfccs</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(G, C)</cite>) – Matrix of Mel cepstral coefficients. Rows correspond to frames, columns
+to cepstral coefficients</li>
+<li><strong>D</strong> (int in <span class="math notranslate nohighlight">\([0, +\infty]\)</span>) – The filter coefficient. 0 corresponds to no filtering, larger values
+correspond to greater amounts of smoothing</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>out</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(G, C)</cite>) – The lifter’d MFCC coefficients</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="mel-spectrogram">
+<h2><code class="docutils literal notranslate"><span class="pre">mel_spectrogram</span></code><a class="headerlink" href="#mel-spectrogram" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.mel_spectrogram">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">mel_spectrogram</code><span class="sig-paren">(</span><em>x</em>, <em>window_duration=0.025</em>, <em>stride_duration=0.01</em>, <em>mean_normalize=True</em>, <em>window='hamming'</em>, <em>n_filters=20</em>, <em>center=True</em>, <em>alpha=0.95</em>, <em>fs=44000</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L523-L605"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.mel_spectrogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the Mel-filterbank to the power spectrum for a signal <cite>x</cite>.</p>
+<p class="rubric">Notes</p>
+<p>The Mel spectrogram is the projection of the power spectrum of the framed
+and windowed signal onto the basis set provided by the Mel filterbank.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A 1D signal consisting of N samples</li>
+<li><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The duration of each frame / window (in seconds). Default is 0.025.</li>
+<li><strong>stride_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The duration of the hop between consecutive windows (in seconds).
+Default is 0.01.</li>
+<li><strong>mean_normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to subtract the coefficient means from the final filter values
+to improve the signal-to-noise ratio. Default is True.</li>
+<li><strong>window</strong> (<em>{'hamming'</em><em>, </em><em>'hann'</em><em>, </em><em>'blackman_harris'}</em>) – The windowing function to apply to the signal before FFT. Default is
+‘hamming’.</li>
+<li><strong>n_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of mel filters to include in the filterbank. Default is 20.</li>
+<li><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to the <cite>k</cite> th frame of the signal should <em>begin</em> at index <code class="docutils literal notranslate"><span class="pre">x[k</span> <span class="pre">*</span>
+<span class="pre">stride_len]</span></code> (center = False) or be <em>centered</em> at <code class="docutils literal notranslate"><span class="pre">x[k</span> <span class="pre">*</span> <span class="pre">stride_len]</span></code>
+(center = True). Default is False.</li>
+<li><strong>alpha</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>)</em>) – The coefficient for the preemphasis filter. A value of 0 corresponds to
+no filtering. Default is 0.95.</li>
+<li><strong>fs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample rate/frequency for the signal. Default is 44000.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>filter_energies</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(G, n_filters)</cite>) – The (possibly mean_normalized) power for each filter in the Mel
+filterbank (i.e., the Mel spectrogram). Rows correspond to frames,
+columns to filters</li>
+<li><strong>energy_per_frame</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(G,)</cite>) – The total energy in each frame of the signal</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="mfcc">
+<h2><code class="docutils literal notranslate"><span class="pre">mfcc</span></code><a class="headerlink" href="#mfcc" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.mfcc">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">mfcc</code><span class="sig-paren">(</span><em>x</em>, <em>fs=44000</em>, <em>n_mfccs=13</em>, <em>alpha=0.95</em>, <em>center=True</em>, <em>n_filters=20</em>, <em>window='hann'</em>, <em>normalize=True</em>, <em>lifter_coef=22</em>, <em>stride_duration=0.01</em>, <em>window_duration=0.025</em>, <em>replace_intercept=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L613-L716"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.mfcc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the Mel-frequency cepstral coefficients (MFCC) for a signal.</p>
+<p class="rubric">Notes</p>
+<p>Computing MFCC features proceeds in the following stages:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Convert the signal into overlapping frames and apply a window fn</li>
+<li>Compute the power spectrum at each frame</li>
+<li>Apply the mel filterbank to the power spectra to get mel filterbank powers</li>
+<li>Take the logarithm of the mel filterbank powers at each frame</li>
+<li>Take the discrete cosine transform (DCT) of the log filterbank
+energies and retain only the first k coefficients to further reduce
+the dimensionality</li>
+</ol>
+</div></blockquote>
+<p>MFCCs were developed in the context of HMM-GMM automatic speech recognition
+(ASR) systems and can be used to provide a somewhat speaker/pitch
+invariant representation of phonemes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N,)</cite>) – A 1D signal consisting of N samples</li>
+<li><strong>fs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample rate/frequency for the signal. Default is 44000.</li>
+<li><strong>n_mfccs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of cepstral coefficients to return (including the intercept
+coefficient). Default is 13.</li>
+<li><strong>alpha</strong> (<em>float in</em><em> [</em><em>0</em><em>, </em><em>1</em><em>)</em>) – The preemphasis coefficient. A value of 0 corresponds to no
+filtering. Default is 0.95.</li>
+<li><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to the kth frame of the signal should <em>begin</em> at index <code class="docutils literal notranslate"><span class="pre">x[k</span> <span class="pre">*</span>
+<span class="pre">stride_len]</span></code> (center = False) or be <em>centered</em> at <code class="docutils literal notranslate"><span class="pre">x[k</span> <span class="pre">*</span> <span class="pre">stride_len]</span></code>
+(center = True). Default is True.</li>
+<li><strong>n_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of filters to include in the Mel filterbank. Default is 20.</li>
+<li><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to mean-normalize the MFCC values. Default is True.</li>
+<li><strong>lifter_coef</strong> (<em>int in :math:</em><em>[</em><em>0</em><em>, </em><em>+ infty</em><em>]</em><em>`</em>) – The cepstral filter coefficient. 0 corresponds to no filtering, larger
+values correspond to greater amounts of smoothing. Default is 22.</li>
+<li><strong>window</strong> (<em>{'hamming'</em><em>, </em><em>'hann'</em><em>, </em><em>'blackman_harris'}</em>) – The windowing function to apply to the signal before taking the DFT.
+Default is ‘hann’.</li>
+<li><strong>stride_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The duration of the hop between consecutive windows (in seconds).
+Default is 0.01.</li>
+<li><strong>window_duration</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – The duration of each frame / window (in seconds). Default is 0.025.</li>
+<li><strong>replace_intercept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Replace the first MFCC coefficient (the intercept term) with the
+log of the total frame energy instead. Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>mfccs</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(G, C)</cite>) – Matrix of Mel-frequency cepstral coefficients. Rows correspond to
+frames, columns to cepstral coefficients</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="mel2hz">
+<h2><code class="docutils literal notranslate"><span class="pre">mel2hz</span></code><a class="headerlink" href="#mel2hz" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.mel2hz">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">mel2hz</code><span class="sig-paren">(</span><em>mel</em>, <em>formula='htk'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L719-L742"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.mel2hz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the mel-scale representation of a signal into Hz</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>mel</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, *)</cite>) – An array of mel frequencies to convert</li>
+<li><strong>formula</strong> (<em>{&quot;htk&quot;</em><em>, </em><em>&quot;slaney&quot;}</em>) – The Mel formula to use. “htk” uses the formula used by the Hidden
+Markov Model Toolkit, and described in O’Shaughnessy (1987). “slaney”
+uses the formula used in the MATLAB auditory toolbox (Slaney, 1998).
+Default is ‘htk’</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>hz</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, *)</cite>) – The frequencies of the items in <cite>mel</cite>, in Hz</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="hz2mel">
+<h2><code class="docutils literal notranslate"><span class="pre">hz2mel</span></code><a class="headerlink" href="#hz2mel" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.hz2mel">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">hz2mel</code><span class="sig-paren">(</span><em>hz</em>, <em>formula='htk'</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L745-L769"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.hz2mel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the frequency representaiton of a signal in Hz into the mel scale.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hz</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, *)</cite>) – The frequencies of the items in <cite>mel</cite>, in Hz</li>
+<li><strong>formula</strong> (<em>{&quot;htk&quot;</em><em>, </em><em>&quot;slaney&quot;}</em>) – The Mel formula to use. “htk” uses the formula used by the Hidden
+Markov Model Toolkit, and described in O’Shaughnessy (1987). “slaney”
+uses the formula used in the MATLAB auditory toolbox (Slaney, 1998).
+Default is ‘htk’.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>mel</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(N, *)</cite>) – An array of mel frequencies to convert.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="mel-filterbank">
+<h2><code class="docutils literal notranslate"><span class="pre">mel_filterbank</span></code><a class="headerlink" href="#mel-filterbank" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="numpy_ml.preprocessing.dsp.mel_filterbank">
+<code class="descclassname">numpy_ml.preprocessing.dsp.</code><code class="descname">mel_filterbank</code><span class="sig-paren">(</span><em>N</em>, <em>n_filters=20</em>, <em>fs=44000</em>, <em>min_freq=0</em>, <em>max_freq=None</em>, <em>normalize=True</em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/preprocessing/dsp.py#L772-L848"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#numpy_ml.preprocessing.dsp.mel_filterbank" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the filters in a Mel filterbank and return the corresponding
+transformation matrix</p>
+<p class="rubric">Notes</p>
+<p>The Mel scale is a perceptual scale designed to simulate the way the human
+ear works. Pitches judged by listeners to be equal in perceptual /
+psychological distance have equal distance on the Mel scale.  Practically,
+this corresponds to a scale with higher resolution at low frequencies and
+lower resolution at higher (&gt; 500 Hz) frequencies.</p>
+<p>Each filter in the Mel filterbank is triangular with a response of 1 at its
+center and a linear decay on both sides until it reaches the center
+frequency of the next adjacent filter.</p>
+<p>This implementation is based on code in the (superb) LibROSA package [1].</p>
+<p class="rubric">References</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>McFee et al. (2015). “librosa: Audio and music signal analysis in
+Python”, <em>Proceedings of the 14th Python in Science Conference</em>
+<a class="reference external" href="https://librosa.github.io">https://librosa.github.io</a></td></tr>
+</tbody>
+</table>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>N</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of DFT bins</li>
+<li><strong>n_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of mel filters to include in the filterbank. Default is 20.</li>
+<li><strong>min_freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Minimum filter frequency (in Hz). Default is 0.</li>
+<li><strong>max_freq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Maximum filter frequency (in Hz). Default is 0.</li>
+<li><strong>fs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample rate/frequency for the signal. Default is 44000.</li>
+<li><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, scale the Mel filter weights by their area in Mel space.
+Default is True.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>fbank</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code></a> of shape <cite>(n_filters, N // 2 + 1)</cite>) – The mel-filterbank transformation matrix. Rows correspond to filters,
+columns to DFT bins.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, David Bourgin.
+      
+      |
+      <a href="_sources/numpy_ml.preprocessing.dsp.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-65839510-3']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
